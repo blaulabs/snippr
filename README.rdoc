@@ -32,8 +32,8 @@ are wrapped in curly braces.
 
   <p>You're topup of {topup_amount} at {date_today} was successful.</p>
 
-To replace the {topup_amount} with a dynamic value, you just pass in a Hash of
-placeholders and dynamic values when instantiating a new snippet.
+To replace both {topup_amount} and {date_today} with a dynamic value, you just pass
+in a Hash of placeholders and dynamic values when instantiating a new snippet.
 
   Snippet.new :topup, :success, :topup_amount => number_to_currency(15), :date_today => Date.today
 
@@ -47,7 +47,7 @@ The result will obviously be something like:
 
 == Snippet content
 
-Getting the snippet content is done by calling the +to_s+ method. This will replace
+Returning the snippet content is done by calling the +to_s+ method. This will replace
 all specified placeholders and links.
 
   Snippet.new(:tariff, :einheit).to_s
