@@ -1,7 +1,7 @@
 = Snippet
 ==== File based content management
 
-A snippet is a piece of HTML to be included in a website. Snippets are plain text
+A snippet is a piece of HTML to be included in a website. They are plain text
 files stored on the file system.
 
 == Snippet path
