@@ -1,16 +1,18 @@
 = Snippet
+==== File based content management
 
-Insane content management.
-
-A snippet (also known as "Schnipsel") is a piece of HTML to be included in a website.
-Snippets are plain text files stored on the file system.
+A snippet is a piece of HTML to be included in a website. Snippets are plain text
+files stored on the file system.
 
 == Snippet path
 
-You need to specify the path to the snippet directory. This can be done by setting
-the +SnippetPathProperty+ as a JVM property or by using the +snippet_path+ method:
+You need to specify the path to the snippet directory:
 
   Snippet.snippet_path = File.join(File.dirname(__FILE__), "..", "snippets")
+
+When running on JRuby, you can also set the path via JVM properties. The property
+you need to specify is defined in +SnippetPath::SnippetPathProperty+. This allows
+system administrators to change the path without having to touch your application.
 
 == Instantiation
 
@@ -23,7 +25,7 @@ or by using multiple Strings or Symbols:
 
   Snippet.new :tariff, :einheit
 
-==== Dynamic values
+=== Dynamic values
 
 A snippet may contain placeholders to be replaced with dynamic values. Placeholders
 are wrapped in curly braces.
@@ -50,7 +52,7 @@ all specified placeholders and links.
 
   Snippet.new(:tariff, :einheit).to_s
 
-==== Rails Helper
+== Rails Helper
 
 When using the Snippet component with Rails, it automatically adds the +SnippetHelper+
 module to your views. You can then use the +snippet+ helper method to load snippets.
