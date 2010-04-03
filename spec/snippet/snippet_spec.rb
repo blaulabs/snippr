@@ -2,7 +2,12 @@ require "spec_helper"
 
 describe Snippet do
   before :all do
-    Snippet.snippet_path = File.join(File.dirname(__FILE__), "..", "fixtures")
+    snippet_path = File.join File.dirname(__FILE__), "..", "fixtures"
+    if RUBY_PLATFORM =~ /java/
+      SnippetPath::JavaLang::System.set_property SnippetPath::JVMProperty, snippet_path
+    else
+      Snippet.snippet_path = snippet_path
+    end
   end
 
   it "should return the content of a snippet" do
