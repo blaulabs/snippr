@@ -5,18 +5,18 @@
 module SnippetPath
 
   # The snippet path JVM property.
-  SnippetPathProperty = "cms.snippet.path"
+  JVMProperty = "cms.snippet.path"
 
   # Returns the snippet path from JVM properties.
   def snippet_path
-    path = JavaLang::System.get_property(SnippetPathProperty) rescue @snippet_path
+    path = JavaLang::System.get_property(JVMProperty) rescue @snippet_path
     validate_snippet_path path
   end
 
   # Sets the snippet path as a JVM property.
   def snippet_path=(path)
     validate_snippet_path path
-    JavaLang::System.set_property(SnippetPathProperty, path) if jruby?
+    JavaLang::System.set_property(JVMProperty, path) if jruby?
     @snippet_path = path
   end
 
