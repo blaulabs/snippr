@@ -11,7 +11,7 @@
 #   Snippet.snippet_path = File.join(File.dirname(__FILE__), "..", "snippets")
 #
 # When running on JRuby, you can also set the path via JVM properties. The property
-# you need to specify is defined in +SnippetPath::SnippetPathProperty+. This allows
+# you need to specify is defined in SnippetPath::SnippetPathProperty. This allows
 # system administrators to change the path without having to touch your application.
 #
 # == Instantiation
