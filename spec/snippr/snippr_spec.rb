@@ -23,6 +23,10 @@ describe Snippr do
     Snippr.new(:tariff, :einheit).to_s.should include("<p>tariff: einheit</p>")
   end
 
+  it "should convert snake_case Symbols to lowerCamelCase Strings" do
+    Snippr.new(:topup, :some_error).to_s.should include("<p>Some error occurred.</p>")
+  end
+
   it "should wrap the snippr in descriptive comments" do
     Snippr.new(:home).to_s.should ==
       "<!-- starting with snippr: home -->\n" <<
@@ -36,10 +40,10 @@ describe Snippr do
   end
 
   it "should return a fallback wrapped in descriptive comments for missing snipprs" do
-    Snippr.new(:does_not_exist).to_s.should ==
-      "<!-- starting with snippr: does_not_exist -->\n" <<
+    Snippr.new(:doesnotexist).to_s.should ==
+      "<!-- starting with snippr: doesnotexist -->\n" <<
       "<samp class=\"missing snippr\" />\n" <<
-      "<!-- ending with snippr: does_not_exist -->"
+      "<!-- ending with snippr: doesnotexist -->"
   end
 
   it "should raise an ArgumentError if the +path+ does not exist" do
