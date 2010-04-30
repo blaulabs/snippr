@@ -15,7 +15,7 @@ module SnippetPath
 
   # Sets the snippet path as a JVM property.
   def snippet_path=(path)
-    validate_snippet_path path
+    validate_snippet_path path.to_s
     JavaLang::System.set_property(JVMProperty, path) if jruby?
     @snippet_path = path
   end
