@@ -103,7 +103,7 @@ private
 
   # Returns the complete path to a snippr file.
   def snippr_file
-    File.join self.class.path, self.class.base_path, "#{@snippr_name}#{SnipprFileExtension}"
+    File.join self.class.path, "#{@snippr_name}#{SnipprFileExtension}"
   end
 
   # Wraps the content from a given +block+ in descriptive comments.
