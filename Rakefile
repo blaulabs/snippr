@@ -5,8 +5,8 @@ require "spec/rake/verify_rcov"
 task :default => :spec
 
 Spec::Rake::SpecTask.new do |t|
-  t.rcov = true
-  t.rcov_opts = %w(--exclude-only ^\/User,spec\/)
+#  t.rcov = true
+#  t.rcov_opts = %w(--exclude-only ^\/User,spec\/)
 end
 
 namespace :spec do
@@ -20,11 +20,11 @@ begin
   require "hanna/rdoctask"
 
   Rake::RDocTask.new do |t|
-    t.title = "Snippet - File based content management"
+    t.title = "Snippr - File based content management"
     t.rdoc_dir = "doc"
     t.rdoc_files.include("**/*.rdoc").include("lib/**/*.rb")
     t.options << "--line-numbers"
-    t.options << "--webcvs=http://github.com/rubiii/snippet/tree/master/"
+    t.options << "--webcvs=http://github.com/blaulabs/snippr/tree/master/"
   end
 rescue LoadError
   puts "'gem install hanna' for documentation"

@@ -1,4 +1,4 @@
-require "snippet"
-require "snippet/snippet_helper"
+require "snippr"
+require "snippr/snippr_helper"
 
-ActionView::Base.send :include, SnippetHelper
+ActionView::Base.send :include, SnipprHelper

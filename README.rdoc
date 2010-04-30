@@ -1,41 +1,41 @@
-= Snippet
+= Snippr
 ==== File based content management
 
-A snippet is a piece of HTML to be included in a website. They are plain text
+A snippr is a piece of HTML to be included in a website. They are plain text
 files stored on the file system.
 
-== Snippet path
+== Snippr path
 
-You need to specify the path to the snippet directory:
+You need to specify the path to the snippr directory:
 
-  Snippet.snippet_path = File.join(File.dirname(__FILE__), "..", "snippets")
+  Snippr.path = File.join(File.dirname(__FILE__), "..", "snippr")
 
 When running on JRuby, you can also set the path via JVM properties. The property
-you need to specify is defined in SnippetPath::JVMProperty. This allows system
+you need to specify is defined in SnipprPath::JVMProperty. This allows system
 administrators to change the path without having to touch your application.
 
 == Instantiation
 
-Instantiating a new snippet is done by passing in the path to the snippet file as
+Instantiating a new snippr is done by passing in the path to the snippr file as
 a String (including path separators):
 
-  Snippet.new "tariff/einheit"
+  Snippr.new "tariff/einheit"
 
 or by using multiple Strings or Symbols:
 
-  Snippet.new :tariff, :einheit
+  Snippr.new :tariff, :einheit
 
 === Dynamic values
 
-A snippet may contain placeholders to be replaced with dynamic values. Placeholders
+A snippr may contain placeholders to be replaced with dynamic values. Placeholders
 are wrapped in curly braces.
 
   <p>You're topup of {topup_amount} at {date_today} was successful.</p>
 
 To replace both {topup_amount} and {date_today} with a dynamic value, you just pass
-in a Hash of placeholders and dynamic values when instantiating a new snippet.
+in a Hash of placeholders and dynamic values when instantiating a new snippr.
 
-  Snippet.new :topup, :success, :topup_amount => number_to_currency(15), :date_today => Date.today
+  Snippr.new :topup, :success, :topup_amount => number_to_currency(15), :date_today => Date.today
 
 The result will obviously be something like:
 
@@ -45,18 +45,18 @@ The result will obviously be something like:
 
 ...
 
-== Snippet content
+== Snippr content
 
-Returning the snippet content is done by calling the +to_s+ method. This will replace
+Returning the snippr content is done by calling the +to_s+ method. This will replace
 all specified placeholders and links.
 
-  Snippet.new(:tariff, :einheit).to_s
+  Snippr.new(:tariff, :einheit).to_s
 
 == Rails Helper
 
-When using the Snippet component with Rails, it automatically adds the +SnippetHelper+
-module to your views. You can then use the +snippet+ helper method to load snippets.
+When using the Snippr component with Rails, it automatically adds the +SnipprHelper+
+module to your views. You can then use the +snippr+ helper method to load snipprs.
 
   %h1 Topup successful
   .topup.info
-    = snippet :topup, :success
+    = snippr :topup, :success
