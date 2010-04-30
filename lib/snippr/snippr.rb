@@ -76,7 +76,7 @@ class Snippr
   # to be replaced with dynamic values.
   def initialize(*args)
     @dynamic_values = args.last.kind_of?(Hash) ? args.pop : {}
-    @snippr_name = args.join("/")
+    @snippr_name = args.map { |arg| arg.kind_of?(Symbol) ? arg.to_s.camelize(:lower) : arg }.join("/")
   end
 
   # Returns the snippr content.
