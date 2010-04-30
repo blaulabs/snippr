@@ -11,7 +11,7 @@
 #   Snippr.path = File.join(File.dirname(__FILE__), "..", "snipprs")
 #
 # When running on JRuby, you can also set the path via JVM properties. The property
-# you need to specify is defined in SnipprPath::JVMProperty. This allows system
+# you need to specify is defined in +SnipprPath::JVMProperty+. This allows system
 # administrators to change the path without having to touch your application.
 #
 # == Instantiation
@@ -55,7 +55,7 @@
 # == Rails Helper
 #
 # When using the Snippr component with Rails, it automatically adds the +SnipprHelper+
-# module to your views. You can then use the +snippr+ helper method to load snipprs.
+# module to your views. You can then use the +snippr+ helper method to load snippr files.
 #
 #   %h1 Topup successful
 #   .topup.info
