@@ -16,7 +16,6 @@ module SnipprPath
   def path=(path)
     path = path.to_s
     raise ArgumentError, "Invalid path: #{path}" unless File.directory? path
-    JavaLang::System.set_property(JVMProperty, path) if jruby?
     @path = path
   end
 
