@@ -9,7 +9,7 @@ module SnipprPath
 
   # Returns the snippr path from JVM properties.
   def path
-    JavaLang::System.get_property(JVMProperty) rescue @path
+    (JavaLang::System.get_property(JVMProperty) rescue @path) || ""
   end
 
   # Sets the snippr path as a JVM property.
