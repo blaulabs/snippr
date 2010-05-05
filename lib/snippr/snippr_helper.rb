@@ -14,3 +14,7 @@ module SnipprHelper
   end
 
 end
+
+if defined? ActionView::Base
+  ActionView::Base.send :include, SnipprHelper
+end
