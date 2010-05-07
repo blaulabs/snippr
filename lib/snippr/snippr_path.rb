@@ -7,16 +7,15 @@ module SnipprPath
   # The snippr path JVM property.
   JVMProperty = "cms.snippet.path"
 
-  # Returns the snippr path from JVM properties.
+  # Returns the snippr path (from JVM properties if available).
   def path
-    (JavaLang::System.get_property(JVMProperty) rescue @path) || ""
+    @path ||= JavaLang::System.get_property(JVMProperty) || "" if jruby?
+    @path ||= ""
   end
 
   # Sets the snippr path as a JVM property.
   def path=(path)
-    path = path.to_s
-    raise ArgumentError, "Invalid path: #{path}" unless File.directory? path
-    @path = path
+    @path = path.to_s
   end
 
 private
