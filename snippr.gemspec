@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = "snippr"
-  s.version = "0.1.3"
-  s.date = "2010-05-05"
+  s.version = "0.1.5"
+  s.date = "2010-05-07"
 
   s.authors = "Daniel Harrington"
   s.email = "me@rubiii.com"
