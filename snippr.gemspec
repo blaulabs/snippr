@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "snippr"
-  s.version = "0.1.5"
+  s.version = "0.1.6"
   s.date = "2010-05-07"
 
   s.authors = "Daniel Harrington"
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/blaulabs/snippr"
   s.summary = "File based content management"
 
-  s.files = Dir["[A-Z]*", "{lib,spec}/**/*.{rb,snip}"]
+  s.files = Dir["[A-Z]*", "{lib,rails,spec}/**/*.{rb,snip}"]
   s.test_files = Dir["spec/**/*.rb"]
 
   s.extra_rdoc_files = ["README.rdoc"]
