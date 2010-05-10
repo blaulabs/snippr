@@ -2,7 +2,8 @@
 ==== File based content management
 
 A snippr is a piece of HTML to be included in a website. They are plain text
-files stored on the file system.
+files stored on the file system. Snipprs end with ".snip" and have to be stored
+in Snippr path:
 
 == Snippr path
 
