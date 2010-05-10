@@ -25,22 +25,6 @@ or by using multiple Strings or Symbols:
 
   Snippr.load :tariff, :einheit
 
-=== I18n
-
-Snippr comes with support for I18n, but up until further notice, you have to manually enable this
-behavior in your application.
-
-  Snippr.i18n = true
-
-Afterwards Snippr uses the locale specified via I18n and automatically prepends the current locale
-prefixed with a "_" to your snippr files.
-
-  I18n.locale = :de
-  Snippr.load :shop # tries to load "shop_de.snip" relative to your Snippr path
-
-  I18n.locale = :en
-  Snippr.load :shop # tries to load "shop_en.snip" relative to your Snippr path
-
 === Dynamic values
 
 A snippr file may contain placeholders to be replaced with dynamic values. Placeholders are
@@ -56,6 +40,22 @@ placeholders and dynamic values when loading a snippr file.
 The result will obviously be something like:
 
   <p>You're topup of 15,00 &euro; at 2010-04-03 was successful.</p>
+
+== I18n
+
+Snippr comes with support for I18n, but up until further notice, you have to manually enable this
+behavior in your application.
+
+  Snippr.i18n = true
+
+Afterwards Snippr uses the locale specified via I18n and automatically prepends the current locale
+prefixed with a "_" to your snippr files.
+
+  I18n.locale = :de
+  Snippr.load :shop # tries to load "shop_de.snip" relative to your Snippr path
+
+  I18n.locale = :en
+  Snippr.load :shop # tries to load "shop_en.snip" relative to your Snippr path
 
 == Rails Helper
 
