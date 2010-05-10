@@ -7,52 +7,6 @@ require "snippr/i18n"
 #
 # A snippr file is a piece of HTML or raw text to be included in a website. They are plain text
 # files stored on the file system. Snippr files end with ".snip" and are read from the Snippr path.
-#
-# == Snippr path
-#
-# You need to specify the path to the directory where your Snippr files are stored:
-#
-#   Snippr.path = File.join File.dirname(__FILE__), "..", "snippr"
-#
-# When running on JRuby, you can also set the path via JVM properties. The property you need to
-# specify is defined in Snippr::Path::JVMProperty. This allows system administrators to change the
-# path without having to touch your application.
-#
-# == Instantiation
-#
-# Instantiating a new snippr is done by passing in the path to the snippr file as a String
-# (including path separators):
-#
-#   Snippr.load "tariff/einheit"
-#
-# or by using multiple Strings or Symbols:
-#
-#   Snippr.load :tariff, :einheit
-#
-# === Dynamic values
-#
-# A snippr file may contain placeholders to be replaced with dynamic values. Placeholders are
-# wrapped in curly braces.
-#
-#   <p>You're topup of {topup_amount} at {date_today} was successful.</p>
-#
-# To replace both {topup_amount} and {date_today} with a dynamic value, you just pass in a Hash of
-# placeholders and dynamic values when loading a snippr file.
-#
-#   Snippr.load :topup, :success, :topup_amount => number_to_currency(15), :date_today => Date.today
-#
-# The result will obviously be something like:
-#
-#   <p>You're topup of 15,00 &euro; at 2010-04-03 was successful.</p>
-#
-# == Rails Helper
-#
-# When using the Snippr module with Rails, it automatically adds the +Snippr::Helper+ module to
-# your views. You can then use the +snippr+ helper method to load snippr files.
-#
-#   %h1 Topup successful
-#   .topup.info
-#     = snippr :topup, :success
 module Snippr
   extend Snippr::Path
   extend Snippr::I18n
