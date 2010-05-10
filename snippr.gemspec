@@ -2,7 +2,7 @@ require "date"
 
 Gem::Specification.new do |s|
   s.name = "snippr"
-  s.version = "0.1.7"
+  s.version = "0.2.0"
   s.date = Date.today.to_s
 
   s.authors = "Daniel Harrington"
@@ -17,5 +17,6 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8", "--line-numbers", "--inline-source"]
   s.rdoc_options += ["--title", "Snippr - File based content management"]
 
+  s.add_dependency "i18n"
   s.add_development_dependency "rspec", ">= 1.2.8"
 end

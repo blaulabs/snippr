@@ -1,20 +1,9 @@
 require "rake"
 require "spec/rake/spectask"
-require "spec/rake/verify_rcov"
 
 task :default => :spec
 
-Spec::Rake::SpecTask.new do |t|
-#  t.rcov = true
-#  t.rcov_opts = %w(--exclude-only ^\/User,spec\/)
-end
-
-namespace :spec do
-  RCov::VerifyTask.new(:rcov => :spec) do |t|
-    t.threshold = 90
-    t.index_html = "coverage/index.html"
-  end
-end
+Spec::Rake::SpecTask.new
 
 begin
   require "hanna/rdoctask"
@@ -27,5 +16,5 @@ begin
     t.options << "--webcvs=http://github.com/blaulabs/snippr/tree/master/"
   end
 rescue LoadError
-  puts "'gem install hanna' for documentation"
+  puts "'gem install hanna' to generate documentation"
 end

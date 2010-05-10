@@ -1,62 +1,50 @@
 = Snippr
 ==== File based content management
 
-A snippr is a piece of HTML to be included in a website. They are plain text
-files stored on the file system. Snipprs end with ".snip" and have to be stored
-in Snippr path:
+A snippr file is a piece of HTML or raw text to be included in a website. They are plain text
+files stored on the file system. Snippr files end with ".snip" and are read from the Snippr path.
 
 == Snippr path
 
-You need to specify the path to the snippr directory:
+You need to specify the path to the directory where your Snippr files are stored:
 
-  Snippr.path = File.join(File.dirname(__FILE__), "..", "snippr")
+  Snippr.path = File.join File.dirname(__FILE__), "..", "snippr"
 
-When running on JRuby, you can also set the path via JVM properties. The property
-you need to specify is defined in +SnipprPath::JVMProperty+. This allows system
-administrators to change the path without having to touch your application.
+When running on JRuby, you can also set the path via JVM properties. The property you need to
+specify is defined in Snippr::Path::JVMProperty. This allows system administrators to change the
+path without having to touch your application.
 
 == Instantiation
 
-Instantiating a new snippr is done by passing in the path to the snippr file as
-a String (including path separators):
+Instantiating a new snippr is done by passing in the path to the snippr file as a String
+(including path separators):
 
-  Snippr.new "tariff/einheit"
+  Snippr.load "tariff/einheit"
 
 or by using multiple Strings or Symbols:
 
-  Snippr.new :tariff, :einheit
+  Snippr.load :tariff, :einheit
 
 === Dynamic values
 
-A snippr may contain placeholders to be replaced with dynamic values. Placeholders
-are wrapped in curly braces.
+A snippr file may contain placeholders to be replaced with dynamic values. Placeholders are
+wrapped in curly braces.
 
   <p>You're topup of {topup_amount} at {date_today} was successful.</p>
 
-To replace both {topup_amount} and {date_today} with a dynamic value, you just pass
-in a Hash of placeholders and dynamic values when instantiating a new snippr.
+To replace both {topup_amount} and {date_today} with a dynamic value, you just pass in a Hash of
+placeholders and dynamic values when loading a snippr file.
 
-  Snippr.new :topup, :success, :topup_amount => number_to_currency(15), :date_today => Date.today
+  Snippr.load :topup, :success, :topup_amount => number_to_currency(15), :date_today => Date.today
 
 The result will obviously be something like:
 
   <p>You're topup of 15,00 &euro; at 2010-04-03 was successful.</p>
 
-== Links
-
-...
-
-== Snippr content
-
-Returning the snippr content is done by calling the +to_s+ method. This will replace
-all specified placeholders and links.
-
-  Snippr.new(:tariff, :einheit).to_s
-
 == Rails Helper
 
-When using the Snippr component with Rails, it automatically adds the +SnipprHelper+
-module to your views. You can then use the +snippr+ helper method to load snippr files.
+When using the Snippr module with Rails, it automatically adds the +Snippr::Helper+ module to
+your views. You can then use the +snippr+ helper method to load snippr files.
 
   %h1 Topup successful
   .topup.info
