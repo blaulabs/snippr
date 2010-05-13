@@ -1,2 +1,16 @@
+== 0.2.0 (2010-05-13)
+  * Added support for I18n snippr files. Simply enable I18n:
+    
+      Snippr.i18n = true
+    
+    And Snippr will automatically retrieve the current locale from I18n and append
+    it to every snippr file you're trying to load:
+    
+      I18n.locale = :de
+      Snippr.load(:topup, :success) # Will load: "topup/success_de.snip"
+
+  * From the example above, you should also notice that the method for loading a
+    snippr file has changed from +new+ to +load+.
+
 == 0.1.0 (2010-04-30)
   * Initial version.
