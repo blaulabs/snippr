@@ -11,7 +11,8 @@ module Snippr
 
     # Returns a snippr specified via +args+.
     def snippr(*args)
-      Snippr.load *args
+      snippr = Snippr.load *args
+      snippr.respond_to?(:html_safe) ? snippr.html_safe : snippr
     end
 
   end
