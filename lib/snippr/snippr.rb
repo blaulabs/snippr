@@ -1,6 +1,7 @@
 require "snippr/core_ext"
 require "snippr/path"
 require "snippr/i18n"
+require "snippr/link"
 
 # = Snippr
 # ==== File based content management
@@ -10,6 +11,7 @@ require "snippr/i18n"
 module Snippr
   extend Snippr::Path
   extend Snippr::I18n
+  extend Snippr::Link
 
   class << self
 
@@ -21,6 +23,7 @@ module Snippr
 
     # The fallback tag for a missing snippr.
     MissingSnipprTag = '<samp class="missing snippr" />'
+
 
     # Expects the name of a snippr file. Also accepts a Hash of placeholders
     # to be replaced with dynamic values.
@@ -44,7 +47,7 @@ module Snippr
       
       content = File.read(file).strip
       insert_dynamics content
-      content
+      linkify content
     end
 
     # Returns the complete path to a snippr file.

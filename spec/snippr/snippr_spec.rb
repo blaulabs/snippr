@@ -46,6 +46,13 @@ describe Snippr do
       "<samp class=\"missing snippr\" />\n" <<
       "<!-- closing snippr: doesnotexist -->"
   end
+  
+  it "should convert wiki links to html links" do
+    Snippr.load(:wiki).should == 
+      "<!-- starting snippr: wiki -->\n" <<
+      "<p>Click <a href=\"http://www.blaulabs.de\">here with blanks</a>.</p>\n" <<
+      "<!-- closing snippr: wiki -->"
+  end
 
   describe "I18n" do
     before { Snippr.i18n = true }

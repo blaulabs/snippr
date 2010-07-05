@@ -1,3 +1,12 @@
+== 0.3.0 (2010-07-05)
+  * Added support for links in wiki syntax:
+    
+      [[http://www.blaulabs.de|blaulabs]]
+      
+    will be converted to:
+    
+      <a href="http://www.blaulabs.de">blaulabs</a>
+
 == 0.2.0 (2010-05-13)
   * Added support for I18n snippr files. Simply enable I18n:
     

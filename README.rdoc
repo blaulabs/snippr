@@ -56,6 +56,16 @@ prefixed with a "_" to your snippr files.
 
   I18n.locale = :en
   Snippr.load :shop # tries to load "shop_en.snip" relative to your Snippr path
+  
+== Wiki Syntax
+
+Until now, only wiki links with text are supported by Snippr:
+
+  [[http://www.blaulabs.de|blaulabs]]
+  
+will be converted to:
+
+  <a href="http://www.blaulabs.de">blaulabs</a>
 
 == Rails Helper
 
