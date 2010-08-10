@@ -2,7 +2,7 @@ require "date"
 
 Gem::Specification.new do |s|
   s.name = "snippr"
-  s.version = "0.3.0"
+  s.version = "0.3.1"
   s.date = Date.today.to_s
 
   s.authors = "Daniel Harrington"
