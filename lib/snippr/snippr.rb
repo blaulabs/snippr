@@ -20,6 +20,7 @@ module Snippr
 
     # The comments wrapping a snippr.
     SnipprComments = "<!-- starting snippr: %s -->\n%s\n<!-- closing snippr: %s -->"
+    MissingSnipprComment = "<!-- missing optional snippr: %s -->"
 
     # The fallback tag for a missing snippr.
     MissingSnipprTag = '<samp class="missing snippr" />'
@@ -27,10 +28,17 @@ module Snippr
 
     # Expects the name of a snippr file. Also accepts a Hash of placeholders
     # to be replaced with dynamic values.
-    def load(*args)
+    def load(*args, &block)
       @dynamics = args.last.kind_of?(Hash) ? args.pop : {}
       @name = name_from args
-      SnipprComments % [@name, content, @name]
+      content = content block_given?
+      if content
+        content = SnipprComments % [@name, content, @name]
+        content = block.call(content) if block_given?
+      else
+        content = MissingSnipprComment % @name
+      end
+      content
     end
 
   private
@@ -42,8 +50,8 @@ module Snippr
 
     # Returns the raw snippr content or a +MissingSnipprTag+ in case the snippr
     # file does not seem to exist.
-    def content
-      return MissingSnipprTag unless File.exist? file
+    def content(graceful)
+      return graceful ? nil : MissingSnipprTag unless File.exist? file
       
       content = File.read(file).strip
       insert_dynamics content
