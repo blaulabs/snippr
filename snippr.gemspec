@@ -18,5 +18,6 @@ Gem::Specification.new do |s|
   s.rdoc_options += ["--title", "Snippr - File based content management"]
 
   s.add_dependency "i18n"
-  s.add_development_dependency "rspec", ">= 1.2.8"
+  s.add_development_dependency "rspec", ">=2.0.0.beta.17"
+  s.add_development_dependency "blau-gem-pusher"
 end

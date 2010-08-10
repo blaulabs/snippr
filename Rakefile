@@ -1,9 +1,21 @@
+require "rubygems"
 require "rake"
-require "spec/rake/spectask"
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new :spec
 task :default => :spec
 
-Spec::Rake::SpecTask.new
+task :bundle_install do
+  puts `bundle install`
+end
+
+desc "Build gem and publish to gem server"
+task :build_and_publish => %w(bundle_install spec) do
+  if `gem build stylr.gemspec` =~ /File: (stylr-[0-9.]+\.gem)$/mi
+    # TODO git tagging? [thomas, 2010-07-20]
+    puts `gem push_to_blau #{$1}`
+  end
+end
 
 begin
   require "hanna/rdoctask"

@@ -1,0 +1,35 @@
+--- 
+dependencies: 
+  blau-gem-pusher: 
+    group: 
+    - :development
+    version: ">= 0"
+  rspec: 
+    group: 
+    - :development
+    version: ">= 2.0.0.beta.17"
+  i18n: 
+    group: 
+    - :default
+    version: ">= 0"
+specs: 
+- blau-gem-pusher: 
+    version: 0.1.0
+- diff-lcs: 
+    version: 1.1.2
+- i18n: 
+    version: 0.4.1
+- rspec-core: 
+    version: 2.0.0.beta.19
+- rspec-expectations: 
+    version: 2.0.0.beta.19
+- rspec-mocks: 
+    version: 2.0.0.beta.19
+- rspec: 
+    version: 2.0.0.beta.19
+hash: d164006d7441f4a78f19fa35ce6f6c77fcf99207
+sources: 
+- Rubygems: 
+    uri: http://gems.blau.de
+- Rubygems: 
+    uri: http://rubygems.org
