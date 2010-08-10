@@ -62,4 +62,12 @@ describe Snippr do
     end
   end
 
+  it "should add a method missing_snippr? that returns false for snipprs that were found" do
+    Snippr.load(:home).missing_snippr?.should == false
+  end
+
+  it "should add a method missing_snippr? that returns true for snipprs that weren't found" do
+    Snippr.load(:doesnotexist).missing_snippr?.should == true
+  end
+
 end

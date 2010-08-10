@@ -30,7 +30,11 @@ module Snippr
     def load(*args)
       @dynamics = args.last.kind_of?(Hash) ? args.pop : {}
       @name = name_from args
-      SnipprComments % [@name, content, @name]
+      snippr = content
+      missing = snippr == MissingSnipprTag
+      snippr = SnipprComments % [@name, snippr, @name]
+      snippr.instance_eval %(def missing_snippr?; #{missing}; end)
+      snippr
     end
 
   private
