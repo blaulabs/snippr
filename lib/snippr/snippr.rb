@@ -32,7 +32,7 @@ module Snippr
       @name = name_from args
       snippr = content
       missing = snippr == MissingSnipprTag
-      snippr = SnipprComments % [@name, snippr, @name]
+      snippr = missing ? snippr % @name : SnipprComments % [@name, snippr, @name]
       snippr.instance_eval %(def missing_snippr?; #{missing}; end)
       snippr
     end

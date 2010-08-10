@@ -8,17 +8,25 @@ dependencies:
     group: 
     - :development
     version: ">= 2.0.0.beta.17"
+  mocha: 
+    group: 
+    - :development
+    version: = 0.9.8
   i18n: 
     group: 
     - :default
     version: ">= 0"
 specs: 
+- rake: 
+    version: 0.8.7
 - blau-gem-pusher: 
     version: 0.1.0
 - diff-lcs: 
     version: 1.1.2
 - i18n: 
     version: 0.4.1
+- mocha: 
+    version: 0.9.8
 - rspec-core: 
     version: 2.0.0.beta.19
 - rspec-expectations: 
