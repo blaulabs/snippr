@@ -41,7 +41,7 @@ describe Snippr do
   end
 
   it "should return a fallback wrapped in descriptive comments for missing snipprs" do
-    Snippr.load(:doesnotexist).should load_snippr_with_content('doesnotexist', '<samp class="missing snippr" />')
+    Snippr.load(:doesnotexist).should == '<!-- missing snippr: doesnotexist -->'
   end
   
   it "should convert wiki links to html links" do

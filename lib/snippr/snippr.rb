@@ -22,7 +22,7 @@ module Snippr
     SnipprComments = "<!-- starting snippr: %s -->\n%s\n<!-- closing snippr: %s -->"
 
     # The fallback tag for a missing snippr.
-    MissingSnipprTag = '<samp class="missing snippr" />'
+    MissingSnipprTag = "<!-- missing snippr: %s -->"
 
 
     # Expects the name of a snippr file. Also accepts a Hash of placeholders
