@@ -10,8 +10,8 @@ module Snippr
   module Helper
 
     # Returns a snippr specified via +args+.
-    def snippr(*args, &block)
-      snippr = Snippr.load *args, &block
+    def snippr(*args)
+      snippr = Snippr.load *args
       snippr.respond_to?(:html_safe) ? snippr.html_safe : snippr
     end
 
