@@ -6,6 +6,9 @@
 #   %h1 Topup successful
 #   .topup.info
 #     = snippr :topup, :success
+#   %h1 Conditional output
+#   - snippr :topup, :conditional_snippr do |snip|
+#     #cond= snip
 module Snippr
   module Helper
 
