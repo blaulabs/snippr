@@ -23,5 +23,10 @@ gemspec_path = File.expand_path('snippr.gemspec', project_dir)
 gemspec = eval(File.read(gemspec_path))
 gemspec.dependencies.each do |dep|
   group = dep.type == :development ? :development : :default
-  gem dep.name, dep.requirement, :group => group
+  name = dep.name
+  if dep.name == 'activesupport'
+    gem dep.name, dep.requirement, :group => group, :require => 'active_support'
+  else
+    gem dep.name, dep.requirement, :group => group
+  end
 end

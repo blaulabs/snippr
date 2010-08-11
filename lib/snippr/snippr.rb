@@ -1,4 +1,3 @@
-require "snippr/core_ext"
 require "snippr/path"
 require "snippr/i18n"
 require "snippr/link"
@@ -41,7 +40,7 @@ module Snippr
 
     # Returns the name of a snippr from a given Array of +args+.
     def snippr_name(args)
-      args.map { |arg| arg.kind_of?(Symbol) ? arg.to_s.lower_camelcase : arg }.join("/") + locale
+      args.map { |arg| arg.kind_of?(Symbol) ? arg.to_s.camelize(:lower) : arg }.join("/")
     end
 
     # Returns the raw snippr content or a +MissingSnipprTag+ in case the snippr

@@ -18,12 +18,7 @@ describe Snippr::Helper do
         @string.stubs(:missing_snippr?).returns(false)
       end
 
-      it "should work when html_safe is not available" do
-        @string.should_not respond_to(:html_safe)
-        @helper.snippr('home').should == @string
-      end
-
-      it "should call html_safe when it is available" do
+      it "should call html_safe" do
         @string.expects(:html_safe).returns('html_safe_snippr')
         @helper.snippr('home').should == 'html_safe_snippr'
       end
@@ -45,12 +40,7 @@ describe Snippr::Helper do
         @string.stubs(:missing_snippr?).returns(false)
       end
 
-      it "should work when html_safe is not available" do
-        @string.should_not respond_to(:html_safe)
-        @helper.snippr('home').should == @string
-      end
-
-      it "should call html_safe when it is available" do
+      it "should call html_safe" do
         @string.expects(:html_safe).returns('html_safe_snippr')
         @helper.snippr('home').should == 'html_safe_snippr'
       end
@@ -72,12 +62,7 @@ describe Snippr::Helper do
         @string.stubs(:missing_snippr?).returns(true)
       end
 
-      it "should work when html_safe is not available" do
-        @string.should_not respond_to(:html_safe)
-        @helper.snippr('home').should == @string
-      end
-
-      it "should call html_safe when it is available" do
+      it "should call html_safe" do
         @string.expects(:html_safe).returns('html_safe_snippr')
         @helper.snippr('home').should == 'html_safe_snippr'
       end

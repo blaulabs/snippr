@@ -16,9 +16,17 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  activesupport: 
+    group: 
+    - :default
+    version: ">= 0"
+    require: 
+    - active_support
 specs: 
 - rake: 
     version: 0.8.7
+- activesupport: 
+    version: 2.3.8
 - blau-gem-pusher: 
     version: 0.1.0
 - diff-lcs: 
@@ -35,7 +43,7 @@ specs:
     version: 2.0.0.beta.19
 - rspec: 
     version: 2.0.0.beta.19
-hash: d164006d7441f4a78f19fa35ce6f6c77fcf99207
+hash: 74ce987fa3be42c767553b0e426fd4dbbba591ca
 sources: 
 - Rubygems: 
     uri: http://gems.blau.de
