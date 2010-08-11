@@ -28,11 +28,11 @@ module Snippr
     # Expects the name of a snippr file. Also accepts a Hash of placeholders
     # to be replaced with dynamic values.
     def load(*args)
-      @dynamics = args.last.kind_of?(Hash) ? args.pop : {}
-      @name = name_from args
-      snippr = content
+      dynamics = args.last.kind_of?(Hash) ? args.pop : {}
+      name = snippr_name args
+      snippr = snippr_content name, dynamics
       missing = snippr == MissingSnipprTag
-      snippr = missing ? snippr % @name : SnipprComments % [@name, snippr, @name]
+      snippr = missing ? snippr % name : SnipprComments % [name, snippr, name]
       snippr.instance_eval %(def missing_snippr?; #{missing}; end)
       snippr
     end
@@ -40,28 +40,24 @@ module Snippr
   private
 
     # Returns the name of a snippr from a given Array of +args+.
-    def name_from(args)
+    def snippr_name(args)
       args.map { |arg| arg.kind_of?(Symbol) ? arg.to_s.lower_camelcase : arg }.join("/") + locale
     end
 
     # Returns the raw snippr content or a +MissingSnipprTag+ in case the snippr
     # file does not seem to exist.
-    def content
+    def snippr_content(name, dynamics)
+      file = snippr_path(name)
       return MissingSnipprTag unless File.exist? file
       
       content = File.read(file).strip
-      insert_dynamics content
+      dynamics.each { |placeholder, value| content.gsub! "{#{placeholder}}", value.to_s }
       linkify content
     end
 
     # Returns the complete path to a snippr file.
-    def file
-      File.join path, [@name, FileExtension].join
-    end
-
-    # Replaces placeholders found in a given snippr +content+ with dynamic values.
-    def insert_dynamics(content)
-      @dynamics.each { |placeholder, value| content.gsub! "{#{placeholder}}", value.to_s }
+    def snippr_path(name)
+      File.join path, "#{name}#{FileExtension}"
     end
 
   end
