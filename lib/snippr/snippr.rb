@@ -28,12 +28,20 @@ module Snippr
     # to be replaced with dynamic values.
     def load(*args)
       dynamics = args.last.kind_of?(Hash) ? args.pop : {}
-      name = snippr_name args
+      name = snippr_name(args) + locale
       snippr = snippr_content name, dynamics
       missing = snippr == MissingSnipprTag
       snippr = missing ? snippr % name : SnipprComments % [name, snippr, name]
       snippr.instance_eval %(def missing_snippr?; #{missing}; end)
       snippr
+    end
+
+    # Expects the name of a snippr directory.
+    def list(*args)
+      dir = snippr_path snippr_name args
+      Dir["#{dir}/*#{locale}.snip"].map do |snip|
+        snip.gsub(/^.*\/([^\.]+)?\.snip$/, '\1').gsub(/_.*$/, '').underscore.to_sym
+      end
     end
 
   private
@@ -46,7 +54,7 @@ module Snippr
     # Returns the raw snippr content or a +MissingSnipprTag+ in case the snippr
     # file does not seem to exist.
     def snippr_content(name, dynamics)
-      file = snippr_path(name)
+      file = snippr_path name, FileExtension
       return MissingSnipprTag unless File.exist? file
       
       content = File.read(file).strip
@@ -55,8 +63,8 @@ module Snippr
     end
 
     # Returns the complete path to a snippr file.
-    def snippr_path(name)
-      File.join path, "#{name}#{FileExtension}"
+    def snippr_path(name, ext = nil)
+      File.join path, "#{name}#{ext}"
     end
 
   end

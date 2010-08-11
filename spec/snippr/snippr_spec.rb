@@ -81,4 +81,42 @@ describe Snippr do
 
   end
 
+  describe "list" do
+
+    context "without I18n" do
+
+      before { Snippr.i18n = false }
+
+      it "should return a list of all snippr names" do
+        Snippr.list(:topup).should == [:some_error, :success]
+      end
+
+      it "should return an empty array for non existant dirs" do
+        Snippr.list(:doesnotexist).should == []
+      end
+
+    end
+
+    context "with I18n" do
+
+      before { Snippr.i18n = true }
+
+      it "should return a list of all snippr names of the current locale (de)" do
+        I18n.locale = :de
+        Snippr.list(:i18n).should == [:list, :shop]
+      end
+
+      it "should return a list of all snippr names of the current locale (en)" do
+        I18n.locale = :en
+        Snippr.list(:i18n).should == [:shop]
+      end
+
+      it "should return an empty array for non existant dirs" do
+        Snippr.list(:doesnotexist).should == []
+      end
+
+    end
+
+  end
+
 end
