@@ -21,6 +21,10 @@ describe Snippr do
         Snippr.load(:home).should load_snippr('home.snip')
       end
 
+      it "should return the content of an empty snippr" do
+        Snippr.load(:empty).should load_snippr('empty.snip')
+      end
+
       it "should return the content a snippr from a subfolder" do
         Snippr.load("tariff/einheit").should load_snippr('tariff/einheit.snip')
       end
@@ -59,6 +63,18 @@ describe Snippr do
 
       it "should add a method missing_snippr? that returns true for snipprs that weren't found" do
         Snippr.load(:doesnotexist).missing_snippr?.should == true
+      end
+
+      it "should add a method empty_snippr? that returns false for snipprs that have content" do
+        Snippr.load(:home).empty_snippr?.should == false
+      end
+
+      it "should add a method empty_snippr? that returns true for snipprs that have no content" do
+        Snippr.load(:empty).empty_snippr?.should == true
+      end
+
+      it "should add a method empty_snippr? that returns true for snipprs that weren't found" do
+        Snippr.load(:doesnotexist).empty_snippr?.should == true
       end
 
     end

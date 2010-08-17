@@ -17,7 +17,7 @@ def define_snippr_matcher(name)
 end
 
 define_snippr_matcher :load_snippr do |path|
-  IO.read path rescue nil
+  IO.read(path).strip rescue nil
 end
 define_snippr_matcher :load_snippr_with_content do |path, content|
   content

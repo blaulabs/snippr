@@ -21,18 +21,24 @@ module Snippr
     SnipprComments = "<!-- starting snippr: %s -->\n%s\n<!-- closing snippr: %s -->"
 
     # The fallback tag for a missing snippr.
-    MissingSnipprTag = "<!-- missing snippr: %s -->"
+    MissingSnipprComment = "<!-- missing snippr: %s -->"
 
 
     # Expects the name of a snippr file. Also accepts a Hash of placeholders
     # to be replaced with dynamic values.
     def load(*args)
       dynamics = args.last.kind_of?(Hash) ? args.pop : {}
+      # load snippr
       name = snippr_name(args) + locale
-      snippr = snippr_content name, dynamics
-      missing = snippr == MissingSnipprTag
+      snippr = snippr_content(name, dynamics).strip
+      # determine whether the content is missing or empty
+      missing = snippr == MissingSnipprComment
+      empty = missing || snippr.empty?
+      # fill comments with name
       snippr = missing ? snippr % name : SnipprComments % [name, snippr, name]
+      # add dynamically generated methods and return
       snippr.instance_eval %(def missing_snippr?; #{missing}; end)
+      snippr.instance_eval %(def empty_snippr?; #{empty}; end)
       snippr
     end
 
@@ -51,11 +57,11 @@ module Snippr
       args.map { |arg| arg.kind_of?(Symbol) ? arg.to_s.camelize(:lower) : arg }.join("/")
     end
 
-    # Returns the raw snippr content or a +MissingSnipprTag+ in case the snippr
+    # Returns the raw snippr content or a +MissingSnipprComment+ in case the snippr
     # file does not seem to exist.
     def snippr_content(name, dynamics)
       file = snippr_path name, FileExtension
-      return MissingSnipprTag unless File.exist? file
+      return MissingSnipprComment unless File.exist? file
       
       content = File.read(file).strip
       dynamics.each { |placeholder, value| content.gsub! "{#{placeholder}}", value.to_s }

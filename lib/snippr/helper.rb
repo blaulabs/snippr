@@ -15,10 +15,17 @@ module Snippr
     # Returns a snippr specified via +args+.
     def snippr(*args)
       snippr = Snippr.load *args
-      pass_to_block = block_given? && !snippr.missing_snippr? && !snippr.strip.empty?
-      snippr = snippr.html_safe if snippr.respond_to?(:html_safe)
-      snippr = yield snippr if pass_to_block
-      snippr
+      html_safe = snippr.html_safe
+      if block_given?
+        if snippr.missing_snippr? || snippr.empty_snippr?
+          concat html_safe
+        elsif !snippr.strip.empty?
+          yield html_safe
+        end
+        0
+      else
+        html_safe
+      end
     end
 
   end
