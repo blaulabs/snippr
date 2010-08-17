@@ -10,7 +10,7 @@ task :bundle_install do
 end
 
 desc "Tag gem"
-task :tag do
+task :tag  => %w(bundle_install spec) do
   project_dir = File.expand_path('..', __FILE__)
   gemspec_path = File.expand_path('snippr.gemspec', project_dir)
   gemspec = eval(File.read(gemspec_path))
