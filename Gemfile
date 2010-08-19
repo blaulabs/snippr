@@ -10,8 +10,6 @@
 #
 #############################################################################
 
-source "http://rubygems.org"
-
 project_dir = File.expand_path('..', __FILE__)
 gemspec_path = File.expand_path('snippr.gemspec', project_dir)
 
