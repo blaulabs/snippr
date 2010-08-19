@@ -1,5 +1,4 @@
 GEM
-  remote: http://gems.blau.de/
   remote: http://rubygems.org/
   specs:
     activesupport (2.3.8)
@@ -24,4 +23,4 @@ DEPENDENCIES
   activesupport
   i18n
   mocha (= 0.9.8)
-  rspec (>= 2.0.0.beta.17)
+  rspec (>= 2.0.0.beta.19)
