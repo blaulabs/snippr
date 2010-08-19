@@ -1,51 +1,27 @@
---- 
-dependencies: 
-  blau-gem-pusher: 
-    group: 
-    - :development
-    version: ">= 0"
-  rspec: 
-    group: 
-    - :development
-    version: ">= 2.0.0.beta.17"
-  mocha: 
-    group: 
-    - :development
-    version: = 0.9.8
-  i18n: 
-    group: 
-    - :default
-    version: ">= 0"
-  activesupport: 
-    group: 
-    - :default
-    version: ">= 0"
-    require: 
-    - active_support
-specs: 
-- rake: 
-    version: 0.8.7
-- activesupport: 
-    version: 2.3.8
-- blau-gem-pusher: 
-    version: 0.1.0
-- diff-lcs: 
-    version: 1.1.2
-- i18n: 
-    version: 0.4.1
-- mocha: 
-    version: 0.9.8
-- rspec-core: 
-    version: 2.0.0.beta.19
-- rspec-expectations: 
-    version: 2.0.0.beta.19
-- rspec-mocks: 
-    version: 2.0.0.beta.19
-- rspec: 
-    version: 2.0.0.beta.19
-hash: 74ce987fa3be42c767553b0e426fd4dbbba591ca
-sources: 
-- Rubygems: 
-    uri: http://gems.blau.de
-- Rubygems: 
-    uri: http://rubygems.org
+GEM
+  remote: http://gems.blau.de/
+  remote: http://rubygems.org/
+  specs:
+    activesupport (2.3.8)
+    diff-lcs (1.1.2)
+    i18n (0.4.1)
+    mocha (0.9.8)
+      rake
+    rake (0.8.7)
+    rspec (2.0.0.beta.19)
+      rspec-core (= 2.0.0.beta.19)
+      rspec-expectations (= 2.0.0.beta.19)
+      rspec-mocks (= 2.0.0.beta.19)
+    rspec-core (2.0.0.beta.19)
+    rspec-expectations (2.0.0.beta.19)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.19)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  i18n
+  mocha (= 0.9.8)
+  rspec (>= 2.0.0.beta.17)

@@ -2,7 +2,7 @@ require "date"
 
 Gem::Specification.new do |s|
   s.name = "snippr"
-  s.version = "0.3.5"
+  s.version = "0.3.6"
   s.date = Date.today.to_s
 
   s.authors = "Daniel Harrington"
@@ -21,5 +21,4 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport"
   s.add_development_dependency "rspec", ">=2.0.0.beta.17"
   s.add_development_dependency "mocha", "0.9.8"
-  s.add_development_dependency "blau-gem-pusher"
 end
