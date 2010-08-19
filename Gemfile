@@ -10,14 +10,13 @@
 #
 #############################################################################
 
-project_dir = File.expand_path('..', __FILE__)
-gemspec_path = File.expand_path('snippr.gemspec', project_dir)
+gemspec_path = Dir[File.expand_path('../*.gemspec', __FILE__)].first
+gemspec = eval(File.read(gemspec_path))
 
 #
 # Setup gemspec dependencies
 #
 
-gemspec = eval(File.read(gemspec_path))
 gemspec.dependencies.each do |dep|
   group = dep.type == :development ? :development : :default
   name = dep.name
