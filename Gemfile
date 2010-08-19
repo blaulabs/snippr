@@ -10,7 +10,6 @@
 #
 #############################################################################
 
-source "http://gems.blau.de"
 source "http://rubygems.org"
 
 project_dir = File.expand_path('..', __FILE__)
