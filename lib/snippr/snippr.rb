@@ -46,8 +46,8 @@ module Snippr
     def list(*args)
       dir = snippr_path snippr_name args
       Dir["#{dir}/*#{locale}.snip"].map do |snip|
-        snip.gsub(/^.*\/([^\.]+)?\.snip$/, '\1').gsub(/_.*$/, '').underscore.to_sym
-      end
+        snip.gsub(/^.*\/([^\.]+)?\.snip$/, '\1').gsub(/_.*$/, '').underscore
+      end.sort.map(&:to_sym)
     end
 
   private
