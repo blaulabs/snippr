@@ -1,9 +1,12 @@
 require "date"
+require "bundler"
 
 Gem::Specification.new do |s|
+  now = Time.now
+
   s.name = "snippr"
-  s.version = "0.3.6"
-  s.date = Date.today.to_s
+  s.version = "0.4.#{now.strftime('%Y%m%d%H%M%S')}"
+  s.date = now
 
   s.authors = "Daniel Harrington"
   s.email = "me@rubiii.com"
@@ -17,8 +20,11 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8", "--line-numbers", "--inline-source"]
   s.rdoc_options += ["--title", "Snippr - File based content management"]
 
-  s.add_dependency "i18n"
-  s.add_dependency "activesupport"
-  s.add_development_dependency "rspec", ">=2.0.0.beta.19"
-  s.add_development_dependency "mocha", "0.9.8"
+  Bundler::Definition.build('Gemfile', 'Gemfile.lock', false).dependencies.each do |dep|
+    if dep.groups.any? {|group| [:default, :production].include? group}
+      s.add_runtime_dependency dep.name, *dep.requirements_list
+    else
+      s.add_development_dependency dep.name, *dep.requirements_list
+    end
+  end
 end
