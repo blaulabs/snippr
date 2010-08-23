@@ -20,6 +20,7 @@ module Snippr
   private
 
     if RUBY_PLATFORM =~ /java/
+      require 'java'
       module JavaLang
         include_package "java.lang"
       end
