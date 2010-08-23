@@ -5,11 +5,6 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new :spec
 task :default => :spec
 
-desc 'Test, tag, build and push'
-task :publish => :spec do
-  system 'blau gem:tag && blau gem:push'
-end
-
 begin
   require "hanna/rdoctask"
 
