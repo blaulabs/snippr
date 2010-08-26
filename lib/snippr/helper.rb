@@ -14,17 +14,17 @@ module Snippr
 
     # Returns a snippr specified via +args+.
     def snippr(*args)
-      snippr = Snippr.load *args
-      html_safe = snippr.html_safe
+      snip = Snip.new *args
+      content = snip.content.html_safe
       if block_given?
-        if snippr.missing_snippr? || snippr.empty_snippr?
-          concat html_safe
-        elsif !snippr.strip.empty?
-          yield html_safe
+        if snip.missing? || snip.blank?
+          concat content
+        elsif !content.strip.blank?
+          yield content
         end
         0
       else
-        html_safe
+        content
       end
     end
 

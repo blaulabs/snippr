@@ -1,138 +1,42 @@
 require "spec_helper"
 
+# HACK for testing of rails specific stuff
+module ActionController; class Base; end; end
+
 describe Snippr do
-  before :all do
-    snippr_path = File.join File.dirname(__FILE__), "..", "fixtures"
 
-    if RUBY_PLATFORM =~ /java/
-      Snippr::Path::JavaLang::System.set_property Snippr::Path::JVMProperty, snippr_path
-    else
-      Snippr.path = snippr_path
-    end
+  it "should delegate path= to Snippr::Path.path=" do
+    Snippr::Path.should respond_to(:path=)
+    Snippr::Path.expects(:path=).with('path')
+    Snippr.path = 'path'
   end
 
-  describe "load" do
-
-    context "without I18n" do
-
-      before { Snippr.i18n = false }
-
-      it "should return the content of a snippr" do
-        Snippr.load(:home).should load_snippr('home.snip')
-      end
-
-      it "should return the content of an empty snippr" do
-        Snippr.load(:empty).should load_snippr('empty.snip')
-      end
-
-      it "should return the content a snippr from a subfolder" do
-        Snippr.load("tariff/einheit").should load_snippr('tariff/einheit.snip')
-      end
-
-      it "should return the content a snippr from a subfolder specified via multiple arguments" do
-        Snippr.load(:tariff, :einheit).should load_snippr('tariff/einheit.snip')
-      end
-
-      it "should convert snake_case Symbols to lowerCamelCase Strings" do
-        Snippr.load(:topup, :some_error).should load_snippr('topup/someError.snip')
-      end
-
-      it "should wrap the snippr in descriptive comments" do
-        Snippr.load(:home).should load_snippr('home.snip')
-      end
-
-      it "should replace placeholders with dynamic values" do
-        today = Date.today
-        Snippr.load(:topup, :success, {
-                      :topup_amount => "15,00 &euro;",
-                      :date_today   => today
-        }).should load_snippr_with_content('topup/success.snip', "<p>You're topup of 15,00 &euro; at #{today} was successful.</p>")
-      end
-
-      it "should return a fallback wrapped in descriptive comments for missing snipprs" do
-        Snippr.load(:doesnotexist).should == '<!-- missing snippr: doesnotexist -->'
-      end
-
-      it "should convert wiki links to html links" do
-        Snippr.load(:wiki).should load_snippr_with_content('wiki.snip', '<p>Click <a href="http://www.blaulabs.de">here with blanks</a>.</p>')
-      end
-
-      it "should add a method missing_snippr? that returns false for snipprs that were found" do
-        Snippr.load(:home).missing_snippr?.should == false
-      end
-
-      it "should add a method missing_snippr? that returns true for snipprs that weren't found" do
-        Snippr.load(:doesnotexist).missing_snippr?.should == true
-      end
-
-      it "should add a method empty_snippr? that returns false for snipprs that have content" do
-        Snippr.load(:home).empty_snippr?.should == false
-      end
-
-      it "should add a method empty_snippr? that returns true for snipprs that have no content" do
-        Snippr.load(:empty).empty_snippr?.should == true
-      end
-
-      it "should add a method empty_snippr? that returns true for snipprs that weren't found" do
-        Snippr.load(:doesnotexist).empty_snippr?.should == true
-      end
-
-    end
-
-    context "with I18n" do
-
-      before { Snippr.i18n = true }
-
-      it "should prepend the current locale prefixed with a '_' to a snippr file" do
-        I18n.locale = :de
-        Snippr.load(:i18n, :shop).should load_snippr('i18n/shop_de.snip')
-      end
-
-      it "should also work for other locales" do
-        I18n.locale = :en
-        Snippr.load(:i18n, :shop).should load_snippr('i18n/shop_en.snip')
-      end
-
-    end
-
+  it "should delegate path to Snippr::Path.path" do
+    Snippr::Path.should respond_to(:path)
+    Snippr::Path.expects(:path).returns('path')
+    Snippr.path.should == 'path'
   end
 
-  describe "list" do
+  it "should delegate i18n= to Snippr::I18n.enabled=" do
+    Snippr::I18n.should respond_to(:enabled=)
+    Snippr::I18n.expects(:enabled=).with(true)
+    Snippr.i18n = true
+  end
 
-    context "without I18n" do
+  it "should delegate i18n? to Snippr::I18n.enabled?" do
+    Snippr::I18n.should respond_to(:enabled?)
+    Snippr::I18n.expects(:enabled?).returns(true)
+    Snippr.i18n?.should == true
+  end
 
-      before { Snippr.i18n = false }
+  it "should delegate load to Snippr::Snip.new" do
+    Snippr::Snip.expects(:new).with(:a, :b).returns('snip')
+    Snippr.load(:a, :b).should == 'snip'
+  end
 
-      it "should return a list of all snippr names" do
-        Snippr.list(:topup).should == [:some_error, :success]
-      end
-
-      it "should return an empty array for non existant dirs" do
-        Snippr.list(:doesnotexist).should == []
-      end
-
-    end
-
-    context "with I18n" do
-
-      before { Snippr.i18n = true }
-
-      it "should return a list of all snippr names of the current locale (de)" do
-        I18n.locale = :de
-        Snippr.list(:i18n).should == [:list, :shop]
-      end
-
-      it "should return a list of all snippr names of the current locale (en)" do
-        I18n.locale = :en
-        Snippr.list(:i18n).should == [:shop]
-      end
-
-      it "should return an empty array for non existant dirs" do
-        Snippr.list(:doesnotexist).should == []
-      end
-
-    end
-
+  it "should delegate list to Snippr::Path.list" do
+    Snippr::Path.expects(:list).with(:c, :d).returns([:snip])
+    Snippr.list(:c, :d).should == [:snip]
   end
 
 end

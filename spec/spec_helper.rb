@@ -4,7 +4,16 @@ Bundler.require(:default, :development)
 
 Rspec.configure do |config|
   config.mock_with :mocha
+  config.before do
+    Snippr::I18n.enabled = nil
+    snippr_path = File.expand_path '../fixtures', __FILE__
+    if RUBY_PLATFORM =~ /java/
+      Snippr::Path.path = nil
+      Snippr::Path::JavaLang::System.set_property Snippr::Path::JVM_PROPERTY, snippr_path
+    else
+      Snippr::Path.path = snippr_path
+    end
+  end
 end
 
-Dir[File.expand_path "../support/**/*.rb", __FILE__].each {|f| require f}
-require "snippr"
+require 'snippr'
