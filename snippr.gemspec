@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   now = Time.now
 
   s.name = "snippr"
-  s.version = "0.4.#{now.strftime('%Y%m%d%H%M%S')}"
+  s.version = "0.5.#{now.strftime('%Y%m%d%H%M%S')}"
   s.date = now
 
   s.authors = "Daniel Harrington"
