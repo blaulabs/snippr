@@ -1,4 +1,4 @@
-# = Snippr::Helper
+# = Snippr::ViewHelper
 #
 # This module is automatically included into +ActionView::Base+ when using the Snippr
 # component with Rails. It provides a +snippr+ helper method for loading snippr files.
@@ -10,7 +10,7 @@
 #   - snippr :topup, :conditional_snippr do |snip|
 #     #cond= snip
 module Snippr
-  module Helper
+  module ViewHelper
 
     # Returns a snippr specified via +args+.
     def snippr(*args)
@@ -32,5 +32,5 @@ module Snippr
 end
 
 if defined? ActionView::Base
-  ActionView::Base.send :include, Snippr::Helper
+  ActionView::Base.send :include, Snippr::ViewHelper
 end

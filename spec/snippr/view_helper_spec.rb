@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Snippr::Helper do
+describe Snippr::ViewHelper do
 
-  include Snippr::Helper
+  include Snippr::ViewHelper
 
   describe "snippr" do
 
