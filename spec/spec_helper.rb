@@ -8,7 +8,7 @@ Rspec.configure do |config|
     Snippr::I18n.enabled = nil
     snippr_path = File.expand_path '../fixtures', __FILE__
     if RUBY_PLATFORM =~ /java/
-      Snippr::Path.path = nil
+      Snippr::Path.path = snippr_path
       Snippr::Path::JavaLang::System.set_property Snippr::Path::JVM_PROPERTY, snippr_path
     else
       Snippr::Path.path = snippr_path
