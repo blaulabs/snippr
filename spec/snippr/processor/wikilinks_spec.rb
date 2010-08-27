@@ -2,28 +2,16 @@ require "spec_helper"
 
 describe Snippr::Processor::Wikilinks do
 
-  before do
-    @processor = Snippr::Processor::Wikilinks.new
+  it "should include Snippr::LinkHelper" do
+    Snippr::Processor::Wikilinks.included_modules.should include(Snippr::LinkHelper)
   end
 
-  it "should convert http wiki links to an anchor with the link" do
-    @processor.process('click [[http://www.blaulabs.de|here with blanks]]').should == 'click <a href="http://www.blaulabs.de">here with blanks</a>'
-  end
-
-  it "should convert https wiki links to an anchor with the link" do
-    @processor.process('click [[https://www.blaulabs.de|here with blanks]]').should == 'click <a href="https://www.blaulabs.de">here with blanks</a>'
-  end
-
-  it "should convert mailto wiki links to an anchor with the link" do
-    @processor.process('click [[mailto:info@example.com|here with blanks]]').should == 'click <a href="mailto:info@example.com">here with blanks</a>'
-  end
-
-  it "should convert relative wiki links to an anchor with the absolute link" do
-    @processor.process('click [[relative.html|here with blanks]]').should == 'click <a href="/relative.html">here with blanks</a>'
-  end
-
-  it "should convert server absolute wiki links to an anchor with the absolute link" do
-    @processor.process('click [[/absolute.html|here with blanks]]').should == 'click <a href="/absolute.html">here with blanks</a>'
+  it "should call enhance_link with the links found and return the results" do
+    processor = Snippr::Processor::Wikilinks.new
+    seq = sequence 'wikilinks'
+    processor.expects(:enhance_link).with('<a href="http://www.blaulabs.de">here</a>').in_sequence(seq).returns('--here--')
+    processor.expects(:enhance_link).with('<a href="internal.html">or here</a>').in_sequence(seq).returns('--or here--')
+    processor.process('click [[http://www.blaulabs.de|here]] [[internal.html|or here]]').should == 'click --here-- --or here--'
   end
 
 end

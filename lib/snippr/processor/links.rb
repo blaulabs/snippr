@@ -2,13 +2,13 @@ module Snippr
 
   module Processor
 
-    class Wikilinks
+    class Links
 
       include LinkHelper
 
       def process(content, opts = {})
-        content.gsub /\[\[([^|]+)\|([^\]]+)\]\]/ do |match|
-          enhance_link "<a href=\"#{$1}\">#{$2}</a>"
+        content.gsub /<a [^>]+>[^<]*<\/a>/i do |match|
+          enhance_link match
         end
       end
 
