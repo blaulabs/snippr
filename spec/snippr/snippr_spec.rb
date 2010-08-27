@@ -1,8 +1,5 @@
 require "spec_helper"
 
-# HACK for testing of rails specific stuff
-module ActionController; class Base; end; end
-
 describe Snippr do
 
   it "should delegate path= to Snippr::Path.path=" do
