@@ -15,7 +15,7 @@ module Snippr
         # replace an existing onclick (if present)
         link_with_onclick = link.gsub /onclick *= *['"][^'"]*['"]/i, onclick
         # add a new onclick (when there was no existing onclick)
-        link_with_onclick = link.gsub(/(^[^>]+)>/, "\\1 #{onclick}>") if link_with_onclick == link
+        link_with_onclick = link.gsub /(^[^>]+)>/, "\\1 #{onclick}>" if link_with_onclick == link
         link = link_with_onclick
       else
         url = enhance_url url
