@@ -4,11 +4,9 @@ module Snippr
 
     class Links
 
-      include LinkHelper
-
       def process(content, opts = {})
         content.gsub /<a [^>]+>[^<]*<\/a>/i do |match|
-          enhance_link match
+          Snippr::Links.adjust_link match
         end
       end
 

@@ -4,11 +4,9 @@ module Snippr
 
     class Wikilinks
 
-      include LinkHelper
-
       def process(content, opts = {})
         content.gsub /\[\[([^|]+)\|([^\]]+)\]\]/ do |match|
-          enhance_link "<a href=\"#{$1}\">#{$2}</a>"
+          Snippr::Links.adjust_link "<a href=\"#{$1}\">#{$2}</a>"
         end
       end
 

@@ -1,16 +1,16 @@
 # = Snippr::LinkHelper
 #
-# This module can be included to get functionality to enhance links.
+# This module can be included to get functionality to adjust links.
 module Snippr
-  module LinkHelper
+  module Links
 
     HREF_REGEX = /(href *= *['"])([^'"]*)(['"])/i
 
-    def enhance_link(link)
+    def self.adjust_link(link)
       return link if link !~ HREF_REGEX
       url = $2
       if url =~ /popup:\/*(.*)$/i
-        url = enhance_url $1
+        url = adjust_url $1
         onclick = "onclick=\"if (typeof popup == 'undefined') { return true; } else { popup('#{url}'); return false; }\""
         # replace an existing onclick (if present)
         link_with_onclick = link.gsub /onclick *= *['"][^'"]*['"]/i, onclick
@@ -18,16 +18,16 @@ module Snippr
         link_with_onclick = link.gsub /(^[^>]+)>/, "\\1 #{onclick}>" if link_with_onclick == link
         link = link_with_onclick
       else
-        url = enhance_url url
+        url = adjust_url url
       end
       link.gsub HREF_REGEX, "\\1#{url}\\3"
     end
 
-    def enhance_url(url)
+    def self.adjust_url(url)
       url =~ /^[a-z]+:/i ? url : url.gsub(/^\/?/, relative_url_root)
     end
 
-    def relative_url_root
+    def self.relative_url_root
       if defined? ActionController::Base
         root = ActionController::Base.config.relative_url_root || '/'
         root = "/#{root}" unless root.start_with?('/')
