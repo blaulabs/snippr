@@ -22,7 +22,7 @@ module Snippr
       url = $2
       if url =~ /popup:\/*(.*)$/i
         url = adjust_url $1
-        onclick = "onclick=\"if (typeof popup == 'undefined') { return true; } else { popup('#{url}'); return false; }\""
+        onclick = "onclick=\"if (typeof popup == 'undefined') { return true; } else { popup(this); return false; }\""
         # replace an existing onclick (if present)
         link_with_onclick = link.gsub /onclick *= *['"][^'"]*['"]/i, onclick
         # add a new onclick (when there was no existing onclick)

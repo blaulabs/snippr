@@ -29,12 +29,12 @@ describe Snippr::Links do
 
     it "should add an onclick when href starts with popup:" do
       Snippr::Links.expects(:adjust_url).with('popup_url').returns('adjustd_url')
-      Snippr::Links.adjust_link('<a href="popup:popup_url" class="link">test</a>').should == '<a href="adjustd_url" class="link" onclick="if (typeof popup == \'undefined\') { return true; } else { popup(\'adjustd_url\'); return false; }">test</a>'
+      Snippr::Links.adjust_link('<a href="popup:popup_url" class="link">test</a>').should == '<a href="adjustd_url" class="link" onclick="if (typeof popup == \'undefined\') { return true; } else { popup(this); return false; }">test</a>'
     end
 
     it "should replace an existing onclick when href starts with popup:" do
       Snippr::Links.expects(:adjust_url).with('url').returns('adjustd_url')
-      Snippr::Links.adjust_link('<a onclick="return true;" href="popup://url" class="link">test</a>').should == '<a onclick="if (typeof popup == \'undefined\') { return true; } else { popup(\'adjustd_url\'); return false; }" href="adjustd_url" class="link">test</a>'
+      Snippr::Links.adjust_link('<a onclick="return true;" href="popup://url" class="link">test</a>').should == '<a onclick="if (typeof popup == \'undefined\') { return true; } else { popup(this); return false; }" href="adjustd_url" class="link">test</a>'
     end
 
   end
