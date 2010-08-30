@@ -6,6 +6,17 @@ module Snippr
 
     HREF_REGEX = /(href *= *['"])([^'"]*)(['"])/i
 
+    # Returns the regular expressions used to determine which urls to exclude from adjustment.
+    def self.adjust_urls_except
+      @@adjust_urls_except ||= [/^[a-z]+:/i]
+    end
+
+    # Sets the regular expressions used to determine which urls to exclude from adjustment.
+    def self.adjust_urls_except=(adjust_urls_except)
+      @@adjust_urls_except = adjust_urls_except
+    end
+
+    # Adjusts a complete anchor tag, allowing the custom protocol popup: which will be converted to a javascript call to popup(this).
     def self.adjust_link(link)
       return link if link !~ HREF_REGEX
       url = $2
@@ -23,10 +34,15 @@ module Snippr
       link.gsub HREF_REGEX, "\\1#{url}\\3"
     end
 
+    # Adjusts an url, prepending / and relative url root (context path) as needed.
     def self.adjust_url(url)
-      url =~ /^[a-z]+:/i ? url : url.gsub(/^\/?/, relative_url_root)
+      adjust_urls_except.each do |regex|
+        return url if url =~ regex
+      end
+      url.gsub /^\/?/, relative_url_root
     end
 
+    # Returns the relative url root (context path) the application is deployed to.
     def self.relative_url_root
       if defined? ActionController::Base
         root = ActionController::Base.config.relative_url_root || '/'

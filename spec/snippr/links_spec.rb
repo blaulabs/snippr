@@ -2,6 +2,20 @@ require "spec_helper"
 
 describe Snippr::Links do
 
+  describe "adjust_urls_except" do
+
+    it "should default to [/^[a-z]+:/i]" do
+      Snippr::Links.adjust_urls_except = nil
+      Snippr::Links.adjust_urls_except.should == [/^[a-z]+:/i]
+    end
+
+    it "should store exceptions" do
+      Snippr::Links.adjust_urls_except = [/^cms.*/]
+      Snippr::Links.adjust_urls_except.should == [/^cms.*/]
+    end
+
+  end
+
   describe ".adjust_link" do
 
     it "should return an a without href unchanged" do
@@ -43,12 +57,21 @@ describe Snippr::Links do
       Snippr::Links.adjust_url('mailto:info@blau.de').should == 'mailto:info@blau.de'
     end
 
-    it "should convert relative links to absolute links" do
+    it "should convert relative links to server absolute links" do
       Snippr::Links.adjust_url('relative.html').should == '/root/relative.html'
     end
 
-    it "should leave server absolute links as is" do
+    it "should convert app absolute links to server absolute links" do
       Snippr::Links.adjust_url('/absolute.html').should == '/root/absolute.html'
+    end
+
+    it "should convert links excepted in next test to server absolute links" do
+      Snippr::Links.adjust_url('/cms/excepted.html').should == '/root/cms/excepted.html'
+    end
+
+    it "should leave excepted links as is" do
+      Snippr::Links.adjust_urls_except << /^\/cms\//
+      Snippr::Links.adjust_url('/cms/excepted.html').should == '/cms/excepted.html'
     end
 
   end

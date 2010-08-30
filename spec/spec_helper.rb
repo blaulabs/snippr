@@ -6,6 +6,7 @@ Rspec.configure do |config|
   config.mock_with :mocha
   config.before do
     Snippr::I18n.enabled = nil
+    Snippr::Links.adjust_urls_except = nil
     snippr_path = File.expand_path '../fixtures', __FILE__
     if RUBY_PLATFORM =~ /java/
       Snippr::Path.path = snippr_path
