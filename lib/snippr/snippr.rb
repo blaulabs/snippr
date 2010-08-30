@@ -25,6 +25,16 @@ module Snippr
     I18n.enabled = enabled
   end
 
+  # Returns the regular expressions used to determine which urls to exclude from adjustment.
+  def self.adjust_urls_except
+    Links.adjust_urls_except
+  end
+
+  # Sets the regular expressions used to determine which urls to exclude from adjustment.
+  def self.adjust_urls_except=(adjust_urls_except)
+    Links.adjust_urls_except = adjust_urls_except
+  end
+
   # Expects the name of a snippr file. Also accepts a Hash of placeholders
   # to be replaced with dynamic values.
   def self.load(*args)
