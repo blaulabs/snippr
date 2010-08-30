@@ -8,7 +8,7 @@ module Snippr
 
     # Returns the regular expressions used to determine which urls to exclude from adjustment.
     def self.adjust_urls_except
-      @@adjust_urls_except ||= [/^[a-z]+:/i]
+      @@adjust_urls_except ||= [/^#/, /^[a-z]+:/i]
     end
 
     # Sets the regular expressions used to determine which urls to exclude from adjustment.

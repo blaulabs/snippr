@@ -4,9 +4,9 @@ describe Snippr::Links do
 
   describe "adjust_urls_except" do
 
-    it "should default to [/^[a-z]+:/i]" do
+    it "should default to [/^#/, /^[a-z]+:/i]" do
       Snippr::Links.adjust_urls_except = nil
-      Snippr::Links.adjust_urls_except.should == [/^[a-z]+:/i]
+      Snippr::Links.adjust_urls_except.should == [/^#/, /^[a-z]+:/i]
     end
 
     it "should store exceptions" do
@@ -63,6 +63,10 @@ describe Snippr::Links do
 
     it "should convert app absolute links to server absolute links" do
       Snippr::Links.adjust_url('/absolute.html').should == '/root/absolute.html'
+    end
+
+    it "should leave internal links (#) as is" do
+      Snippr::Links.adjust_url('#aname').should == '#aname'
     end
 
     it "should convert links excepted in next test to server absolute links" do
