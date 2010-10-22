@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 Bundler.require(:default, :development)
 
-Rspec.configure do |config|
+RSpec.configure do |config|
   config.mock_with :mocha
   config.before do
     Snippr::I18n.enabled = nil
@@ -16,5 +16,3 @@ Rspec.configure do |config|
     end
   end
 end
-
-require 'snippr'
