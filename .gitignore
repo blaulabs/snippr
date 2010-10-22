@@ -8,3 +8,4 @@ coverage
 .project
 *~
 *.gem
+spec/reports

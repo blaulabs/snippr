@@ -1,9 +1,4 @@
-source :rubygems
+source "http://rubygems.org"
 
-gem "i18n"
-gem "activesupport", :require => "active_support"
-
-group :development do
-  gem "rspec", ">=2.0.0.beta.20"
-  gem "mocha", "0.9.8"
-end
+# Specify your gem's dependencies in snippr.gemspec
+gemspec

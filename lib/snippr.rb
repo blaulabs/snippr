@@ -1,3 +1,5 @@
+require 'active_support/core_ext'
+
 Dir[File.expand_path '../snippr/*.rb', __FILE__].each {|f| require f}
 Dir[File.expand_path '../snippr/processor/*.rb', __FILE__].each {|f| require f}
 

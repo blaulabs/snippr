@@ -1,30 +1,30 @@
-require "date"
-require "bundler"
-
+# -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  now = Time.now
+  s.name        = "snippr"
+  s.version     = "0.6.0"
+  s.date        = Time.now
+  s.platform    = Gem::Platform::RUBY
+  s.authors     = ["Thomas Jachmann"]
+  s.email       = ["me@rubiii.com"]
+  s.homepage    = "http://github.com/blaulabs/snippr"
+  s.summary     = %q{File based content management}
+  s.description = %q{This gem provides ways to access file based cms resources from a rails app.}
 
-  s.name = "snippr"
-  s.version = "0.5.#{now.strftime('%Y%m%d%H%M%S')}"
-  s.date = now
+  s.rubyforge_project = "snippr"
 
-  s.authors = "Daniel Harrington"
-  s.email = "me@rubiii.com"
-  s.homepage = "http://github.com/blaulabs/snippr"
-  s.summary = "File based content management"
+  s.add_runtime_dependency "i18n"
+  s.add_runtime_dependency "activesupport"
 
-  s.files = Dir["[A-Z]*", "{lib,rails,spec}/**/*.{rb,snip}"]
-  s.test_files = Dir["spec/**/*.rb"]
+  s.add_development_dependency "ci_reporter", "~> 1.6.3"
+  s.add_development_dependency "rspec", "~> 2.0.0"
+  s.add_development_dependency "mocha", "0.9.8"
+
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.require_paths = ["lib"]
 
   s.extra_rdoc_files = ["README.rdoc"]
   s.rdoc_options = ["--charset=UTF-8", "--line-numbers", "--inline-source"]
   s.rdoc_options += ["--title", "Snippr - File based content management"]
-
-  Bundler::Definition.build('Gemfile', 'Gemfile.lock', false).dependencies.each do |dep|
-    if dep.groups.any? {|group| [:default, :production].include? group}
-      s.add_runtime_dependency dep.name, *dep.requirements_list
-    else
-      s.add_development_dependency dep.name, *dep.requirements_list
-    end
-  end
 end
