@@ -9,3 +9,4 @@ coverage
 *~
 *.gem
 spec/reports
+Gemfile.lock
