@@ -18,8 +18,8 @@ module Snippr
 
     # Returns the current locale prefixed with a "_" from I18n if I18n is enabled.
     # Otherwise defaults to an empty String.
-    def self.locale
-      enabled? ? "_#{::I18n.locale}" : ''
+    def self.locale(enabled=nil)
+      (enabled.nil? ? enabled? : enabled) ? "_#{::I18n.locale}" : ''
     end
 
   end

@@ -13,7 +13,7 @@ module Snippr
     def initialize(*names)
       @opts = names.last.kind_of?(Hash) ? names.pop : {}
       @opts.symbolize_keys!
-      @name = "#{Path.normalize_name(*names)}#{I18n.locale}"
+      @name = "#{Path.normalize_name(*names)}#{ I18n.locale(@opts[:i18n]) }"
       @path = Path.path_from_name @name, (@opts[:extension] || FILE_EXTENSION)
     end
 
