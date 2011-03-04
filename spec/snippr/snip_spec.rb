@@ -28,6 +28,20 @@ describe Snippr::Snip do
         snip.opts.should == {:key => :value}
       end
 
+      it "should initialize name, path and opts with given extension" do
+        snip = Snippr::Snip.new(:path_to_snips, :file, :extension => :yml)
+        snip.name.should == "pathToSnips/file"
+        snip.path.should == "path/pathToSnips/file.yml"
+        snip.opts.should == { :extension => :yml }
+      end
+      # 
+      # it "should initialize name, path and opts with given i18n deactivation" do
+      #   snip = Snippr::Snip.new(:path_to_snips, :file, :i18n => true)
+      #   snip.name.should == "pathToSnips/file_#{::I18n.locale}"
+      #   snip.path.should == "path/pathToSnips/file_#{::I18n.locale}.snip"
+      #   snip.opts.should == {}
+      # end
+      # 
     end
 
     context "with I18n" do
@@ -50,7 +64,21 @@ describe Snippr::Snip do
         snip.opts.should == {:key => :value}
       end
 
+      it "should initialize name, path and opts with given extension" do
+        snip = Snippr::Snip.new(:path_to_snips, :file, :extension => :yml)
+        snip.name.should == "pathToSnips/file_#{::I18n.locale}"
+        snip.path.should == "path/pathToSnips/file_#{::I18n.locale}.yml"
+        snip.opts.should == { :extension => :yml }
+      end
+    
+      # it "should initialize name, path and opts with given i18n deactivation" do
+      #   snip = Snippr::Snip.new(:path_to_snips, :file, :i18n => false)
+      #   snip.name.should == "pathToSnips/file"
+      #   snip.path.should == "path/pathToSnips/file.snip"
+      #   snip.opts.should == {}
+      # end
     end
+    
 
   end
 

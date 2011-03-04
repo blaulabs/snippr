@@ -6,14 +6,15 @@ module Snippr
 
     extend ActiveSupport::Memoizable
 
-    FILE_EXTENSION = '.snip'
+    FILE_EXTENSION = 'snip'
 
     attr_reader :name, :path, :opts
 
     def initialize(*names)
       @opts = names.last.kind_of?(Hash) ? names.pop : {}
+      @opts.symbolize_keys!
       @name = "#{Path.normalize_name(*names)}#{I18n.locale}"
-      @path = Path.path_from_name @name, FILE_EXTENSION
+      @path = Path.path_from_name @name, (@opts[:extension] || FILE_EXTENSION)
     end
 
     # Returns the unprocessed, plain content from the file.

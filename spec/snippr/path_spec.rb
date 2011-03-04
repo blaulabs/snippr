@@ -37,7 +37,7 @@ describe Snippr::Path do
     end
 
     it "should join path and name (with extension)" do
-      Snippr::Path.path_from_name('name', '.snip').should == 'path/name.snip'
+      Snippr::Path.path_from_name('name', 'snip').should == 'path/name.snip'
     end
 
     it "should join path and name (without extension)" do
