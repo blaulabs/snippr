@@ -73,6 +73,10 @@ describe Snippr::Links do
       Snippr::Links.adjust_url('/cms/excepted.html').should == '/root/cms/excepted.html'
     end
 
+    it "should leave server absolute links as is" do
+      Snippr::Links.adjust_url('/root/bla/absolute.html').should == '/root/bla/absolute.html'
+    end
+
     it "should leave excepted links as is" do
       Snippr::Links.adjust_urls_except << /^\/cms\//
       Snippr::Links.adjust_url('/cms/excepted.html').should == '/cms/excepted.html'

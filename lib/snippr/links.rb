@@ -39,7 +39,8 @@ module Snippr
       adjust_urls_except.each do |regex|
         return url if url =~ regex
       end
-      url.gsub /^\/?/, relative_url_root
+      root = relative_url_root
+      url.gsub(/^(#{root}|\/)?/, root)
     end
 
     # Returns the relative url root (context path) the application is deployed to.
