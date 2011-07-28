@@ -41,6 +41,22 @@ The result will obviously be something like:
 
   <p>You're topup of 15,00 &euro; at 2010-04-03 was successful.</p>
 
+=== Including snippr files inside other files
+
+A snippr file can include another snippr file:
+
+  This snippr file includes another {snip:filepath/of/snip} file
+
+This will cause `filepath/of/snip.snip` to be included in place.
+
+Dynamic values of the parent snip will be accessable inside the included snip file.
+
+You can pass additional dynamic values when using `{snip}`. These will override any parent parameter.
+
+  {snip:filepath/of/snip,dyn_key1=dyn_value,dyn_key2=dyn_value2}
+
+Those will be available as {dyn_key1} and {dyn_key2} in filepath/of/snip.snip
+
 == I18n
 
 Snippr comes with support for I18n, but up until further notice, you have to manually enable this

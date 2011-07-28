@@ -10,10 +10,11 @@ describe Snippr::Processor do
 
     it "should have a set of default processors" do
       processors = Snippr::Processor.processors
-      processors.size.should == 3
-      processors[0].should be_a(Snippr::Processor::Dynamics)
-      processors[1].should be_a(Snippr::Processor::Links)
-      processors[2].should be_a(Snippr::Processor::Wikilinks)
+      processors.size.should == 4
+      processors[0].should be_a(Snippr::Processor::Functions)
+      processors[1].should be_a(Snippr::Processor::Dynamics)
+      processors[2].should be_a(Snippr::Processor::Links)
+      processors[3].should be_a(Snippr::Processor::Wikilinks)
     end
 
   end
