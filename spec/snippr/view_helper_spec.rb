@@ -6,6 +6,14 @@ describe Snippr::ViewHelper do
 
   describe "snippr" do
 
+    def helper_method(param)
+      "wrapppppp #{param.upcase} ppppppparw"
+    end
+
+    it "should allow calling of methods on a Rails view" do
+      snippr(:with_view_helper_method).should == "<!-- starting snippr: withViewHelperMethod -->\nwith helper *wrapppppp TEST ppppppparw*\n<!-- closing snippr: withViewHelperMethod -->"
+    end
+
     context "existing snippr" do
 
       it "should call html_safe and return html safe value" do

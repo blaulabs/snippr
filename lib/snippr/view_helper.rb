@@ -14,6 +14,9 @@ module Snippr
 
     # Returns a snippr specified via +args+.
     def snippr(*args)
+      variables = args.last.kind_of?(Hash) ? args.pop : {}
+      variables[:view] = self
+      args << variables
       snip = Snip.new *args
       content = snip.content.html_safe
       if block_given?

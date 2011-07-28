@@ -41,6 +41,38 @@ The result will obviously be something like:
 
   <p>You're topup of 15,00 &euro; at 2010-04-03 was successful.</p>
 
+=== calling methods on passed variables
+
+You can call methods on passed parameters. Calling this:
+
+  class Klazz
+    def doit; "HELLO"; end
+  end
+  Snippr.load :snip :a_variable => Klass.new
+
+On ...
+
+  <p>Snippr says: {a_variable.doit}</p>
+
+will yield:
+  
+  <p>Snippr says: HELLO</p>
+
+You can even pass parameters to the call. Those *must* be enclosed in quotes ("):
+
+  class Klazz
+    def doitagain(p); "HELLO #{p}"; end
+  end
+  Snippr.load :snip :a_variable => Klass.new
+
+On ...
+
+  <p>Snippr says: {a_variable.doitagain("SNIPPR")}</p>
+
+will yield:
+  
+  <p>Snippr says: HELLO SNIPPR</p>
+
 === Including snippr files inside other files
 
 A snippr file can include another snippr file:
