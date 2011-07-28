@@ -31,4 +31,9 @@ describe Snippr::Processor::Dynamics do
     Snippr::Processor::Dynamics.new.process(tpl, :var => Klass.new).should == "An instance METHOD WITH PARAMETER1 AND PARAMETER2"
   end
 
+  it "should keep the {snip} if calling a method but tht method is not defined" do
+    tpl = "An instance {var.method_not_exist()}"
+    Snippr::Processor::Dynamics.new.process(tpl, :var => Klass.new).should == tpl
+  end
+
 end

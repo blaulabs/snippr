@@ -12,6 +12,8 @@ module Snippr
               method = $1
               params = ($2 || "").split("\",\"")
               value.send(method, *params).to_s
+            elsif $1
+              match
             else
               value.to_s
             end
