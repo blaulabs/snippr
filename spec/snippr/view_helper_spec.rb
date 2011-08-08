@@ -78,7 +78,7 @@ describe Snippr::ViewHelper do
 
   describe "#snippr_with_path" do
 
-    context "when a controller and actionnames are set" do
+    context "when controller and actionname is set" do
 
       it "should use the path given in 'id' param when called via a 'pages' controller" do
         stubs(:controller_name).returns("pages")
@@ -100,6 +100,16 @@ describe Snippr::ViewHelper do
         content = snippr_with_path(:a_path, :a_snippet)
         content.should match /controller\/action\/aPath\/aSnippet/
       end
+
+      it "should allow a block to be passed in" do
+        stubs(:controller_name).returns("controller")
+        stubs(:params).returns({:action => :action})
+        content = snippr_with_path(:a_snippet) do |snip|
+          snip
+        end
+        content.should == 0
+      end
+
     end
 
   end
