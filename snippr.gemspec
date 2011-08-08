@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "snippr"
-  s.version     = "0.8.5"
+  s.version     = "0.8.6"
   s.date        = Time.now
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Thomas Jachmann"]
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 2.6.0"
   s.add_development_dependency "mocha", "0.9.12"
   s.add_development_dependency "rake", "0.8.7"
+  s.add_development_dependency "autotest"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

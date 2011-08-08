@@ -78,38 +78,59 @@ describe Snippr::ViewHelper do
 
   describe "#snippr_with_path" do
 
-    context "when controller and actionname is set" do
+    context "on pages controller (special case)" do
 
-      it "should use the path given in 'id' param when called via a 'pages' controller" do
+      before do
         stubs(:controller_name).returns("pages")
-        stubs(:params).returns({:id => 'a/path', :action => :action})
-        content = snippr_with_path(:a_snippet)
-        content.should match /a\/path\/aSnippet/
+        stubs(:params).returns(:id => "a/path", :action => :view)
+      end
+
+      it "uses the path given in 'id' param" do
+        snippr_with_path(:a_snippet).should == "<!-- starting snippr: a/path/aSnippet -->\na snippet\n<!-- closing snippr: a/path/aSnippet -->"
+      end
+
+      it "works with a given block" do
+        lambda {
+          snippr_with_path(:a_snippet) do |snippr|
+            snippr.should be_html_safe
+            raise StandardError.new('block should be called')
+          end
+        }.should raise_error StandardError, 'block should be called'
+      end
+
+      it "works with parameters hash" do
+        snippr_with_path(:a_snippet_with_param, :param => "value").should == "<!-- starting snippr: a/path/aSnippetWithParam -->\na snippet with param value\n<!-- closing snippr: a/path/aSnippetWithParam -->"
+      end
+
+    end
+
+    context "on standard controllers" do
+
+      before do
+        stubs(:controller_name).returns("with_underscore")
+        stubs(:params).returns(:action => :and_underscore)
       end
 
       it "should camelize controller and action names" do
-        stubs(:controller_name).returns("with_underscore")
-        stubs(:params).returns({:action => :with_underscore})
-        content = snippr_with_path(:a_snippet)
-        content.should match /withUnderscore\/withUnderscore\/aSnippet/
+        snippr_with_path(:a_snippet).should == "<!-- starting snippr: withUnderscore/andUnderscore/aSnippet -->\nan underscored snippet with param {param}\n<!-- closing snippr: withUnderscore/andUnderscore/aSnippet -->"
+      end
+
+      it "works with a given block" do
+        lambda {
+          snippr_with_path(:a_snippet) do |snippr|
+            snippr.should be_html_safe
+            raise StandardError.new('block should be called')
+          end
+        }.should raise_error StandardError, 'block should be called'
+      end
+
+      it "works with parameters hash" do
+        snippr_with_path(:a_snippet, :param => "value").should == "<!-- starting snippr: withUnderscore/andUnderscore/aSnippet -->\nan underscored snippet with param value\n<!-- closing snippr: withUnderscore/andUnderscore/aSnippet -->"
       end
 
       it "should allow multiple arguments" do
-        stubs(:controller_name).returns("controller")
-        stubs(:params).returns({:action => :action})
-        content = snippr_with_path(:a_path, :a_snippet)
-        content.should match /controller\/action\/aPath\/aSnippet/
+        snippr_with_path(:deeper, :nested, :snippet).should == "<!-- missing snippr: withUnderscore/andUnderscore/deeper/nested/snippet -->"
       end
-
-      it "should allow a block to be passed in" do
-        stubs(:controller_name).returns("controller")
-        stubs(:params).returns({:action => :action})
-        content = snippr_with_path(:a_snippet) do |snip|
-          snip
-        end
-        content.should == 0
-      end
-
     end
 
   end
