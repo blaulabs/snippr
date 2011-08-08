@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "snippr"
-  s.version     = "0.8.2"
+  s.version     = "0.8.3"
   s.date        = Time.now
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Thomas Jachmann"]

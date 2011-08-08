@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe Snippr::ViewHelper do
-
   include Snippr::ViewHelper
 
   describe "snippr" do
@@ -71,6 +70,28 @@ describe Snippr::ViewHelper do
             raise StandardError.new('block should not be called')
           end.should == 0
         }.should_not raise_error
+      end
+
+    end
+
+  end
+
+  describe "#snippr_with_path" do
+
+    context "when a controller and actionnames are set" do
+
+      it "should use the path given in 'id' param when called via a 'pages' controller" do
+        stubs(:controller_name).returns("pages")
+        stubs(:params).returns({:id => 'a/path', :action => :action})
+        content = snippr_with_path(:a_snippet)
+        content.should match /a\/path\/aSnippet/
+      end
+
+      it "should camelize controller and action names" do
+        stubs(:controller_name).returns("with_underscore")
+        stubs(:params).returns({:action => :with_underscore})
+        content = snippr_with_path(:a_snippet)
+        content.should match /withUnderscore\/withUnderscore\/aSnippet/
       end
 
     end
