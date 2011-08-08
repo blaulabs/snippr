@@ -31,14 +31,13 @@ module Snippr
       end
     end
 
-    def snippr_with_path(snippet_name)
+    def snippr_with_path(*args)
       path = if controller_name == "pages"
                params[:id].split('/')
              else
                [controller_name, params[:action]]
              end
-      path << snippet_name
-      snippr path.compact.map { |e| e.to_s.camelize(:lower).to_sym }
+      snippr (path + args).compact.map { |e| e.to_s.camelize(:lower).to_sym }
     end
 
   end

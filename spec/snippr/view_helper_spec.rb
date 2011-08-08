@@ -94,6 +94,12 @@ describe Snippr::ViewHelper do
         content.should match /withUnderscore\/withUnderscore\/aSnippet/
       end
 
+      it "should allow multiple arguments" do
+        stubs(:controller_name).returns("controller")
+        stubs(:params).returns({:action => :action})
+        content = snippr_with_path(:a_path, :a_snippet)
+        content.should match /controller\/action\/aPath\/aSnippet/
+      end
     end
 
   end
