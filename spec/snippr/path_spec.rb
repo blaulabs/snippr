@@ -5,10 +5,10 @@ describe Snippr::Path do
   describe "path" do
 
     it "should store the path" do
-      Snippr::Path.path = nil
-      Snippr::Path.path.should == ''
-      Snippr::Path.path = 'path'
-      Snippr::Path.path.should == 'path'
+      subject.path = nil
+      subject.path.should == ''
+      subject.path = 'path'
+      subject.path.should == 'path'
     end
 
     # TODO test JVM path? [thomas, 2010-08-26]
@@ -21,7 +21,7 @@ describe Snippr::Path do
       seq = sequence "normalizers"
       Snippr::Normalizer.expects(:normalize).with("a").in_sequence(seq).returns("AA")
       Snippr::Normalizer.expects(:normalize).with(:b).in_sequence(seq).returns("BB")
-      Snippr::Path.normalize_name("a", :b).should == "AA/BB"
+      subject.normalize_name("a", :b).should == "AA/BB"
     end
 
   end
@@ -29,15 +29,15 @@ describe Snippr::Path do
   describe ".path_from_name" do
 
     before do
-      Snippr::Path.path = 'path'
+      subject.path = 'path'
     end
 
     it "should join path and name (with extension)" do
-      Snippr::Path.path_from_name('name', 'snip').should == 'path/name.snip'
+      subject.path_from_name('name', 'snip').should == 'path/name.snip'
     end
 
     it "should join path and name (without extension)" do
-      Snippr::Path.path_from_name('file').should == 'path/file'
+      subject.path_from_name('file').should == 'path/file'
     end
 
   end
@@ -51,11 +51,11 @@ describe Snippr::Path do
       end
 
       it "should return a list of all snippr names" do
-        Snippr::Path.list(:topup).should == [:some_error, :success]
+        subject.list(:topup).should == [:some_error, :success]
       end
 
       it "should return an empty array for non existant dirs" do
-        Snippr::Path.list(:doesnotexist).should == []
+        subject.list(:doesnotexist).should == []
       end
 
     end
@@ -68,16 +68,16 @@ describe Snippr::Path do
 
       it "should return a list of all snippr names of the current locale (de)" do
         I18n.locale = :de
-        Snippr::Path.list(:i18n).should == [:list, :shop]
+        subject.list(:i18n).should == [:list, :shop]
       end
 
       it "should return a list of all snippr names of the current locale (en)" do
         I18n.locale = :en
-        Snippr::Path.list(:i18n).should == [:shop]
+        subject.list(:i18n).should == [:shop]
       end
 
       it "should return an empty array for non existant dirs" do
-        Snippr::Path.list(:doesnotexist).should == []
+        subject.list(:doesnotexist).should == []
       end
 
     end
