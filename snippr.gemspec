@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "snippr"
-  s.version     = "0.8.7"
+  s.version     = "0.9.0"
   s.date        = Time.now
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Thomas Jachmann"]
-  s.email       = ["me@rubiii.com"]
+  s.authors     = ["Daniel Harrington", "Thomas Jachmann"]
+  s.email       = ["me@rubiii.com", "self@thomasjachmann.com"]
   s.homepage    = "http://github.com/blaulabs/snippr"
   s.summary     = %q{File based content management}
   s.description = %q{This gem provides ways to access file based cms resources from a rails app.}
