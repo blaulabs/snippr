@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake", "0.8.7"
   # pin down ZenTest so that autotest works without upgrading rubygems
   # see http://stackoverflow.com/questions/6802610/autotest-problem [mw, 2011-08-10]
-  s.add_dependency "ZenTest", "4.5.0"
+  s.add_development_dependency "ZenTest", "4.5.0"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
