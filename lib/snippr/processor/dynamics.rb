@@ -1,3 +1,6 @@
+# = Snippr::Processor::Dynamics
+#
+# Replaces {placeholder} placeholders in the content with values taken from the given opts.
 module Snippr
 
   module Processor

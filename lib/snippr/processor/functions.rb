@@ -1,3 +1,6 @@
+# = Snippr::Processor::Functions
+#
+# Processes several functions in {command:options} syntax.
 module Snippr
 
   module Processor

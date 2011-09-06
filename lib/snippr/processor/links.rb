@@ -1,3 +1,6 @@
+# = Snippr::Processor::Links
+#
+# Adjusts URLs in links.
 module Snippr
 
   module Processor

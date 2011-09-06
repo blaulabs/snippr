@@ -1,3 +1,6 @@
+# = Snippr::Processor::Wikilinks
+#
+# Replaces links in [url|title] syntax with real links.
 module Snippr
 
   module Processor

@@ -1,4 +1,4 @@
-# = Snippr::Path
+# = Snippr::Processor
 #
 # Provides methods to process snippr content.
 module Snippr
