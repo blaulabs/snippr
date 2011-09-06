@@ -20,7 +20,7 @@ module Snippr
     # Builds a snippr name from an array of path parts.
     def self.normalize_name(*names)
       names.map do |name|
-        name.kind_of?(Symbol) ? name.to_s.camelize(:lower) : name
+        Normalizer.normalize(name)
       end.join("/")
     end
 

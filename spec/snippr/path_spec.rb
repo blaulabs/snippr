@@ -17,15 +17,11 @@ describe Snippr::Path do
 
   describe ".normalize_name" do
 
-    {
-      [:path_to_snips, :file] => 'pathToSnips/file',
-      [:path, 'to_file']      => 'path/to_file'
-    }.each do |names, name|
-
-      it "should convert #{names.inspect} to #{name}" do
-        Snippr::Path.normalize_name(*names).should == name
-      end
-
+    it "should call Snippr::Normalizer.normalize with all names and return normalized result" do
+      seq = sequence "normalizers"
+      Snippr::Normalizer.expects(:normalize).with("a").in_sequence(seq).returns("AA")
+      Snippr::Normalizer.expects(:normalize).with(:b).in_sequence(seq).returns("BB")
+      Snippr::Path.normalize_name("a", :b).should == "AA/BB"
     end
 
   end
