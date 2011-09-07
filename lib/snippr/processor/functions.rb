@@ -23,7 +23,7 @@ module Snippr
       # {snip:path/to/snippet}
       def cmd_snip(unprocessed_content, opts, original_options)
         path = opts[:default].split("/")
-        snip_content = Snippr::Snip.new(path, opts).content
+        snip_content = Snippr::Snip.new(*path + [opts]).content
         unprocessed_content.gsub("{snip:#{original_options}}", snip_content)
       end
 

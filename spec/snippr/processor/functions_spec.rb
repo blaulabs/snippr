@@ -29,6 +29,24 @@ describe Snippr::Processor::Functions do
       }).should == "Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 99 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip"
     end
 
+    context "for home/show/blauappOverviewBoxMobile (regression test)" do
+
+      before do
+        Snippr::Normalizer.normalizers << Snippr::Normalizer::DeRester.new # add a second normalizer to ensure chain behaviour
+        Snippr::I18n.enabled = true
+        I18n.locale = :de
+      end
+
+      after do
+        Snippr::Normalizer.normalizers.pop # remove second normalizer
+      end
+
+      it "should work" do
+        subject.process("{snip:home/show/blauappOverviewBoxMobile}").should == "<!-- missing snippr: home/show/blauappOverviewBoxMobile_de -->"
+      end
+
+    end
+
   end
 
   describe "#hashify" do
