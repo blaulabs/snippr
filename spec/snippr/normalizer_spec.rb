@@ -18,18 +18,21 @@ describe Snippr::Normalizer do
 
   describe ".normalize" do
 
-    it "should call normalize on all normalizers, passing the path element between them and returning the last result" do
+    before do
       subject.normalizers << Snippr::Normalizer::DeRester.new # add a second normalizer to ensure chain behaviour
-      begin
-        seq = sequence "normalizers"
-        subject.normalizers.each_with_index do |normalizer, i|
-          normalizer.should respond_to(:normalize)
-          normalizer.expects(:normalize).with(i.to_s).returns((i + 1).to_s).in_sequence(seq)
-        end
-        subject.normalize('0').should == subject.normalizers.size.to_s
-      ensure
-        subject.normalizers.pop # remove second normalizer
+    end
+
+    after do
+      subject.normalizers.pop # remove second normalizer
+    end
+
+    it "should call normalize on all normalizers, passing the path element between them and returning the last result" do
+      seq = sequence "normalizers"
+      subject.normalizers.each_with_index do |normalizer, i|
+        normalizer.should respond_to(:normalize)
+        normalizer.expects(:normalize).with(i.to_s).returns((i + 1).to_s).in_sequence(seq)
       end
+      subject.normalize('0').should == subject.normalizers.size.to_s
     end
 
   end
