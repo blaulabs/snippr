@@ -3,6 +3,26 @@ require "spec_helper"
 describe Snippr::ViewHelper do
   include Snippr::ViewHelper
 
+  describe "snippr_exists?" do
+
+    it "return true when snippet exists" do
+      snippr_exists?(:a, :path, :a_snippet).should be_true
+    end
+
+    it "return false when snippet is missing" do
+      snippr_exists?(:missing).should be_false
+    end
+
+    it "works with variable arguments" do
+      snippr_exists?(:home, :test => 1).should be_true
+    end
+
+    it "is also available as snippet_exists?" do
+      snippet_exists?(:home).should be_true
+    end
+
+  end
+
   describe "snippr" do
 
     def helper_method(param)

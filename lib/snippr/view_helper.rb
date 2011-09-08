@@ -40,6 +40,13 @@ module Snippr
       snippr(*(path + args), &block)
     end
 
+    def snippr_exists?(*args)
+      args.pop if args.last.kind_of?(Hash)
+      snip = Snip.new *args
+      !snip.missing?
+    end
+    alias_method :snippet_exists?, :snippr_exists?
+
   end
 end
 
