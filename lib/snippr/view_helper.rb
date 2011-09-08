@@ -27,6 +27,14 @@ module Snippr
         end
         0
       else
+        content.class_eval(%(
+          def missing?
+            #{snip.missing?}
+          end
+          def exists?
+            #{!snip.missing?}
+          end
+        ))
         content
       end
     end
@@ -40,14 +48,8 @@ module Snippr
       snippr(*(path + args), &block)
     end
 
-    def snippr_exists?(*args)
-      args.pop if args.last.kind_of?(Hash)
-      snip = Snip.new *args
-      !snip.missing?
-    end
-    alias_method :snippet_exists?, :snippr_exists?
-
   end
+
 end
 
 if defined? ActionView::Base

@@ -3,26 +3,6 @@ require "spec_helper"
 describe Snippr::ViewHelper do
   include Snippr::ViewHelper
 
-  describe "snippr_exists?" do
-
-    it "return true when snippet exists" do
-      snippr_exists?(:a, :path, :a_snippet).should be_true
-    end
-
-    it "return false when snippet is missing" do
-      snippr_exists?(:missing).should be_false
-    end
-
-    it "works with variable arguments" do
-      snippr_exists?(:home, :test => 1).should be_true
-    end
-
-    it "is also available as snippet_exists?" do
-      snippet_exists?(:home).should be_true
-    end
-
-  end
-
   describe "snippr" do
 
     def helper_method(param)
@@ -31,6 +11,32 @@ describe Snippr::ViewHelper do
 
     it "should allow calling of methods on a Rails view" do
       snippr(:with_view_helper_method).should == "<!-- starting snippr: withViewHelperMethod -->\nwith helper *wrapppppp TEST ppppppparw*\n<!-- closing snippr: withViewHelperMethod -->"
+    end
+
+    context "existance check on string returned by snippr" do
+
+      context "existing snippet" do
+
+        it "returns true when calling .exists?" do
+          snippr(:home).exists?.should be_true
+        end
+
+        it "returns false when calling .missing?" do
+          snippr(:home).missing?.should be_false
+        end
+
+      end
+
+      context "missing snippet" do
+        it "returns false when calling .exists?" do
+          snippr(:missing).exists?.should be_false
+        end
+
+        it "returns true when calling .missing?" do
+          snippr(:missing).missing?.should be_true
+        end
+      end
+
     end
 
     context "existing snippr" do
