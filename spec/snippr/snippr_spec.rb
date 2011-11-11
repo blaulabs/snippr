@@ -38,6 +38,39 @@ describe Snippr do
     subject.adjust_urls_except = [2]
   end
 
+  context "the logger" do
+
+    after do
+      Snippr.logger = nil
+    end
+
+    it "can be configured" do
+      Snippr.logger = :logger
+      Snippr.logger.should == :logger
+    end
+
+    it "defaults to a custom logger" do
+      Snippr.logger.should be_a(Logger)
+    end
+
+    context "in a Rails app" do
+
+      before do
+        Rails = Class.new { def self.logger; :rails_logger end }
+      end
+
+      after do
+        Object.send(:remove_const, :Rails)
+      end
+
+      it "uses the Rails logger" do
+        Snippr.logger.should == :rails_logger
+      end
+
+    end
+
+  end
+
   it "should delegate load to Snippr::Snip.new" do
     Snippr::Snip.expects(:new).with(:a, :b).returns('snip')
     subject.load(:a, :b).should == 'snip'

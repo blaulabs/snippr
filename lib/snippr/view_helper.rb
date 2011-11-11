@@ -14,28 +14,18 @@ module Snippr
 
     # Returns a snippr specified via +args+.
     def snippr(*args)
-      variables = args.last.kind_of?(Hash) ? args.pop : {}
-      variables[:view] = self
-      args << variables
-      snip = Snip.new *args
+      snip = Snip.new *add_view_to_snippr_args(args)
       content = snip.content.html_safe
+
       if block_given?
         if snip.missing? || snip.blank?
           concat content
-        elsif !content.strip.blank?
+        elsif content.strip.present?
           yield content
         end
         0
       else
-        content.class_eval(%(
-          def missing?
-            #{snip.missing?}
-          end
-          def exists?
-            #{!snip.missing?}
-          end
-        ))
-        content
+        extend_snip_content(content, snip)
       end
     end
 
@@ -48,8 +38,32 @@ module Snippr
       snippr(*(path + args), &block)
     end
 
-  end
+  private
 
+    def add_view_to_snippr_args(args)
+      variables = args.last.kind_of?(Hash) ? args.pop : {}
+      variables[:view] = self
+      args << variables
+      args
+    end
+
+    def extend_snip_content(content, snip)
+      content.class_eval %(
+        def missing?
+          #{snip.missing?}
+        end
+        def exists?
+          #{!snip.missing?}
+        end
+        def meta(key = nil)
+          meta = #{snip.meta.inspect}
+          key ? meta[key] : meta
+        end
+      )
+      content
+    end
+
+  end
 end
 
 if defined? ActionView::Base
