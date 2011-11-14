@@ -14,7 +14,7 @@ module Snippr
         meta = yaml_load(name, $1)
       end
 
-      meta = meta ? meta.symbolize_keys : {}
+      meta = meta ? meta : {}
       [content, meta]
     end
 

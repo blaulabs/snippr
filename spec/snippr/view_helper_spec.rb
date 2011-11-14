@@ -45,13 +45,13 @@ describe Snippr::ViewHelper do
 
         it "returns a Hash of meta information" do
           snippr(:meta, :with_content).meta.should == {
-            :description => "Die mit dem Fluegli",
-            :keywords => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
+            "description" => "Die mit dem Fluegli",
+            "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
           }
         end
 
         it "accepts a key to search for" do
-          snippr(:meta, :with_content).meta(:description).should == "Die mit dem Fluegli"
+          snippr(:meta, :with_content).meta("description").should == "Die mit dem Fluegli"
         end
 
         it "returns the content without meta information" do
@@ -64,8 +64,8 @@ describe Snippr::ViewHelper do
 
         it "still returns a Hash of meta information" do
           snippr(:meta, :with_no_content).meta.should == {
-            :description => "Die mit dem Fluegli",
-            :keywords => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
+            "description" => "Die mit dem Fluegli",
+            "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
           }
         end
 
