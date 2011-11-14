@@ -73,6 +73,21 @@ will yield:
   
   <p>Snippr says: HELLO SNIPPR</p>
 
+=== Meta Infos
+
+A snippet can not only hold content but also meta infos for this snippet.
+
+Inspired by [jekyll](http://jekyllrb.com) a snippet can host metdata that are accessable via the `.meta` method on a loaded snippet.
+`.meta' will return an empty hash when no data was found.
+
+Metadata must be placed at the top of the snippet and is delimited with three dashed.
+The data itself is parsed as YAML:
+
+    ---  
+    a_yaml: hash  
+    ---  
+    normal snippet content comes here until the end of the file
+
 === Including snippr files inside other files
 
 A snippr file can include another snippr file:
