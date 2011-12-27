@@ -16,6 +16,11 @@ describe Snippr::Processor::Dynamics do
     }).should == "Your topup of 15,00 &euro; at #{today} was successful."
   end
 
+  it "parses multi-line parameters" do
+    tpl = "An instance {var.method2(\"PARAM\t\n ETER\")}"
+    subject.process(tpl, :var => Klass.new).should == "An instance METHOD WITH PARAMETER"
+  end
+
   it "should allow calling methods on placeholders" do
     tpl = "An instance {var.method()}"
     subject.process(tpl, :var => Klass.new).should == "An instance METHOD"

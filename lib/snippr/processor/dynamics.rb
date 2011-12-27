@@ -10,10 +10,10 @@ module Snippr
       def process(content, opts = {})
         opts.inject(content) do |c, pv|
           placeholder, value = pv
-          c.gsub(/\{#{placeholder}(?:\.(.*?)\(["]?(.*?)["]?\))?\}/) do |match|
+          c.gsub(/\{#{placeholder}(?:\.(.*?)\(["]?(.*?)["]?\))?\}/m) do |match|
             if $1 && value.respond_to?($1)
               method = $1
-              params = ($2 || "").split("\",\"")
+              params = ($2 || "").gsub(/\s/,"").split("\",\"")
               value.send(method, *params).to_s
             elsif $1
               match
