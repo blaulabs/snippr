@@ -17,8 +17,13 @@ describe Snippr::Processor::Dynamics do
   end
 
   it "parses multi-line parameters" do
-    tpl = "An instance {var.method2(\"PARAM\t\n ETER\")}"
+    tpl = "An instance {var.method2(\"PARAM\t\nETER\")}"
     subject.process(tpl, :var => Klass.new).should == "An instance METHOD WITH PARAMETER"
+  end
+
+  it "Does not kill all whitespace" do
+    tpl = "An instance {var.method2(\"PART1\t\n SPACE PART2\")}"
+    subject.process(tpl, :var => Klass.new).should == "An instance METHOD WITH PART1 SPACE PART2"
   end
 
   it "should allow calling methods on placeholders" do

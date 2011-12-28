@@ -13,7 +13,7 @@ module Snippr
           c.gsub(/\{#{placeholder}(?:\.(.*?)\(["]?(.*?)["]?\))?\}/m) do |match|
             if $1 && value.respond_to?($1)
               method = $1
-              params = ($2 || "").gsub(/\s/,"").split("\",\"")
+              params = ($2 || "").gsub(/[\t\r\n]/,"").split("\",\"")
               value.send(method, *params).to_s
             elsif $1
               match
