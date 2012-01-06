@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "yaml"
 
 # = Snippr::MetaData
@@ -9,8 +10,8 @@ module Snippr
   class MetaData
 
     def self.extract(name, content)
-      if content =~ /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
-        content = Regexp.last_match.post_match
+      if content =~ /^(---\s*\n.*?\n?)^(---\s*$?)/m
+        content = Regexp.last_match.post_match.strip
         meta = yaml_load(name, $1)
       end
 

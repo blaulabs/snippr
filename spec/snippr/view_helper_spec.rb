@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "spec_helper"
 
 describe Snippr::ViewHelper do
@@ -48,6 +49,14 @@ describe Snippr::ViewHelper do
             "description" => "Die mit dem Fluegli",
             "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
           }
+        end
+
+        it "returns a hash ofmeta information even if the YAML Fron Matter BLock ends without newline" do
+          snippr(:meta, :with_content_no_newline).meta.should == {
+            "description" => "Die mit dem Fluegli",
+            "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
+          }
+
         end
 
         it "accepts a key to search for" do
