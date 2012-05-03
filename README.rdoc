@@ -138,3 +138,6 @@ your views. You can then use the +snippr+ helper method to load snippr files.
   %h1 Topup successful
   .topup.info
     = snippr :topup, :success
+
+== Build Status
+<img src="https://secure.travis-ci.org/blaulabs/snippr.png" />
