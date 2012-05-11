@@ -10,6 +10,7 @@ module Snippr
     FILE_EXTENSION = 'snip'
 
     def initialize(*names)
+      names = strip_empty_values(names)
       @opts = names.last.kind_of?(Hash) ? names.pop : {}
       @opts.symbolize_keys!
       @name = "#{Path.normalize_name(*names)}#{ I18n.locale(@opts[:i18n]) }"
@@ -44,6 +45,12 @@ module Snippr
     # Returns whether the snip is empty or not.
     def empty?
       unprocessed_content.blank?
+    end
+
+  private
+
+    def strip_empty_values(names)
+      names - [nil, ""]
     end
 
   end

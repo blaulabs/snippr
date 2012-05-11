@@ -42,7 +42,19 @@ describe Snippr::Snip do
         snip.path.should == "path/pathToSnips/file_#{::I18n.locale}.snip"
         snip.opts.should == { :i18n => true }
       end
-      
+
+      it "returns no double slahes in the path for nil value" do
+        snip = Snippr::Snip.new(:path_to_snips, nil ,:file)
+        snip.name.should == 'pathToSnips/file'
+        snip.path.should == 'path/pathToSnips/file.snip'
+      end
+
+      it "returns no double slahes in the path for empty string value" do
+        snip = Snippr::Snip.new(:path_to_snips, "" ,:file)
+        snip.name.should == 'pathToSnips/file'
+        snip.path.should == 'path/pathToSnips/file.snip'
+      end
+
     end
 
     context "with I18n" do
