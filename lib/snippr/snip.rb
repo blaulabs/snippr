@@ -1,3 +1,4 @@
+# # -*- encoding : utf-8 -*-
 # = Snippr::Snip
 #
 # Represents a single snip and provides methods to read data.
