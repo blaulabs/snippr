@@ -27,8 +27,4 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-
-  s.extra_rdoc_files = ["README.rdoc"]
-  s.rdoc_options = ["--charset=UTF-8", "--line-numbers", "--inline-source"]
-  s.rdoc_options += ["--title", "Snippr - File based content management"]
 end
