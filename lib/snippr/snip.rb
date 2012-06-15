@@ -2,10 +2,9 @@
 # = Snippr::Snip
 #
 # Represents a single snip and provides methods to read data.
+
 module Snippr
   class Snip
-
-    extend ActiveSupport::Memoizable
 
     FILE_EXTENSION = 'snip'
 
@@ -22,20 +21,20 @@ module Snippr
 
     # Returns the processed and decorated content.
     def content
-      if missing?
-        "<!-- missing snippr: #{name} -->"
-      else
-        content = Processor.process unprocessed_content, opts
-        "<!-- starting snippr: #{name} -->\n#{content}\n<!-- closing snippr: #{name} -->"
+      @content ||= begin
+        if missing?
+          "<!-- missing snippr: #{name} -->"
+        else
+          content = Processor.process unprocessed_content, opts
+          "<!-- starting snippr: #{name} -->\n#{content}\n<!-- closing snippr: #{name} -->"
+        end
       end
     end
-    memoize :content
     alias :to_s :content
 
     def raw_content
-      missing? ? '' : File.read(@path).strip
+      @raw_content ||= missing? ? '' : File.read(@path).strip
     end
-    memoize :raw_content
 
     # Returns whether the snip is missing or not.
     def missing?
