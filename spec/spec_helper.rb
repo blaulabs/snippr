@@ -1,5 +1,8 @@
+# -*- encoding : utf-8 -*-
 require 'rubygems'
 require 'bundler'
+require 'snippr'
+
 Bundler.require(:default, :development)
 
 RSpec.configure do |config|

@@ -1,20 +1,22 @@
+# # -*- encoding : utf-8 -*-
 # = Snippr::Path
 #
 # Provides methods for dealing with the path to snippr files.
 module Snippr
   module Path
 
-    # The JVM property to set the path to the snippr files.
-    JVM_PROPERTY = 'cms.snippet.path'
-
-    # Returns the path to the snippr files (from JVM properties if available).
+    # Returns the path to the snippr files
     def self.path
-      @@path ||= JavaLang::System.get_property(JVM_PROPERTY) rescue ""
+      if @@path.respond_to?(:call)
+        @@path_evaled ||= @@path.call
+      else
+        @@path.to_s
+      end
     end
 
     # Sets the path to the snippr files.
     def self.path=(path)
-      @@path = path.to_s
+      @@path = path
     end
 
     # Builds a snippr name from an array of path parts.
@@ -35,15 +37,6 @@ module Snippr
       Dir["#{dir}/*#{I18n.locale}.#{Snip::FILE_EXTENSION}"].map do |snip|
         snip.gsub(/^.*\/([^\.]+)?\.#{Snip::FILE_EXTENSION}$/, '\1').gsub(/_.*$/, '').underscore
       end.sort.map(&:to_sym)
-    end
-
-  private
-
-    if RUBY_PLATFORM =~ /java/
-      require 'java'
-      module JavaLang
-        include_package "java.lang"
-      end
     end
 
   end
