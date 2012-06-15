@@ -1,8 +1,24 @@
+# -*- encoding : utf-8 -*-
 require 'active_support/core_ext'
 
-Dir[File.expand_path '../snippr/*.rb', __FILE__].each {|f| require f}
-Dir[File.expand_path '../snippr/normalizer/*.rb', __FILE__].each {|f| require f}
-Dir[File.expand_path '../snippr/processor/*.rb', __FILE__].each {|f| require f}
+require 'snippr/snippr'
+require 'snippr/snip'
+require 'snippr/i18n'
+require 'snippr/links'
+require 'snippr/meta_data'
+require 'snippr/normalizer'
+require 'snippr/path'
+require 'snippr/processor'
+require 'snippr/railtie' if defined?(Rails)
+require 'snippr/view_helper'
+
+require 'snippr/normalizer/camelizer'
+require 'snippr/normalizer/de_rester'
+
+require 'snippr/processor/dynamics'
+require 'snippr/processor/functions'
+require 'snippr/processor/links'
+require 'snippr/processor/wikilinks'
 
 Snippr::Normalizer.normalizers << Snippr::Normalizer::Camelizer.new
 # don't use DeRester this for all apps, but configure it as needed
