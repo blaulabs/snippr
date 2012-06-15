@@ -16,12 +16,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activesupport"
 
   s.add_development_dependency "ci_reporter", "~> 1.6.5"
-  s.add_development_dependency "rspec", "~> 2.6.0"
-  s.add_development_dependency "mocha", "0.9.12"
-  s.add_development_dependency "rake", "~> 0.9.0"
-  # pin down ZenTest so that autotest works without upgrading rubygems
-  # see http://stackoverflow.com/questions/6802610/autotest-problem [mw, 2011-08-10]
-  s.add_development_dependency "ZenTest", "4.5.0"
+  s.add_development_dependency "rspec", "~> 2.8.0"
+  s.add_development_dependency "mocha", "0.11.4"
+  s.add_development_dependency "rake", "~> 0.9.2"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
