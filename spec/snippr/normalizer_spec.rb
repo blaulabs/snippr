@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "spec_helper"
 
 describe Snippr::Normalizer do
@@ -33,6 +34,25 @@ describe Snippr::Normalizer do
         normalizer.expects(:normalize).with(i.to_s).returns((i + 1).to_s).in_sequence(seq)
       end
       subject.normalize('0').should == subject.normalizers.size.to_s
+    end
+
+  end
+
+  describe ".add" do
+
+    before do
+      subject.normalizers.clear
+      subject.normalizers << Snippr::Normalizer::Camelizer.new
+    end
+
+    it "adds the normalizer if an class" do
+      subject.add(Snippr::Normalizer::DeRester.new)
+      subject.normalizers.should have(2).normalizers
+    end
+
+    it "adds the normalizers if an array" do
+      subject.add([Snippr::Normalizer::DeRester.new, Snippr::Normalizer::DeRester.new])
+      subject.normalizers.should have(3).normalizers
     end
 
   end
