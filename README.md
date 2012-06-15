@@ -1,5 +1,6 @@
 # Snippr
 ## File based content management
+![Travis-CI](https://secure.travis-ci.org/blaulabs/snippr.png)
 
 A snippr file is a piece of HTML or raw text to be included in a website. They are plain text
 files stored on the file system. Snippr files end with ".snip" and are read from the Snippr path.
@@ -139,5 +140,16 @@ your views. You can then use the +snippr+ helper method to load snippr files.
     .topup.info
       = snippr :topup, :success
 
-## Build Status
-![Travis-CI](https://secure.travis-ci.org/blaulabs/snippr.png)
+## Configuration via railtie
+Starting in version 0.13.2 you can configure snippr without the use of initializers when using Rails:
+
+Edit `application.rb` (or the environment specific files in config/environments) and add:
+
+    class Application < Rails::Application
+      config.snippr.i18n = true
+      # Add a Normalizer:
+      config.snippr.normalizers = Snippr::Normalizer::DeRester.new
+      config.snippr.path = "my/path/to/snippets"
+      # or even for defered configuration with a lambda:
+      # config.snippr.path = lambda { SomeClassThatsAvailableLater.path }
+    end
