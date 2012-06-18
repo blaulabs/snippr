@@ -9,6 +9,7 @@ module Snippr
       Snippr.i18n = app.config.snippr.i18n
       Snippr.path = app.config.snippr.path
       Snippr::Normalizer.add app.config.snippr.normalizers if app.config.snippr.normalizers
+      Snippr.adjust_urls_except += Array(app.config.adjust_urls_except) if app.config.adjust_urls_except
     end
 
   end
