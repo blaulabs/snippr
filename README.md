@@ -74,6 +74,22 @@ will yield:
   
     <p>Snippr says: HELLO SNIPPR</p>
 
+The last parameter can also be passed in in 'block' form:
+
+    {a_variable.doitagain()}
+    SNIPPR
+    {/a_variable.doitagain}
+
+Notice that you have to leave that last parameter out of the signature of the snippr call:
+
+    {two_parameters.signature("ONE","TWO")}
+
+is equivalent to
+
+    {two_parameters.signature("ONE")}
+    TWO
+    {/two_parameters.signature}
+
 ### Meta Infos
 
 A snippet can not only hold content but also meta infos for this snippet.

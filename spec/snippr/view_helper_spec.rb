@@ -10,8 +10,18 @@ describe Snippr::ViewHelper do
       "wrapppppp #{param.upcase} ppppppparw"
     end
 
-    it "should allow calling of methods on a Rails view" do
+    def with_block(param1, block_content)
+      "block result: #{block_content}"
+    end
+
+    it "allows calling of methods on a Rails view" do
       snippr(:with_view_helper_method).should == "<!-- starting snippr: withViewHelperMethod -->\nwith helper *wrapppppp TEST ppppppparw*\n<!-- closing snippr: withViewHelperMethod -->"
+    end
+
+    context "block given in snippet" do
+      it "returns a correct snippet" do
+        snippr(:with_block).should == "<!-- starting snippr: withBlock -->\nblock result: IN BLOCK-LINE \"TWO\"\n<!-- closing snippr: withBlock -->"
+      end
     end
 
     context "existance check on string returned by snippr" do
@@ -98,13 +108,13 @@ describe Snippr::ViewHelper do
 
     context "existing snippr" do
 
-      it "should call html_safe and return html safe value" do
+      it "calls html_safe and return html safe value" do
         content = snippr(:home)
         content.should == "<!-- starting snippr: home -->\n<p>Home</p>\n<!-- closing snippr: home -->"
         content.should be_html_safe
       end
 
-      it "should pass html_safe snippr to block" do
+      it "passes html_safe snippr to block" do
         lambda {
           snippr(:home) do |snippr|
             snippr.should be_html_safe
@@ -113,7 +123,7 @@ describe Snippr::ViewHelper do
         }.should raise_error StandardError, 'block should be called'
       end
 
-      it "should return 0 with block" do
+      it "returns 0 with block" do
         snippr(:home) do; end.should == 0
       end
 
@@ -121,13 +131,13 @@ describe Snippr::ViewHelper do
 
     context "empty snippr" do
 
-      it "should call html_safe return html save value" do
+      it "calls html_safe return html save value" do
         content = snippr(:empty)
         content.should == "<!-- starting snippr: empty -->\n\n<!-- closing snippr: empty -->"
         content.should be_html_safe
       end
 
-      it "should not pass snippr to block but concat snippr and return 0" do
+      it "doesn't pass snippr to block but concat snippr and return 0" do
         expects(:concat).with("<!-- starting snippr: empty -->\n\n<!-- closing snippr: empty -->")
         lambda {
           snippr(:empty) do
@@ -140,13 +150,13 @@ describe Snippr::ViewHelper do
 
     context "missing snippr" do
 
-      it "should call html_safe return html save value" do
+      it "calls html_safe return html save value" do
         content = snippr(:doesnotexist)
         content.should == '<!-- missing snippr: doesnotexist -->'
         content.should be_html_safe
       end
 
-      it "should not pass snippr to block but concat snippr and return 0" do
+      it "doesn't pass snippr to block but concat snippr and return 0" do
         expects(:concat).with('<!-- missing snippr: doesnotexist -->')
         lambda {
           snippr(:doesnotexist) do
@@ -194,7 +204,7 @@ describe Snippr::ViewHelper do
         stubs(:params).returns(:action => :and_underscore)
       end
 
-      it "should camelize controller and action names" do
+      it "camelizes controller and action names" do
         snippr_with_path(:a_snippet).should == "<!-- starting snippr: withUnderscore/andUnderscore/aSnippet -->\nan underscored snippet with param {param}\n<!-- closing snippr: withUnderscore/andUnderscore/aSnippet -->"
       end
 
@@ -211,7 +221,7 @@ describe Snippr::ViewHelper do
         snippr_with_path(:a_snippet, :param => "value").should == "<!-- starting snippr: withUnderscore/andUnderscore/aSnippet -->\nan underscored snippet with param value\n<!-- closing snippr: withUnderscore/andUnderscore/aSnippet -->"
       end
 
-      it "should allow multiple arguments" do
+      it "allows multiple arguments" do
         snippr_with_path(:deeper, :nested, :snippet).should == "<!-- missing snippr: withUnderscore/andUnderscore/deeper/nested/snippet -->"
       end
     end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # = Snippr::Processor::Dynamics
 #
 # Replaces {placeholder} placeholders in the content with values taken from the given opts.
