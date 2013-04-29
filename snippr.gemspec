@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.email       = ["me@rubiii.com", "self@thomasjachmann.com"]
   s.homepage    = "http://github.com/blaulabs/snippr"
   s.summary     = %q{File based content management}
+  s.license     = "MIT"
   s.description = %q{This gem provides ways to access file based cms resources from a rails app.}
 
   s.rubyforge_project = "snippr"
@@ -21,8 +22,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake", "~> 0.9.0"
   s.add_development_dependency "debugger"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = `git ls-files`.split("\n").reject{ |a| a.start_with?("\"") }
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n").reject{ |a| a.start_with?("\"") }
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 end
