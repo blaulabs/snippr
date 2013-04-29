@@ -65,6 +65,10 @@ describe Snippr::Path do
         subject.list(:doesnotexist).should == []
       end
 
+      it "can cope with umlauts in the name" do
+        subject.list(:mixed_encoding).first.encoding.to_s.should == "UTF-8"
+      end
+
     end
 
     context "with I18n" do

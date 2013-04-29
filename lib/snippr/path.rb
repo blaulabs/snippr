@@ -35,7 +35,7 @@ module Snippr
     def self.list(*names)
       dir = path_from_name normalize_name *names
       Dir["#{dir}/*#{I18n.locale}.#{Snip::FILE_EXTENSION}"].map do |snip|
-        snip.gsub(/^.*\/([^\.]+)?\.#{Snip::FILE_EXTENSION}$/, '\1').gsub(/_.*$/, '').underscore
+        snip.force_encoding("UTF-8").gsub(/^.*\/([^\.]+)?\.#{Snip::FILE_EXTENSION}$/, '\1').gsub(/_.*$/, '').underscore
       end.sort.map(&:to_sym)
     end
 
