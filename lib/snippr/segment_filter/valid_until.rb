@@ -3,7 +3,7 @@ module Snippr
   module SegmentFilter
     class ValidUntil < Base
       def active?
-        DateTime.now <= DateTime.strptime(@filter_value, "%Y-%m-%d %H:%M:%S")
+        DateTime.now.to_s <= DateTime.strptime(@filter_value, "%Y-%m-%d %H:%M").to_s
       rescue ArgumentError
         false
       end
