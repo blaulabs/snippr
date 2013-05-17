@@ -94,7 +94,7 @@ is equivalent to
 
 A snippet can not only hold content but also meta infos for this snippet.
 
-Inspired by [jekyll](http://jekyllrb.com) a snippet can host metdata that are accessable via the `.meta` method on a loaded snippet.
+Inspired by [jekyll](http://jekyllrb.com) a snippet can host metadata that is accessable via the `.meta` method on a loaded snippet.
 `.meta' will return an empty hash when no data was found.
 
 Metadata must be placed at the top of the snippet and is delimited with three dashed.
@@ -120,6 +120,28 @@ You can pass additional dynamic values when using `{snip}`. These will override 
     {snip:filepath/of/snip,dyn_key1=dyn_value,dyn_key2=dyn_value2}
 
 Those will be available as {dyn_key1} and {dyn_key2} in filepath/of/snip.snip
+
+### Segments (as of Snippr 0.15.0)
+
+A snippet file can contain multiple snippet "segments".  
+Those segment are delimited by a line containing only `==== somefilter: filtervalue ====`.  
+Since there can be only one active content per snippet you must use segmentfilters to determine which segment of the enippet to use.  
+
+Currently there are the following filters:  
+
+#### valid_from
+`valid_from: YYYY-MM-DD HH:MM:SS` :  
+Activates the following snippet section if the current date is greater than the timestamp passed as the filtervalue.  
+  
+    First segment
+    ==== valid_from: 2013-05-17 13:15:00 ====
+    Second segement
+
+Here the second segment would be the content of the snippet on and after 2013-05-17 13:15:00.
+
+#### valid_until
+`valid_until: YYYY-MM-DD HH:MM:SS` :  
+Same as `valid_from` only the other way round
 
 ## I18n
 

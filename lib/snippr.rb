@@ -12,6 +12,11 @@ require 'snippr/processor'
 require 'snippr/railtie' if defined?(Rails)
 require 'snippr/view_helper'
 
+require 'snippr/segment_parser'
+require 'snippr/segment_filter/base'
+require 'snippr/segment_filter/valid_from'
+require 'snippr/segment_filter/valid_until'
+
 require 'snippr/normalizer/camelizer'
 require 'snippr/normalizer/de_rester'
 

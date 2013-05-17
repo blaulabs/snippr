@@ -43,7 +43,7 @@ describe Snippr::Snip do
         snip.opts.should == { :i18n => true }
       end
 
-      it "returns no double slahes in the path for nil value" do
+      it "returns no double slashes in the path for nil value" do
         snip = Snippr::Snip.new(:path_to_snips, nil ,:file)
         snip.name.should == 'pathToSnips/file'
         snip.path.should == 'path/pathToSnips/file.snip'
@@ -119,29 +119,24 @@ describe Snippr::Snip do
 
   end
 
-  [:content, :to_s].each do |method|
+  describe "content" do
 
-    describe "##{method}" do
-
-      it "calls Snippr::Processor.process with opts and return decorated result" do
-        Snippr::Processor.expects(:process).with('<p>Home</p>', {:a => :b}).returns('processed')
-        Snippr::Snip.new(:home, :a => :b).send(method).should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
-      end
-
-      it "stores the processed data instead of processing it again" do
-        Snippr::Processor.expects(:process).with('<p>Home</p>', {:a => :b}).once.returns('processed')
-        snip = Snippr::Snip.new(:home, :a => :b)
-        snip.send(method).should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
-        snip.send(method).should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
-      end
-
-      it "doesn't call Snippr::Processor.process and return missing string" do
-        Snippr::Processor.expects(:process).never
-        Snippr::Snip.new(:doesnotexist, :a => :b).send(method).should == '<!-- missing snippr: doesnotexist -->'
-      end
-
+    it "calls Snippr::Processor.process with opts and return decorated result" do
+      Snippr::Processor.expects(:process).with('<p>Home</p>', {:a => :b}).returns('processed')
+      Snippr::Snip.new(:home, :a => :b).content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
     end
 
+    it "stores the processed data instead of processing it again" do
+      Snippr::Processor.expects(:process).with('<p>Home</p>', {:a => :b}).once.returns('processed')
+      snip = Snippr::Snip.new(:home, :a => :b)
+      snip.content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
+      snip.content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
+    end
+
+    it "doesn't call Snippr::Processor.process and return missing string" do
+      Snippr::Processor.expects(:process).never
+      Snippr::Snip.new(:doesnotexist, :a => :b).content.should == '<!-- missing snippr: doesnotexist -->'
+    end
   end
 
   describe "#missing?" do

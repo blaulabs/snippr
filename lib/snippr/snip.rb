@@ -25,7 +25,8 @@ module Snippr
         if missing?
           "<!-- missing snippr: #{name} -->"
         else
-          content = Processor.process unprocessed_content, opts
+          content = SegmentParser.new(@unprocessed_content).content
+          content = Processor.process content, opts
           "<!-- starting snippr: #{name} -->\n#{content}\n<!-- closing snippr: #{name} -->"
         end
       end

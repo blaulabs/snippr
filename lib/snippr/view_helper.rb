@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # = Snippr::ViewHelper
 #
 # This module is automatically included into +ActionView::Base+ when using the Snippr
