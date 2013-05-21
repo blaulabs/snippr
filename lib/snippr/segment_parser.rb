@@ -2,14 +2,14 @@
 module Snippr
   class SegmentParser
 
-    SEGMENT_MARKER = /====\s(.*?):\s(.*?)\s====/
+    SEGMENT_MARKER = /[=✄]{4}\s(.*?):\s(.*?)\s[=✄]{4}/
 
     def initialize(raw_content)
       @raw_content = insert_dummy_filter(raw_content.clone)
     end
 
     def content
-      @cotennt ||= @raw_content.scan(/====$\n(.*?)\n?(?:\z|====)/m)[find_active_segment][0]
+      @content ||= @raw_content.scan(/[=✄]{4}$\n(.*?)\n?(?:\z|[=✄]{4})/m)[find_active_segment][0]
     end
 
     private
@@ -28,7 +28,7 @@ module Snippr
     end
 
     def extract_filters
-      @raw_content.scan(/^====\s(.*?):\s(.*?)\s====$/).map {|filter| { :name => filter[0], :value => filter[1] } }
+      @raw_content.scan(/^[=✄]{4}\s(.*?):\s(.*?)\s[=✄]{4}$/).map {|filter| { :name => filter[0], :value => filter[1] } }
     end
 
     def camel_case(str)
