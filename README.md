@@ -1,5 +1,5 @@
 # Snippr
-## File based content management
+## File based content management compatible with ruby 1.9
 ![Travis-CI](https://secure.travis-ci.org/blaulabs/snippr.png)
 
 A snippr file is a piece of HTML or raw text to be included in a website. They are plain text
