@@ -19,4 +19,11 @@ describe "SegmentParser" do
     actual = Snippr::SegmentParser.new("a\n==== valid_from: 1099-05-01 09:00:00 ====\nb").content.should == "b"
   end
 
+  it "returns the first matching segment if multiple segments are given" do
+    actual = Snippr::SegmentParser.new("a\n==== valid_from: 1099-05-01 09:00:00 ====\nb\n==== valid_from: 1100-05-01 09:00:00 ====\nc").content.should == "b"
+  end
+
+  it "can handle more than two segments" do
+    actual = Snippr::SegmentParser.new("a\n==== valid_from: 6099-05-01 09:00:00 ====\nb\n==== valid_from: 1100-05-01 09:00:00 ====\nc").content.should == "c"
+  end
 end
