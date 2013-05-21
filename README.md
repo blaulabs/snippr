@@ -137,11 +137,16 @@ Activates the following snippet section if the current date is greater than the 
     ==== valid_from: 2013-05-17 13:15:00 ====
     Second segement
 
-Here the second segment would be the content of the snippet on and after 2013-05-17 13:15:00.
+Here the second segment would be the content on and after 2013-05-17 13:15:00.
 
 #### valid_until
 `valid_until: YYYY-MM-DD HH:MM:SS` :  
 Same as `valid_from` only the other way round
+
+#### on_rails_env
+`on_rails_env: production`:  
+Shows the snippet only in the given environment(s).  
+Separate environments with a comma (eg. production,test,unstable)
 
 ## I18n
 

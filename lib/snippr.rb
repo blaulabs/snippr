@@ -16,6 +16,7 @@ require 'snippr/segment_parser'
 require 'snippr/segment_filter/base'
 require 'snippr/segment_filter/valid_from'
 require 'snippr/segment_filter/valid_until'
+require 'snippr/segment_filter/on_rails_env' if defined?(Rails)
 
 require 'snippr/normalizer/camelizer'
 require 'snippr/normalizer/de_rester'
