@@ -20,7 +20,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 2.8.0"
   s.add_development_dependency "mocha", "= 0.11.4"
   s.add_development_dependency "rake", "~> 0.9.0"
-  s.add_development_dependency "debugger"
+
+  unless ENV["CI"]
+    s.add_development_dependency "debugger"
+  end
 
   s.files         = `git ls-files`.split("\n").reject{ |a| a.start_with?("\"") }
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n").reject{ |a| a.start_with?("\"") }
