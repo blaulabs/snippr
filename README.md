@@ -149,8 +149,7 @@ Shows the snippet only in the given environment(s).
 Separate environments with a comma (eg. production,test,unstable)
 
 #### on_host
-:cn
-
+`on_host: thismachinehostname`:  
 Shows the snippet segment only on a host with the name 'thismachinehostname'.  
 Multiple hostnames can be given, separated with commas.
 
