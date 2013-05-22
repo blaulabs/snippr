@@ -15,7 +15,7 @@ module Snippr
       private
 
       def in_env?
-        sources.include?(Socket.hostname)
+        sources.include?(Socket.gethostname)
       end
 
       def sources
