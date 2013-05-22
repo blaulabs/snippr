@@ -148,6 +148,11 @@ Same as `valid_from` only the other way round
 Shows the snippet only in the given environment(s).  
 Separate environments with a comma (eg. production,test,unstable)
 
+#### on_host
+`on_host: thismachinehostname`:  
+Shows the snippet segment only on a host with the name 'thismachinehostname'.  
+Multiple hostnames can be given, separated with commas.
+
 ## I18n
 
 Snippr comes with support for I18n, but up until further notice, you have to manually enable this
