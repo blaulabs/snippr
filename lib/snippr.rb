@@ -11,6 +11,7 @@ require 'snippr/path'
 require 'snippr/processor'
 require 'snippr/railtie' if defined?(Rails)
 require 'snippr/view_helper'
+require 'snippr/clock'
 
 require 'snippr/segment_parser'
 require 'snippr/segment_filter/base'
