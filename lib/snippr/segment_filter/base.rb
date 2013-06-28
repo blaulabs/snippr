@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Snippr
   module SegmentFilter
     class Base
@@ -16,7 +17,7 @@ module Snippr
       end
 
       def active?
-        raise RuntimeException("Subclasses need to implement #active?")
+        raise NotImplementedError("Subclasses need to implement #active?")
       end
     end
   end
