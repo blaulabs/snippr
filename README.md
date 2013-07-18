@@ -53,13 +53,13 @@ You can call methods on passed parameters. Calling this:
 
 on ...
 
-    <p>Snippr says: {a_variable.doit}</p>
+    <p>Snippr says: {a_variable.doit()}</p>
 
 will yield:
   
     <p>Snippr says: HELLO</p>
 
-You can even pass parameters to the call. Those *must* be enclosed in quotes ("):
+You can even pass parameters to the call. Those *must* be enclosed in double quotes ("):
 
     class Klazz
       def doitagain(p); "HELLO #{p}"; end
@@ -89,6 +89,14 @@ is equivalent to
     {two_parameters.signature("ONE")}
     TWO
     {/two_parameters.signature}
+
+Snippr will check (via #respond_to?) if the method is available on the receiver variable.  
+If that is not what you want and you want to force snippr to call the method on the receiver you can prepend a bang to the variable name (as of Snippr 0.15.8):
+
+    {!a_variable.called_even_if_not_available()}
+
+That would result in an ``NoMethodError``.
+This can be very useful if you call a method on a proxy object with dynamic method generation that isn't so polite as to implement a meaningful ``respond_to?`` or ``respond_to_missing?`` (eg. The Draper::HelperProxy)
 
 ### Meta Infos
 

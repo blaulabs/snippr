@@ -47,4 +47,9 @@ describe Snippr::Processor::Dynamics do
     subject.process(tpl, :var => Klass.new).should == tpl
   end
 
+  it "calls a bang(!) method even if the receiver does not respond_to the method" do
+    tpl = "An instance {!var.method_not_exist()}"
+    lambda { subject.process(tpl, :var => Klass.new) }.should raise_error(NoMethodError)
+  end
+
 end

@@ -11,12 +11,12 @@ module Snippr
       def process(content, opts = {})
         opts.inject(content) do |c, pv|
           placeholder, value = pv
-          c.gsub(/\{#{placeholder}(?:\.(.*?)\(["]?(.*?)["]?\))?\}/m) do |match|
-            if $1 && value.respond_to?($1)
-              method = $1
-              params = ($2 || "").gsub(/[\t\r\n]/,"").split("\",\"")
+          c.gsub(/\{(!?)#{placeholder}(?:\.(.*?)\(["]?(.*?)["]?\))?\}/m) do |match|
+            if $2 && (value.respond_to?($2) || $1 == "!")
+              method = $2
+              params = ($3 || "").gsub(/[\t\r\n]/,"").split("\",\"")
               value.send(method, *params).to_s
-            elsif $1
+            elsif $2
               match
             else
               value.to_s
