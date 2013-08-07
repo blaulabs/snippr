@@ -34,7 +34,7 @@ module Snippr
     alias :to_s :content
 
     def raw_content
-      @raw_content ||= missing? ? '' : File.read(@path).strip
+      @raw_content ||= missing? ? '' : File.read(@path).rstrip
     end
 
     # Returns whether the snip is missing or not.
