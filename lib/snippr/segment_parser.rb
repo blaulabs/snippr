@@ -9,7 +9,7 @@ module Snippr
     end
 
     def content
-      @content ||= @raw_content.scan(/[=✄]{4}$\n(.*?)\n?(?:\z|[=✄]{4})/m)[find_active_segment][0]
+      @content ||= @raw_content.scan(/[=✄]{4}$\n?(.*?)\n?(?:\z|[=✄]{4})/m)[find_active_segment][0]
     end
 
     private
