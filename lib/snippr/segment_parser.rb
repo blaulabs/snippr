@@ -5,7 +5,7 @@ module Snippr
     SEGMENT_MARKER = /[=✄]{4}\s(.*?):\s(.*?)\s[=✄]{4}/
 
     def initialize(raw_content)
-      @raw_content = insert_dummy_filter(raw_content.clone)
+      @raw_content = insert_dummy_filter(clean_up(raw_content.clone))
     end
 
     def content
@@ -41,6 +41,10 @@ module Snippr
         content.prepend("==== dummy: filter ====\n")
       end
       content
+    end
+
+    def clean_up(content)
+      content.gsub("\r","")
     end
   end
 end

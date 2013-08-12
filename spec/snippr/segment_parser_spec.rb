@@ -30,4 +30,8 @@ describe "SegmentParser" do
   it "doesn't need a newline after the last segment" do
     Snippr::SegmentParser.new("a\n==== valid_from: 1099-05-01 09:00:00 ====").content.should be_empty
   end
+
+  it "chooses the correct segment even with \r\n" do
+    Snippr::SegmentParser.new("alt\r\n==== valid_from: 1099-05-01 09:00:00 ====\r\nneu\r\n").content.should == "neu"
+  end
 end
