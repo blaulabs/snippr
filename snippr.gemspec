@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake", "~> 10.0"
 
   unless ENV["CI"]
-    s.add_development_dependency "debugger"
+    s.add_development_dependency "pry-debugger"
   end
 
   s.files         = `git ls-files`.split("\n").reject{ |a| a.start_with?("\"") }
