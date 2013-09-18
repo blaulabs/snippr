@@ -1,0 +1,17 @@
+<%# encoding: utf-8 %>
+<%= stylesheet_link_tag 'snippr_tardis/snippr_tardis' %>
+<%= javascript_include_tag 'snippr_tardis/snippr_tardis' %>
+<div id="snippr_tardis">
+  <div class="header">
+    <%= image_tag("snippr_tardis/icon-close.png", class: "tardis") %>
+    <div class="headline content">
+      Snippr Timewarp:
+    </div>
+  </div>
+  <div class="content">
+    <%= Snippr::Clock.now %>
+    <input class="interval" type="text" placeholder="<%= session[:snippr_tardis_interval] || "+1d" %>" />
+    <button class="warp">Warp</botton>
+    <button class="reset">Reset</botton>
+  </div>
+</div>

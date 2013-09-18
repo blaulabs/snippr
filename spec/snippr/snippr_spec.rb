@@ -15,6 +15,17 @@ describe Snippr do
     subject.path = 'path'
   end
 
+  it "delegates tardis= to Snippr::Tardis.enabled=" do
+    Snippr::Tardis.expects(:enabled=).with(true)
+    subject.tardis_enabled = true
+  end
+
+  it "delegates tardis to Snippr::Tardis.enabled" do
+    Snippr::Tardis.should respond_to(:enabled)
+    Snippr::Tardis.expects(:enabled)
+    subject.tardis_enabled
+  end
+
   it "delegates i18n? to Snippr::I18n.enabled?" do
     Snippr::I18n.should respond_to(:enabled?)
     Snippr::I18n.expects(:enabled?).returns(true)

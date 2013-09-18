@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "logger"
 
 # = Snippr
@@ -16,6 +17,14 @@ module Snippr
   # Sets the path to the snippr files.
   def path=(path)
     Path.path = path
+  end
+
+  def tardis_enabled=(bool_or_block)
+    Tardis.enabled = bool_or_block
+  end
+
+  def tardis_enabled
+    Tardis.enabled
   end
 
   # Returns whether to use I18n snippr files.
@@ -54,7 +63,7 @@ module Snippr
 
   # Lists all snips inside a snippr directory specified by path parts.
   def list(*args)
-    Path.list *args
+    Path.list(*args)
   end
 
 end

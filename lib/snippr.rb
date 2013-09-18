@@ -8,6 +8,7 @@ require 'snippr/links'
 require 'snippr/meta_data'
 require 'snippr/normalizer'
 require 'snippr/path'
+require 'snippr/tardis'
 require 'snippr/processor'
 require 'snippr/railtie' if defined?(Rails)
 require 'snippr/view_helper'

@@ -1,0 +1,33 @@
+#snippr_tardis {
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px 5px 5px 5px;
+  min-height: 18px;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+  z-index: 10000;
+}
+
+#snippr_tardis .tardis, #snippr_tardis .headline {
+  float: left;
+}
+
+#snippr_tardis .header {
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+#snippr_tardis .hinterval {
+  width: 40px;
+}
+
+#snippr_tardis .current {
+  margin-bottom: 5px;
+}
+
+#snippr_tardis .content {
+  display: none;
+  width: 200px;
+}

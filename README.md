@@ -209,3 +209,30 @@ Edit `application.rb` (or the environment specific files in config/environments)
       # or even for defered configuration with a lambda:
       # config.snippr.path = lambda { SomeClassThatsAvailableLater.path }
     end
+
+## Bigger on the inside
+Starting with 0.15.11 the gem supports rewinding and advancing time to display the state of a webpage on that moment.  
+This is especially useful when using `valid_from` or `valid_to`time based segment filters.
+
+For that to work you need to configure the so called "snippr tardis" to be active.  
+Configuration is done via application.rb like so:
+
+    class Application < Rails::Application
+      config.snippr.tardis_enabled = true # or false or a Proc
+    end
+
+Then call the `snippr_tardis` helper in your view:  
+
+    <%= snippr_tardis if Rails.env.development? %>
+
+You will then see the tardis appear in the upper right corner after a server restart.
+Click on the tardis icon.
+
+Now use one of the following and click "warp":
+
++1d : advance time one day  
+-4d : rewind time four days  
+-7h : rewind time 7 hours  
++10m : advance ten minutes  
+
+You get the idea. Exterminate!
