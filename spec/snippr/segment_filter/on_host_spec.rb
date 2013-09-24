@@ -3,7 +3,7 @@ require "spec_helper"
 
 describe "Snippr::SegmentFilter::OnHoAst" do
   before do
-    Socket.expects(:gethostname).returns("thishost")
+    allow(Socket).to receive(:gethostname).and_return("thishost")
   end
 
   it "is active on the given host" do

@@ -25,9 +25,8 @@ describe Snippr::Path do
   describe ".normalize_name" do
 
     it "calls Snippr::Normalizer.normalize with all names and return normalized result" do
-      seq = sequence "normalizers"
-      Snippr::Normalizer.expects(:normalize).with("a").in_sequence(seq).returns("AA")
-      Snippr::Normalizer.expects(:normalize).with(:b).in_sequence(seq).returns("BB")
+      expect(Snippr::Normalizer).to receive(:normalize).with("a").and_return("AA")
+      expect(Snippr::Normalizer).to receive(:normalize).with(:b).and_return("BB")
       subject.normalize_name("a", :b).should == "AA/BB"
     end
 

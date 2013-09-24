@@ -6,7 +6,6 @@ require 'snippr'
 Bundler.require(:default, :development)
 
 RSpec.configure do |config|
-  config.mock_with :mocha
   config.before do
     Snippr::I18n.enabled = nil
     Snippr::Links.adjust_urls_except = nil

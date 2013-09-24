@@ -24,10 +24,9 @@ describe Snippr::Processor do
   describe ".process" do
 
     it "calls process on all processors, passing the content between them and returning the last result" do
-      seq = sequence 'processors'
       subject.processors.each_with_index do |processor, i|
         processor.should respond_to(:process)
-        processor.expects(:process).with(i.to_s, {'1' => '2'}).returns((i + 1).to_s).in_sequence(seq)
+        expect(processor).to receive(:process).with(i.to_s, {'1' => '2'}).and_return((i + 1).to_s)
       end
       subject.process('0', {'1' => '2'}).should == subject.processors.size.to_s
     end

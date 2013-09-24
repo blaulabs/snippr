@@ -5,11 +5,11 @@ describe Snippr::Normalizer do
 
   describe ".normalizers" do
 
-    it "should be an array" do
+    it "is an array" do
       subject.normalizers.should be_an(Array)
     end
 
-    it "should have a set of default normalizers" do
+    it "has a set of default normalizers" do
       normalizers = subject.normalizers
       normalizers.size.should == 1
       normalizers[0].should be_a(Snippr::Normalizer::Camelizer)
@@ -27,11 +27,10 @@ describe Snippr::Normalizer do
       subject.normalizers.pop # remove second normalizer
     end
 
-    it "should call normalize on all normalizers, passing the path element between them and returning the last result" do
-      seq = sequence "normalizers"
+    it "calls normalize on all normalizers, passing the path element between them and returning the last result" do
       subject.normalizers.each_with_index do |normalizer, i|
         normalizer.should respond_to(:normalize)
-        normalizer.expects(:normalize).with(i.to_s).returns((i + 1).to_s).in_sequence(seq)
+        expect(normalizer).to receive(:normalize).with(i.to_s).and_return((i + 1).to_s)
       end
       subject.normalize('0').should == subject.normalizers.size.to_s
     end

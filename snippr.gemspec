@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "snippr"
-  s.version     = "0.15.13"
+  s.version     = "0.15.14"
   s.date        = Time.now
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Daniel Harrington", "Thomas Jachmann", "Frank Schumacher"]
@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "ci_reporter", "~> 1.6.5"
   s.add_development_dependency "rspec", "~> 2.14.0"
-  s.add_development_dependency "mocha", "= 0.11.4"
   s.add_development_dependency "rake", "~> 10.0"
 
   unless ENV["CI"]

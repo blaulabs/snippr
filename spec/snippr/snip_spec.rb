@@ -16,7 +16,7 @@ describe Snippr::Snip do
       end
 
       it "calls #after_initialize" do
-        Snippr::Snip.any_instance.expects(:after_initialize).once
+        Snippr::Snip.any_instance.should_receive(:after_initialize).once
         Snippr::Snip.new(:path_to_snips, :file)
       end
 
@@ -107,14 +107,14 @@ describe Snippr::Snip do
     end
 
     it "stores the read data instead of reading it again" do
-      File.expects(:read).once.returns('data')
+      File.should_receive(:read).once.and_return('data')
       snip = Snippr::Snip.new(:home)
       snip.unprocessed_content.should == 'data'
       snip.unprocessed_content.should == 'data'
     end
 
     it "returns an empty string on missing snips" do
-      File.expects(:read).never
+      File.should_receive(:read).never
       Snippr::Snip.new(:doesnotexist).unprocessed_content.should == ''
     end
 
@@ -127,19 +127,19 @@ describe Snippr::Snip do
   describe "content" do
 
     it "calls Snippr::Processor.process with opts and return decorated result" do
-      Snippr::Processor.expects(:process).with('<p>Home</p>', {:a => :b}).returns('processed')
+      Snippr::Processor.should_receive(:process).with('<p>Home</p>', {:a => :b}).and_return('processed')
       Snippr::Snip.new(:home, :a => :b).content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
     end
 
     it "stores the processed data instead of processing it again" do
-      Snippr::Processor.expects(:process).with('<p>Home</p>', {:a => :b}).once.returns('processed')
+      Snippr::Processor.should_receive(:process).with('<p>Home</p>', {:a => :b}).once.and_return('processed')
       snip = Snippr::Snip.new(:home, :a => :b)
       snip.content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
       snip.content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
     end
 
     it "doesn't call Snippr::Processor.process and return missing string" do
-      Snippr::Processor.expects(:process).never
+      Snippr::Processor.should_receive(:process).never
       Snippr::Snip.new(:doesnotexist, :a => :b).content.should == '<!-- missing snippr: doesnotexist -->'
     end
   end

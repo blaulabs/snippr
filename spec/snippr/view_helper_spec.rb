@@ -95,9 +95,7 @@ describe Snippr::ViewHelper do
     context "snippr with broken meta data" do
 
       it "logs a warning and acts as if no meta information exist" do
-        Snippr.logger.expects(:warn).with do |msg|
-          msg =~ /Unable to extract meta data from Snip \[:meta, :broken\]/
-        end
+        expect(Snippr.logger).to receive(:warn).with(/Unable to extract meta data from Snip \[:meta, :broken\]/)
 
         snip = snippr(:meta, :broken)
         snip.meta.should == {}
@@ -138,7 +136,7 @@ describe Snippr::ViewHelper do
       end
 
       it "doesn't pass snippr to block but concat snippr and return 0" do
-        expects(:concat).with("<!-- starting snippr: empty -->\n\n<!-- closing snippr: empty -->")
+        expect(self).to receive(:concat).with("<!-- starting snippr: empty -->\n\n<!-- closing snippr: empty -->")
         lambda {
           snippr(:empty) do
             raise StandardError.new('block should not be called')
@@ -157,7 +155,7 @@ describe Snippr::ViewHelper do
       end
 
       it "doesn't pass snippr to block but concat snippr and return 0" do
-        expects(:concat).with('<!-- missing snippr: doesnotexist -->')
+        expect(self).to receive(:concat).with('<!-- missing snippr: doesnotexist -->')
         lambda {
           snippr(:doesnotexist) do
             raise StandardError.new('block should not be called')
@@ -174,8 +172,8 @@ describe Snippr::ViewHelper do
     context "on pages controller (special case)" do
 
       before do
-        stubs(:controller_name).returns("pages")
-        stubs(:params).returns(:id => "a/path", :action => :view)
+        allow(self).to receive(:controller_name).and_return("pages")
+        allow(self).to receive(:params).and_return(:id => "a/path", :action => :view)
       end
 
       it "uses the path given in 'id' param" do
@@ -200,8 +198,8 @@ describe Snippr::ViewHelper do
     context "on standard controllers" do
 
       before do
-        stubs(:controller_name).returns("with_underscore")
-        stubs(:params).returns(:action => :and_underscore)
+        allow(self).to receive(:controller_name).and_return("with_underscore")
+        allow(self).to receive(:params).and_return(:action => :and_underscore)
       end
 
       it "camelizes controller and action names" do

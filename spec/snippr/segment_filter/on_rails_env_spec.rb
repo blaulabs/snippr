@@ -12,7 +12,7 @@ describe "Snippr::SegmentFilter::OnRailsEnv" do
   end
 
   it "is active in the defined environment" do
-    Rails.expects(:env).returns("test")
+    expect(Rails).to receive(:env).and_return("test")
     Snippr::SegmentFilter::OnRailsEnv.new("test").should be_active
   end
 
