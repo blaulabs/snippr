@@ -15,6 +15,7 @@ module Snippr
       @name = "#{Path.normalize_name(*names)}#{ I18n.locale(@opts[:i18n]) }"
       @path = Path.path_from_name @name, (@opts[:extension] || FILE_EXTENSION)
       @unprocessed_content, @meta = MetaData.extract(names, raw_content)
+      after_initialize
     end
 
     attr_reader :name, :path, :opts, :unprocessed_content, :meta
@@ -46,6 +47,8 @@ module Snippr
     def empty?
       unprocessed_content.blank?
     end
+
+    def after_initialize; end
 
   private
 

@@ -15,6 +15,11 @@ describe Snippr::Snip do
         Snippr::I18n.enabled = false
       end
 
+      it "calls #after_initialize" do
+        Snippr::Snip.any_instance.expects(:after_initialize).once
+        Snippr::Snip.new(:path_to_snips, :file)
+      end
+
       it "initializes name, path and opts without opts" do
         snip = Snippr::Snip.new(:path_to_snips, :file)
         snip.name.should == 'pathToSnips/file'
