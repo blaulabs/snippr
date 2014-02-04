@@ -151,6 +151,10 @@ Here the second segment would be the content on and after 2013-05-17 13:15:00.
 `valid_until: YYYY-MM-DD HH:MM:SS` :  
 Same as `valid_from` only the other way round
 
+#### valid_between
+`valid_between: YYYY-MM-DD HH:MM:SS - YYYY-MM-DD HH:MM::SS` :  
+Combines `valid_from` and `valid_until` segment filters
+
 #### on_rails_env
 `on_rails_env: production`:  
 Shows the snippet only in the given environment(s).  
