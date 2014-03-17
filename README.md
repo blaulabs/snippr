@@ -127,7 +127,12 @@ You can pass additional dynamic values when using `{snip}`. These will override 
 
     {snip:filepath/of/snip,dyn_key1=dyn_value,dyn_key2=dyn_value2}
 
-Those will be available as {dyn_key1} and {dyn_key2} in filepath/of/snip.snip
+or
+
+    {snip:filepath/of/snip,dyn_key1="dyn_value",dyn_key2='dyn_value2'}
+
+Those will be available as {dyn_key1} and {dyn_key2} in filepath/of/snip.snip  
+Outer quotes and double quotes will be removed
 
 ### Segments (as of Snippr 0.15.0)
 

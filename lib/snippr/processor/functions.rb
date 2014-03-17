@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # = Snippr::Processor::Functions
 #
 # Processes several functions in {command:options} syntax.
@@ -38,7 +39,7 @@ module Snippr
             opt_value = opt_key
             opt_key = :default
           end
-          options[opt_key.to_sym] = opt_value
+          options[opt_key.to_sym] = opt_value.match(/^["']?(.*?)["']?$/)[1]
         end
         options
       end
