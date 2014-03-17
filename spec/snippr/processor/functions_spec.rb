@@ -82,6 +82,9 @@ describe Snippr::Processor::Functions do
       subject.send(:hashify, 'key="quoted"').should == { :key => 'quoted' }
     end
 
+    it "allows a comma inside quotes strings" do
+      subject.send(:hashify, 'key="with,comma"').should == { :key => 'with,comma' }
+    end
   end
 
 end
