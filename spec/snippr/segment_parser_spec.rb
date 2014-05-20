@@ -34,4 +34,12 @@ describe "SegmentParser" do
   it "chooses the correct segment even with \r\n" do
     Snippr::SegmentParser.new("alt\r\n==== valid_from: 1099-05-01 09:00:00 ====\r\nneu\r\n").content.should == "neu"
   end
+
+  it 'works with yml block in old block' do
+    Snippr::SegmentParser.new("---\nyml_key: yml_value\nalt\n==== valid_from: 1099-05-01 09:00:00 ====\nneu\n").content.should == "neu"
+  end
+
+  it 'works with yml block in new block' do
+    Snippr::SegmentParser.new("---\nyml_key: yml_value\n---\nalt\n==== valid_from: 1099-05-01 09:00:00 ====\n---\nyml_key: yml_value\n---\nneu\n").content.should == "---\nyml_key: yml_value\n---\nneu"
+  end
 end
