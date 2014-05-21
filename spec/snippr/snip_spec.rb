@@ -176,4 +176,10 @@ describe Snippr::Snip do
 
   end
 
+  describe '#meta' do
+    it 'returns metadata from validf segment' do
+      expect(Snippr::Snip.new(:meta, :with_content_and_segment_filter).meta).to eq({'description' => 'neues meta'})
+    end
+  end
+
 end
