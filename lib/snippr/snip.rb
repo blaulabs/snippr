@@ -15,6 +15,7 @@ module Snippr
       @name = "#{Path.normalize_name(*names)}#{ I18n.locale(@opts[:i18n]) }"
       @path = Path.path_from_name @name, (@opts[:extension] || FILE_EXTENSION)
       @unprocessed_content = raw_content
+      @meta = {}
       content
       after_initialize
     end

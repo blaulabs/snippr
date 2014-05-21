@@ -180,6 +180,10 @@ describe Snippr::Snip do
     it 'returns metadata from valid segment' do
       expect(Snippr::Snip.new(:meta, :with_content_and_segmentfilter).meta).to eq({'description' => 'neues meta'})
     end
+
+    it 'initializes meta with empty hash' do
+      expect(Snippr::Snip.new(:meta, :missing_snippet).meta).to eq({})
+    end
   end
 
 end
