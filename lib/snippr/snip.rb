@@ -14,7 +14,7 @@ module Snippr
       @opts.symbolize_keys!
       @name = "#{Path.normalize_name(*names)}#{ I18n.locale(@opts[:i18n]) }"
       @path = Path.path_from_name @name, (@opts[:extension] || FILE_EXTENSION)
-      @unprocessed_content, @meta = MetaData.extract(names, raw_content)
+      @unprocessed_content = raw_content
       after_initialize
     end
 
@@ -26,8 +26,9 @@ module Snippr
         if missing?
           "<!-- missing snippr: #{name} -->"
         else
-          content = SegmentParser.new(@unprocessed_content).content
-          content = Processor.process content, opts
+          content = SegmentParser.new(raw_content).content
+          @unprocessed_content, @meta = MetaData.extract(name, content)
+          content = Processor.process @unprocessed_content, opts
           "<!-- starting snippr: #{name} -->\n#{content}\n<!-- closing snippr: #{name} -->"
         end
       end

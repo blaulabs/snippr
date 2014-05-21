@@ -51,22 +51,19 @@ describe Snippr::ViewHelper do
     end
 
     context "snippr with meta data" do
-
       context "and content" do
-
         it "returns a Hash of meta information" do
           snippr(:meta, :with_content).meta.should == {
-            "description" => "Die mit dem Fluegli",
-            "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
+              "description" => "Die mit dem Fluegli",
+              "keywords"    => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
           }
         end
 
         it "returns a hash ofmeta information even if the YAML Fron Matter BLock ends without newline" do
           snippr(:meta, :with_content_no_newline).meta.should == {
-            "description" => "Die mit dem Fluegli",
-            "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
+              "description" => "Die mit dem Fluegli",
+              "keywords"    => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
           }
-
         end
 
         it "accepts a key to search for" do
@@ -76,36 +73,37 @@ describe Snippr::ViewHelper do
         it "returns the content without meta information" do
           snippr(:meta, :with_content).to_s.should == "<!-- starting snippr: meta/withContent -->\n<p>So meta!</p>\n<!-- closing snippr: meta/withContent -->"
         end
-
       end
 
       context "and no content" do
-
         it "still returns a Hash of meta information" do
           snippr(:meta, :with_no_content).meta.should == {
-            "description" => "Die mit dem Fluegli",
-            "keywords" => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
+              "description" => "Die mit dem Fluegli",
+              "keywords"    => "blau Mobilfunk GmbH, blau.de, blauworld, handy, sim"
           }
         end
-
       end
 
+      context 'with segmentfilter' do
+        it 'uses new meta data and new content' do
+          # snippr(:meta, :with_content).to_s.should == "<!-- starting snippr: meta/withContentandSegmentfilter -->\n<p>So meta!</p>\n<!-- closing snippr: meta/withContentandSegmentfilter -->"
+          expect(snippr(:meta, :with_content_and_segmentfilter).to_s).to eq "<!-- starting snippr: meta/withContentAndSegmentfilter -->\n<p>neuer content</p>\n<!-- closing snippr: meta/withContentAndSegmentfilter -->"
+          expect(snippr(:meta, :with_content_and_segmentfilter).meta('description')).to eq 'neues meta'
+        end
+      end
     end
 
     context "snippr with broken meta data" do
-
       it "logs a warning and acts as if no meta information exist" do
-        expect(Snippr.logger).to receive(:warn).with(/Unable to extract meta data from Snip \[:meta, :broken\]/)
+        expect(Snippr.logger).to receive(:warn).with(/Unable to extract meta data from Snip \"meta\/broken\"/)
 
         snip = snippr(:meta, :broken)
         snip.meta.should == {}
         snip.to_s.should == "<!-- starting snippr: meta/broken -->\n<p>Broken!</p>\n<!-- closing snippr: meta/broken -->"
       end
-
     end
 
     context "existing snippr" do
-
       it "calls html_safe and return html safe value" do
         content = snippr(:home)
         content.should == "<!-- starting snippr: home -->\n<p>Home</p>\n<!-- closing snippr: home -->"
@@ -122,7 +120,9 @@ describe Snippr::ViewHelper do
       end
 
       it "returns 0 with block" do
-        snippr(:home) do; end.should == 0
+        snippr(:home) do
+          ;
+        end.should == 0
       end
 
     end
@@ -223,7 +223,5 @@ describe Snippr::ViewHelper do
         snippr_with_path(:deeper, :nested, :snippet).should == "<!-- missing snippr: withUnderscore/andUnderscore/deeper/nested/snippet -->"
       end
     end
-
   end
-
 end
