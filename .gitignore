@@ -11,3 +11,4 @@ coverage
 spec/reports
 Gemfile.lock
 .rvmrc
+.ruby-version
