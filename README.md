@@ -105,13 +105,25 @@ A snippet can not only hold content but also meta infos for this snippet.
 Inspired by [jekyll](http://jekyllrb.com) a snippet can host metadata that is accessable via the `.meta` method on a loaded snippet.
 `.meta' will return an empty hash when no data was found.
 
-Metadata must be placed at the top of the snippet and is delimited with three dashed.
+Metadata must be placed at the top of the snippet or directly after the segment filter and is delimited with three dashed.
 The data itself is parsed as YAML:
 
     ---  
     a_yaml: hash  
     ---  
     normal snippet content comes here until the end of the file
+
+Or with Segmentfilter:
+
+    ---
+	a_yaml: old
+	---
+	old snippet content comes here until before segment filter
+	==== valid_from: 2013-05-17 13:15:00 ====
+	---
+	a_yaml: new
+	---
+	new snippet content after segment filter
 
 ### Including snippr files inside other files
 
