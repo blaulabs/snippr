@@ -7,7 +7,8 @@ describe Snippr::Processor::Dynamics do
     def method; "METHOD"; end
     def method2(param); "METHOD WITH #{param}"; end
     def method3(param1, param2); "METHOD WITH #{param1} AND #{param2}"; end
-  end
+  def method4; ""; end
+end
 
   it "replaces placeholders with dynamic values" do
     today = Date.today
@@ -43,13 +44,22 @@ describe Snippr::Processor::Dynamics do
   end
 
   it "keeps the {snip} if calling a method but the method is not defined" do
-    tpl = "An instance {var.method_not_exist()}"
-    subject.process(tpl, :var => Klass.new).should == tpl
+  subject.process("An instance {var.method_not_exist()}", :var => Klass.new).should == "An instance {var.method_not_exist()}"
   end
 
   it "calls a bang(!) method even if the receiver does not respond_to the method" do
     tpl = "An instance {!var.method_not_exist()}"
     lambda { subject.process(tpl, :var => Klass.new) }.should raise_error(NoMethodError)
+  end
+
+  it "defaults the value if the content is empty" do
+    tpl = "{empty|default}"
+    expect(subject.process(tpl, empty: "")).to eq "default"
+  end
+
+  it "defaults the value if the content is  present" do
+    tpl = "{var.method4()|default2}"
+    expect(subject.process(tpl, var: Klass.new )).to eq "default2"
   end
 
 end

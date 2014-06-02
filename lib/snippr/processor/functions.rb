@@ -18,12 +18,13 @@ module Snippr
         content
       end
 
-    private
+      private
 
       # expand another snip
       # {snip:path/to/snippet}
       def cmd_snip(unprocessed_content, opts, original_options)
         path = opts[:default].split("/")
+        path = recursive_include_from_path(path, opts[:_parent]) if path.first.in? [".", ".."]
         snip_content = Snippr::Snip.new(*path + [opts]).content
         unprocessed_content.gsub("{snip:#{original_options}}", snip_content)
       end
@@ -52,6 +53,14 @@ module Snippr
         options
       end
 
+      def recursive_include_from_path(path, parent)
+        target_pathname = Pathname.new(parent.pathname + path.join(File::SEPARATOR))
+        if target_pathname.to_s =~ /^#{Snippr.path}/
+          target_pathname.to_s.gsub(/^#{Snippr.path}\//, "").split(File::SEPARATOR)
+        else
+          path
+        end
+      end
     end
 
   end

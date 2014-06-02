@@ -2,9 +2,12 @@
 # = Snippr::Snip
 #
 # Represents a single snip and provides methods to read data.
+require 'pathname'
 
 module Snippr
   class Snip
+
+    attr_reader :name, :path, :opts, :unprocessed_content, :meta, :pathname
 
     FILE_EXTENSION = 'snip'
 
@@ -12,15 +15,14 @@ module Snippr
       names = strip_empty_values(names)
       @opts = names.last.kind_of?(Hash) ? names.pop : {}
       @opts.symbolize_keys!
-      @name = "#{Path.normalize_name(*names)}#{ I18n.locale(@opts[:i18n]) }"
+      @name = "#{Path.normalize_name(*names)}#{I18n.locale(@opts[:i18n])}"
       @path = Path.path_from_name @name, (@opts[:extension] || FILE_EXTENSION)
       @unprocessed_content = raw_content
       @meta = {}
+      @pathname = Pathname.new(@path).dirname
       content
       after_initialize
     end
-
-    attr_reader :name, :path, :opts, :unprocessed_content, :meta
 
     # Returns the processed and decorated content.
     def content
@@ -30,7 +32,7 @@ module Snippr
         else
           content = SegmentParser.new(raw_content).content
           @unprocessed_content, @meta = MetaData.extract(name, content)
-          content = Processor.process @unprocessed_content, opts
+          content = Processor.process @unprocessed_content, opts, self
           "<!-- starting snippr: #{name} -->\n#{content}\n<!-- closing snippr: #{name} -->"
         end
       end

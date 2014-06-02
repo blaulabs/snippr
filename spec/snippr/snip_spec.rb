@@ -127,12 +127,12 @@ describe Snippr::Snip do
   describe "content" do
 
     it "calls Snippr::Processor.process with opts and return decorated result" do
-      Snippr::Processor.should_receive(:process).with('<p>Home</p>', {:a => :b}).and_return('processed')
+      Snippr::Processor.should_receive(:process).with('<p>Home</p>', {:a => :b}, anything()).and_return('processed')
       Snippr::Snip.new(:home, :a => :b).content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
     end
 
     it "stores the processed data instead of processing it again" do
-      Snippr::Processor.should_receive(:process).with('<p>Home</p>', {:a => :b}).once.and_return('processed')
+      Snippr::Processor.should_receive(:process).with('<p>Home</p>', {:a => :b}, anything()).once.and_return('processed')
       snip = Snippr::Snip.new(:home, :a => :b)
       snip.content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"
       snip.content.should == "<!-- starting snippr: home -->\nprocessed\n<!-- closing snippr: home -->"

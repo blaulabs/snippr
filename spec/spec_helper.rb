@@ -5,6 +5,8 @@ require 'snippr'
 
 Bundler.require(:default, :development)
 
+I18n.enforce_available_locales = false
+
 RSpec.configure do |config|
   config.before do
     Snippr::I18n.enabled = nil

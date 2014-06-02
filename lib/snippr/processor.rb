@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # = Snippr::Processor
 #
 # Provides methods to process snippr content.
@@ -10,7 +11,8 @@ module Snippr
     end
 
     # Sends the given content and opts to all the configured processors and returns the result.
-    def self.process(content, opts)
+    def self.process(content, opts, including_snippet)
+      opts[:_parent] = including_snippet
       @processors.inject(content) {|c, processor| processor.process c, opts}
     end
 

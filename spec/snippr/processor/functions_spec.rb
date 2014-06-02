@@ -36,8 +36,35 @@ describe Snippr::Processor::Functions do
       }).should == "Include a <!-- starting snippr: topup/success -->\n<p>You're topup of A B C at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip"
     end
 
-    context "for home/show/blauappOverviewBoxMobile (regression test)" do
+    context "relative inclusion via {snip:./name}" do
+      context "via {snip:../../name}" do
+        it "allows inclusion" do
+          snippet = Snippr.load(:snip, :subdir, :subdir2, :snippet)
+          expect(snippet.content).to eq "<!-- starting snippr: snip/subdir/subdir2/snippet -->\nLIKE <!-- starting snippr: snip/base -->\nBase includes <!-- starting snippr: snip/alsoInBase -->\nALSO IN BASE DIR\n<!-- closing snippr: snip/alsoInBase --> and <!-- starting snippr: snip/subdir/snippet -->\nIN SUBDIR\n<!-- closing snippr: snip/subdir/snippet -->\n<!-- closing snippr: snip/base -->\n<!-- closing snippr: snip/subdir/subdir2/snippet -->"
+        end
 
+        it "returns a missing snippet when the inclusion recurses past the Snippr.path" do
+          snippet = Snippr.load(:snip, :subdir, :subdir2, :past_snippr_path)
+          expect(snippet.content).to eq "<!-- starting snippr: snip/subdir/subdir2/pastSnipprPath -->\nERROR <!-- missing snippr: ../../../../base -->\n<!-- closing snippr: snip/subdir/subdir2/pastSnipprPath -->"
+        end
+      end
+
+      context "via {snip:./name}" do
+        it "allows relative inclusion via {snip:../name}" do
+          snippet = Snippr.load(:snip, :base)
+          expect(snippet.content).to eq "<!-- starting snippr: snip/base -->\nBase includes <!-- starting snippr: snip/alsoInBase -->\nALSO IN BASE DIR\n<!-- closing snippr: snip/alsoInBase --> and <!-- starting snippr: snip/subdir/snippet -->\nIN SUBDIR\n<!-- closing snippr: snip/subdir/snippet -->\n<!-- closing snippr: snip/base -->"
+        end
+      end
+
+      context "mixed {snip:../././../name}" do
+        it "allows inclusion" do
+          snippet = Snippr.load(:snip, :subdir, :subdir2, :mixed)
+          expect(snippet.content).to eq "<!-- starting snippr: snip/subdir/subdir2/mixed -->\nLIKE <!-- starting snippr: snip/base -->\nBase includes <!-- starting snippr: snip/alsoInBase -->\nALSO IN BASE DIR\n<!-- closing snippr: snip/alsoInBase --> and <!-- starting snippr: snip/subdir/snippet -->\nIN SUBDIR\n<!-- closing snippr: snip/subdir/snippet -->\n<!-- closing snippr: snip/base -->\n<!-- closing snippr: snip/subdir/subdir2/mixed -->"
+        end
+      end
+    end
+
+    context "for home/show/blauappOverviewBoxMobile (regression test)" do
       before do
         Snippr::Normalizer.normalizers << Snippr::Normalizer::DeRester.new # add a second normalizer to ensure chain behaviour
         Snippr::I18n.enabled = true
@@ -51,7 +78,6 @@ describe Snippr::Processor::Functions do
       it "works" do
         subject.process("{snip:home/show/blauappOverviewBoxMobile}").should == "<!-- missing snippr: home/show/blauappOverviewBoxMobile_de -->"
       end
-
     end
 
   end

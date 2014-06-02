@@ -9,20 +9,48 @@ module Snippr
     class Dynamics
 
       def process(content, opts = {})
-        opts.inject(content) do |c, pv|
-          placeholder, value = pv
-          c.gsub(/\{(!?)#{placeholder}(?:\.(.*?)\(["]?(.*?)["]?\))?\}/m) do |match|
-            if $2 && (value.respond_to?($2) || $1 == "!")
-              method = $2
-              params = ($3 || "").gsub(/[\t\r\n]/,"").split("\",\"")
-              value.send(method, *params).to_s
-            elsif $2
-              match
-            else
-              value.to_s
-            end
+        matches = []
+        # convert array of arrays to array of matchdata
+        content.scan(regex) { matches << $~ }
+
+        matches.each do |match_data|
+          replacement = match_data[:all]
+          value = opts[match_data[:placeholder].to_sym]
+          if match_data[:method] && (value.respond_to?(match_data[:method]) || match_data[:respond_to_check] == "!")
+            params = (match_data[:parameters] || "").gsub(/[\t\r\n]/,"").split("\",\"")
+            replacement = value.send(match_data[:method], *params).to_s
+          elsif match_data[:method]
+            replacement = match_data[:all]
+          else
+            replacement = value.to_s
           end
+
+          # default set?
+          replacement = match_data[:default_when_empty].strip if replacement.empty? && match_data[:default_when_empty]
+
+          content.gsub!(match_data[:all], replacement)
         end
+        content
+      end
+
+      private
+
+      def regex
+        %r{
+        (?<all>                           # group caputing all
+        \{                                # start of dynamic value
+        (?<respond_to_check>!?)           # $1. use ! to call the method on an object even if :respond_to fails
+        (?<placeholder>.*?)               # variable holding value or object
+        (?:\.(?<method>.*?)               # $2. about to call an method on the 'placeholder'
+        \(                                # Non-optional bracket to merk method call
+        ["]?                              # Optional opening double quote
+        (?<parameters>.*?)                # $3. Paramters for method call
+        ["]?                              # Optional closing double quote
+        \))?                              # mandatory closing bracket and group end
+        (\|(?<default_when_empty>.*?))?   # $4. optional default value when snippet content empty
+        \}                                # and thats it
+        )                                 # end all group
+        }xm
       end
 
     end

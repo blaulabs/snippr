@@ -98,6 +98,9 @@ If that is not what you want and you want to force snippr to call the method on 
 That would result in an ``NoMethodError``.
 This can be very useful if you call a method on a proxy object with dynamic method generation that isn't so polite as to implement a meaningful ``respond_to?`` or ``respond_to_missing?`` (eg. The Draper::HelperProxy)
 
+### Defaulting an empty {snippet_variable}
+You can use `{variable|default_value}` to default this snippet to a value, here it would result in `default_value`. This also works on method invocations.
+
 ### Meta Infos
 
 A snippet can not only hold content but also meta infos for this snippet.
@@ -127,11 +130,20 @@ Or with Segmentfilter:
 
 ### Including snippr files inside other files
 
+    {snip:absolute/path/from/snippr/path}
+    {snip:./relative/path/from/including/snippet}
+    {snip:../relative/path/from/including/snippet}
+
 A snippr file can include another snippr file:
 
     This snippr file includes another {snip:filepath/of/snip} file
 
 This will cause `filepath/of/snip.snip` to be included in place.
+
+You can also include relative to the including snippet. A snippet in `some/deep/path/deep.snip` containing `{snip:../../twoDown}` will include `some/twoDown.snip`.  
+Also `{snip:./further/we/go}` would include `some/deep/path/further/we/go.snip`.
+
+Note that it is not allowed to go outside of the designated `Snippr.path`: `{snip:../../../etc/password}` would then output `<!-- missing snippr: ./etc/password -->` wven if the file exists.
 
 Dynamic values of the parent snip will be accessable inside the included snip file.
 
