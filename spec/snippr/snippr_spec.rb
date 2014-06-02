@@ -4,49 +4,49 @@ require "spec_helper"
 describe Snippr do
 
   it "delegates path to Snippr::Path.path" do
-    Snippr::Path.should respond_to(:path)
-    Snippr::Path.should_receive(:path).and_return('path')
-    subject.path.should == 'path'
+    expect(Snippr::Path).to respond_to(:path)
+    expect(Snippr::Path).to receive(:path).and_return('path')
+    expect(subject.path).to eq('path')
   end
 
   it "delegates path= to Snippr::Path.path=" do
-    Snippr::Path.should respond_to(:path=)
-    Snippr::Path.should_receive(:path=).with('path')
+    expect(Snippr::Path).to respond_to(:path=)
+    expect(Snippr::Path).to receive(:path=).with('path')
     subject.path = 'path'
   end
 
   it "delegates tardis= to Snippr::Tardis.enabled=" do
-    Snippr::Tardis.should_receive(:enabled=).with(true)
+    expect(Snippr::Tardis).to receive(:enabled=).with(true)
     subject.tardis_enabled = true
   end
 
   it "delegates tardis to Snippr::Tardis.enabled" do
-    Snippr::Tardis.should respond_to(:enabled)
-    Snippr::Tardis.should_receive(:enabled)
+    expect(Snippr::Tardis).to respond_to(:enabled)
+    expect(Snippr::Tardis).to receive(:enabled)
     subject.tardis_enabled
   end
 
   it "delegates i18n? to Snippr::I18n.enabled?" do
-    Snippr::I18n.should respond_to(:enabled?)
-    Snippr::I18n.should_receive(:enabled?).and_return(true)
-    subject.i18n?.should == true
+    expect(Snippr::I18n).to respond_to(:enabled?)
+    expect(Snippr::I18n).to receive(:enabled?).and_return(true)
+    expect(subject.i18n?).to eq(true)
   end
 
   it "delegates i18n= to Snippr::I18n.enabled=" do
-    Snippr::I18n.should respond_to(:enabled=)
-    Snippr::I18n.should_receive(:enabled=).with(true)
+    expect(Snippr::I18n).to respond_to(:enabled=)
+    expect(Snippr::I18n).to receive(:enabled=).with(true)
     subject.i18n = true
   end
 
   it "delegates adjust_urls_except? to Snippr::Links.adjust_urls_except" do
-    Snippr::Links.should respond_to(:adjust_urls_except)
-    Snippr::Links.should_receive(:adjust_urls_except).and_return([1])
-    subject.adjust_urls_except.should == [1]
+    expect(Snippr::Links).to respond_to(:adjust_urls_except)
+    expect(Snippr::Links).to receive(:adjust_urls_except).and_return([1])
+    expect(subject.adjust_urls_except).to eq([1])
   end
 
   it "delegates adjust_urls_except= to Snippr::Links.adjust_urls_except=" do
-    Snippr::Links.should respond_to(:adjust_urls_except=)
-    Snippr::Links.should_receive(:adjust_urls_except=).with([2])
+    expect(Snippr::Links).to respond_to(:adjust_urls_except=)
+    expect(Snippr::Links).to receive(:adjust_urls_except=).with([2])
     subject.adjust_urls_except = [2]
   end
 
@@ -58,11 +58,11 @@ describe Snippr do
 
     it "can be configured" do
       Snippr.logger = :logger
-      Snippr.logger.should == :logger
+      expect(Snippr.logger).to eq(:logger)
     end
 
     it "defaults to a custom logger" do
-      Snippr.logger.should be_a(Logger)
+      expect(Snippr.logger).to be_a(Logger)
     end
 
     context "in a Rails app" do
@@ -76,7 +76,7 @@ describe Snippr do
       end
 
       it "uses the Rails logger" do
-        Snippr.logger.should == :rails_logger
+        expect(Snippr.logger).to eq(:rails_logger)
       end
 
     end
@@ -84,13 +84,13 @@ describe Snippr do
   end
 
   it "delegates load to Snippr::Snip.new" do
-    Snippr::Snip.should_receive(:new).with(:a, :b).and_return('snip')
-    subject.load(:a, :b).should == 'snip'
+    expect(Snippr::Snip).to receive(:new).with(:a, :b).and_return('snip')
+    expect(subject.load(:a, :b)).to eq('snip')
   end
 
   it "delegates list to Snippr::Path.list" do
-    Snippr::Path.should_receive(:list).with(:c, :d).and_return([:snip])
-    subject.list(:c, :d).should == [:snip]
+    expect(Snippr::Path).to receive(:list).with(:c, :d).and_return([:snip])
+    expect(subject.list(:c, :d)).to eq([:snip])
   end
 
 end

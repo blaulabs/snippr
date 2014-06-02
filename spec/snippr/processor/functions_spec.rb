@@ -6,34 +6,34 @@ describe Snippr::Processor::Functions do
   describe "#cmd_snip" do
 
     it "includes snips inside of snips" do
-      subject.process('Include a {snip:home} inside a snip').should == "Include a <!-- starting snippr: home -->\n<p>Home</p>\n<!-- closing snippr: home --> inside a snip"
+      expect(subject.process('Include a {snip:home} inside a snip')).to eq("Include a <!-- starting snippr: home -->\n<p>Home</p>\n<!-- closing snippr: home --> inside a snip")
     end
 
     it "passes parameters to the include" do
-      subject.process('Include a {snip:topup/success} inside a snip', {
+      expect(subject.process('Include a {snip:topup/success} inside a snip', {
         :topup_amount => '10',
         :date_today => '123'
-      }).should == "Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 10 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip"
+      })).to eq("Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 10 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip")
     end
 
     it "allows additional parameters to be passed to the included snippet" do
-      subject.process('Include a {snip:topup/success,topup_amount=99} inside a snip', {
+      expect(subject.process('Include a {snip:topup/success,topup_amount=99} inside a snip', {
         :date_today => '123'
-      }).should == "Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 99 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip"
+      })).to eq("Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 99 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip")
     end
 
     it "allows additional parameters of the snip call to override parent options" do
-      subject.process('Include a {snip:topup/success,topup_amount=99} inside a snip', {
+      expect(subject.process('Include a {snip:topup/success,topup_amount=99} inside a snip', {
         :date_today => '123',
         :topup_amount => '1'
-      }).should == "Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 99 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip"
+      })).to eq("Include a <!-- starting snippr: topup/success -->\n<p>You're topup of 99 at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip")
     end
 
     it "allows additional parameters of the snip call to override parent options" do
-      subject.process('Include a {snip:topup/success,topup_amount="A B C"} inside a snip', {
+      expect(subject.process('Include a {snip:topup/success,topup_amount="A B C"} inside a snip', {
         :date_today => '123',
         :topup_amount => '1'
-      }).should == "Include a <!-- starting snippr: topup/success -->\n<p>You're topup of A B C at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip"
+      })).to eq("Include a <!-- starting snippr: topup/success -->\n<p>You're topup of A B C at 123 was successful.</p>\n<!-- closing snippr: topup/success --> inside a snip")
     end
 
     context "relative inclusion via {snip:./name}" do
@@ -76,7 +76,7 @@ describe Snippr::Processor::Functions do
       end
 
       it "works" do
-        subject.process("{snip:home/show/blauappOverviewBoxMobile}").should == "<!-- missing snippr: home/show/blauappOverviewBoxMobile_de -->"
+        expect(subject.process("{snip:home/show/blauappOverviewBoxMobile}")).to eq("<!-- missing snippr: home/show/blauappOverviewBoxMobile_de -->")
       end
     end
 
@@ -85,31 +85,31 @@ describe Snippr::Processor::Functions do
   describe "#hashify" do
 
     it "processes a single argument with no value as default" do
-      subject.send(:hashify, "test").should == { :default => "test" }
+      expect(subject.send(:hashify, "test")).to eq({ :default => "test" })
     end
 
     it "processes a single argument with key and value" do
-      subject.send(:hashify, "key=value").should == { :key => "value" }
+      expect(subject.send(:hashify, "key=value")).to eq({ :key => "value" })
     end
 
     it "processes multiple arguments delimited by comma" do
-      subject.send(:hashify, "key=value,key2=value2").should == { :key => "value", :key2 => "value2" }
+      expect(subject.send(:hashify, "key=value,key2=value2")).to eq({ :key => "value", :key2 => "value2" })
     end
 
     it "processes a combination of all arguments" do
-      subject.send(:hashify, "default,key=value,key2=value2").should == { :default => 'default', :key => "value", :key2 => "value2" }
+      expect(subject.send(:hashify, "default,key=value,key2=value2")).to eq({ :default => 'default', :key => "value", :key2 => "value2" })
     end
 
     it "removes leading and trailing quotes" do
-      subject.send(:hashify, "key='quoted'").should == { :key => 'quoted' }
+      expect(subject.send(:hashify, "key='quoted'")).to eq({ :key => 'quoted' })
     end
 
     it "removes leading and trailing double quotes" do
-      subject.send(:hashify, 'key="quoted"').should == { :key => 'quoted' }
+      expect(subject.send(:hashify, 'key="quoted"')).to eq({ :key => 'quoted' })
     end
 
     it "allows a comma inside quotes strings" do
-      subject.send(:hashify, 'key="with,comma"').should == { :key => 'with,comma' }
+      expect(subject.send(:hashify, 'key="with,comma"')).to eq({ :key => 'with,comma' })
     end
   end
 

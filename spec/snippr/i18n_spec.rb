@@ -6,9 +6,9 @@ describe Snippr::I18n do
 
     it "should store the enabled state" do
       subject.enabled = nil
-      subject.enabled?.should == false
+      expect(subject.enabled?).to eq(false)
       subject.enabled = true
-      subject.enabled?.should == true
+      expect(subject.enabled?).to eq(true)
     end
 
   end
@@ -17,12 +17,12 @@ describe Snippr::I18n do
 
     it "should return an empty string when I18n is not enabled" do
       subject.enabled = false
-      subject.locale.should == ''
+      expect(subject.locale).to eq('')
     end
 
     it "should return the locale string when I18n is enabled" do
       subject.enabled = true
-      subject.locale.should == "_#{I18n.locale}"
+      expect(subject.locale).to eq("_#{I18n.locale}")
     end
 
   end

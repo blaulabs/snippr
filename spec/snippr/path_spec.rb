@@ -10,14 +10,14 @@ describe Snippr::Path do
     end
 
     it "stores the path if set as string" do
-      subject.path.should == ''
+      expect(subject.path).to eq('')
       subject.path = 'path'
-      subject.path.should == 'path'
+      expect(subject.path).to eq('path')
     end
 
     it "stores and defers the path evaluation if passed a lambda" do
       subject.path = lambda { "WOW LAMBDA ACTION!" }
-      subject.path.should == "WOW LAMBDA ACTION!"
+      expect(subject.path).to eq("WOW LAMBDA ACTION!")
     end
 
   end
@@ -27,7 +27,7 @@ describe Snippr::Path do
     it "calls Snippr::Normalizer.normalize with all names and return normalized result" do
       expect(Snippr::Normalizer).to receive(:normalize).with("a").and_return("AA")
       expect(Snippr::Normalizer).to receive(:normalize).with(:b).and_return("BB")
-      subject.normalize_name("a", :b).should == "AA/BB"
+      expect(subject.normalize_name("a", :b)).to eq("AA/BB")
     end
 
   end
@@ -39,11 +39,11 @@ describe Snippr::Path do
     end
 
     it "joins path and name (with extension)" do
-      subject.path_from_name('name', 'snip').should == 'path/name.snip'
+      expect(subject.path_from_name('name', 'snip')).to eq('path/name.snip')
     end
 
     it "joins path and name (without extension)" do
-      subject.path_from_name('file').should == 'path/file'
+      expect(subject.path_from_name('file')).to eq('path/file')
     end
 
   end
@@ -57,11 +57,11 @@ describe Snippr::Path do
       end
 
       it "returns a list of all snippr names" do
-        subject.list(:topup).should == [:some_error, :success]
+        expect(subject.list(:topup)).to eq([:some_error, :success])
       end
 
       it "returns an empty array for non existant dirs" do
-        subject.list(:doesnotexist).should == []
+        expect(subject.list(:doesnotexist)).to eq([])
       end
 
     end
@@ -74,16 +74,16 @@ describe Snippr::Path do
 
       it "returns a list of all snippr names of the current locale (de)" do
         I18n.locale = :de
-        subject.list(:i18n).should == [:list, :shop]
+        expect(subject.list(:i18n)).to eq([:list, :shop])
       end
 
       it "returns a list of all snippr names of the current locale (en)" do
         I18n.locale = :en
-        subject.list(:i18n).should == [:shop]
+        expect(subject.list(:i18n)).to eq([:shop])
       end
 
       it "returns an empty array for non existant dirs" do
-        subject.list(:doesnotexist).should == []
+        expect(subject.list(:doesnotexist)).to eq([])
       end
 
     end

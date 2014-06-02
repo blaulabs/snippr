@@ -7,14 +7,14 @@ describe "Snippr::SegmentFilter::OnHoAst" do
   end
 
   it "is active on the given host" do
-    Snippr::SegmentFilter::OnHost.new("thishost").should be_active
+    expect(Snippr::SegmentFilter::OnHost.new("thishost")).to be_active
   end
 
   it "inactive on other than the given host" do
-    Snippr::SegmentFilter::OnHost.new("thathost").should_not be_active
+    expect(Snippr::SegmentFilter::OnHost.new("thathost")).not_to be_active
   end
 
   it "allows multiple hostnames to be given" do
-    Snippr::SegmentFilter::OnHost.new("ahost, , thishost,     foobarhost").should be_active
+    expect(Snippr::SegmentFilter::OnHost.new("ahost, , thishost,     foobarhost")).to be_active
   end
 end

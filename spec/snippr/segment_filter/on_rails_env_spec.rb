@@ -13,14 +13,14 @@ describe "Snippr::SegmentFilter::OnRailsEnv" do
 
   it "is active in the defined environment" do
     expect(Rails).to receive(:env).and_return("test")
-    Snippr::SegmentFilter::OnRailsEnv.new("test").should be_active
+    expect(Snippr::SegmentFilter::OnRailsEnv.new("test")).to be_active
   end
 
   it "is not active in other environments" do
-    Snippr::SegmentFilter::OnRailsEnv.new("non-existing-env").should_not be_active
+    expect(Snippr::SegmentFilter::OnRailsEnv.new("non-existing-env")).not_to be_active
   end
 
   it "allows multiple environments to be given" do
-    Snippr::SegmentFilter::OnRailsEnv.new("a_env, test, development,     foobar").should be_active
+    expect(Snippr::SegmentFilter::OnRailsEnv.new("a_env, test, development,     foobar")).to be_active
   end
 end

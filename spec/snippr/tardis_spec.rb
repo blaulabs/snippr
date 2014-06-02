@@ -5,12 +5,12 @@ describe Snippr::Tardis do
   describe ".enabled=" do
     it "accepts a block" do
       Snippr::Tardis.enabled = -> { "truthy" }
-      Snippr::Tardis.enabled.should eq "truthy"
+      expect(Snippr::Tardis.enabled).to eq "truthy"
     end
 
     it "accepts simple values" do
       Snippr::Tardis.enabled = "truthy"
-      Snippr::Tardis.enabled.should be_true
+      expect(Snippr::Tardis.enabled).to be_true
     end
   end
 end

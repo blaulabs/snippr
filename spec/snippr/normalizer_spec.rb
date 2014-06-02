@@ -6,13 +6,13 @@ describe Snippr::Normalizer do
   describe ".normalizers" do
 
     it "is an array" do
-      subject.normalizers.should be_an(Array)
+      expect(subject.normalizers).to be_an(Array)
     end
 
     it "has a set of default normalizers" do
       normalizers = subject.normalizers
-      normalizers.size.should == 1
-      normalizers[0].should be_a(Snippr::Normalizer::Camelizer)
+      expect(normalizers.size).to eq(1)
+      expect(normalizers[0]).to be_a(Snippr::Normalizer::Camelizer)
     end
 
   end
@@ -29,10 +29,10 @@ describe Snippr::Normalizer do
 
     it "calls normalize on all normalizers, passing the path element between them and returning the last result" do
       subject.normalizers.each_with_index do |normalizer, i|
-        normalizer.should respond_to(:normalize)
+        expect(normalizer).to respond_to(:normalize)
         expect(normalizer).to receive(:normalize).with(i.to_s).and_return((i + 1).to_s)
       end
-      subject.normalize('0').should == subject.normalizers.size.to_s
+      expect(subject.normalize('0')).to eq(subject.normalizers.size.to_s)
     end
 
   end
@@ -46,12 +46,12 @@ describe Snippr::Normalizer do
 
     it "adds the normalizer if an class" do
       subject.add(Snippr::Normalizer::DeRester.new)
-      subject.normalizers.should have(2).normalizers
+      expect(subject.normalizers.size).to eq(2)
     end
 
     it "adds the normalizers if an array" do
       subject.add([Snippr::Normalizer::DeRester.new, Snippr::Normalizer::DeRester.new])
-      subject.normalizers.should have(3).normalizers
+      expect(subject.normalizers.size).to eq(3)
     end
 
   end

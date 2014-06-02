@@ -17,7 +17,7 @@ describe Snippr::Normalizer::DeRester do
     :update => "edit"
   }.each do |replace, with|
     it "should replace #{replace.inspect} in a path with #{with.inspect}" do
-      subject.normalize(replace).should == with
+      expect(subject.normalize(replace)).to eq(with)
     end
   end
 

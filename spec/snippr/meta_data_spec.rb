@@ -11,7 +11,7 @@ describe Snippr::MetaData do
     it 'returns an array with 2 elements [contentstring, metahash]' do
       result = Snippr::MetaData.extract([:content], TEST_CONTENT)
       expect(result).to be_a Array
-      expect(result).to have(2).items
+      expect(result.size).to eq(2)
       expect(result.first).to be_a String
       expect(result.second).to be_a Hash
     end
