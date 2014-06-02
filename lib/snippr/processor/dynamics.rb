@@ -39,15 +39,15 @@ module Snippr
         %r{
         (?<all>                           # group caputing all
         \{                                # start of dynamic value
-        (?<respond_to_check>!?)           # $1. use ! to call the method on an object even if :respond_to fails
+        (?<respond_to_check>!?)           # use ! to call the method on an object even if :respond_to fails
         (?<placeholder>.*?)               # variable holding value or object
-        (?:\.(?<method>.*?)               # $2. about to call an method on the 'placeholder'
-        \(                                # Non-optional bracket to merk method call
-        ["]?                              # Optional opening double quote
-        (?<parameters>.*?)                # $3. Paramters for method call
-        ["]?                              # Optional closing double quote
+        (?:\.(?<method>.*?)               # about to call an method on the 'placeholder'
+        \(                                # non-optional bracket to merk method call
+        ["]?                              # optional opening double quote
+        (?<parameters>.*?)                # paramters for method call
+        ["]?                              # optional closing double quote
         \))?                              # mandatory closing bracket and group end
-        (\|(?<default_when_empty>.*?))?   # $4. optional default value when snippet content empty
+        (\|(?<default_when_empty>.*?))?   # optional default value when snippet content empty
         \}                                # and thats it
         )                                 # end all group
         }xm
