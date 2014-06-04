@@ -203,7 +203,7 @@ describe Snippr::ViewHelper do
       end
 
       it "camelizes controller and action names" do
-        expect(snippr_with_path(:a_snippet)).to eq("<!-- starting snippr: withUnderscore/andUnderscore/aSnippet -->\nan underscored snippet with param \n<!-- closing snippr: withUnderscore/andUnderscore/aSnippet -->")
+        expect(snippr_with_path(:a_snippet)).to eq("<!-- starting snippr: withUnderscore/andUnderscore/aSnippet -->\nan underscored snippet with param {param}\n<!-- closing snippr: withUnderscore/andUnderscore/aSnippet -->")
       end
 
       it "works with a given block" do

@@ -7,8 +7,8 @@ describe Snippr::Processor::Dynamics do
     def method; "METHOD"; end
     def method2(param); "METHOD WITH #{param}"; end
     def method3(param1, param2); "METHOD WITH #{param1} AND #{param2}"; end
-  def method4; ""; end
-end
+    def method4; ""; end
+  end
 
   it "replaces placeholders with dynamic values" do
     today = Date.today
@@ -57,9 +57,20 @@ end
     expect(subject.process(tpl, empty: "")).to eq "default"
   end
 
-  it "defaults the value if the content is  present" do
+  it "defaults the value if the content is present" do
     tpl = "{var.method4()|default2}"
     expect(subject.process(tpl, var: Klass.new )).to eq "default2"
+  end
+
+  it "leaves the dynamic vslue untouched if no replacement and default exists" do
+    tpl = <<-HEREDOC
+      .clazz {
+      }
+
+      .clazz {}
+      </style>
+    HEREDOC
+    expect(subject.process(tpl)).to eq "      .clazz {\n      }\n\n      .clazz {}\n      </style>\n"
   end
 
 end

@@ -15,19 +15,19 @@ module Snippr
 
         matches.each do |match_data|
           replacement = match_data[:all]
-          value = opts[match_data[:placeholder].to_sym]
+          placeholder = match_data[:placeholder].strip.to_sym
+          value = opts[placeholder]
           if match_data[:method] && (value.respond_to?(match_data[:method]) || match_data[:respond_to_check] == "!")
             params = (match_data[:parameters] || "").gsub(/[\t\r\n]/,"").split("\",\"")
             replacement = value.send(match_data[:method], *params).to_s
           elsif match_data[:method]
             replacement = match_data[:all]
-          else
+          elsif value
             replacement = value.to_s
           end
 
           # default set?
           replacement = match_data[:default_when_empty].strip if replacement.empty? && match_data[:default_when_empty]
-
           content.gsub!(match_data[:all], replacement)
         end
         content
