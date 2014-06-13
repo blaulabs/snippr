@@ -43,8 +43,13 @@ describe Snippr::Processor::Dynamics do
     expect(subject.process(tpl, :var => Klass.new)).to eq("An instance METHOD WITH PARAMETER1 AND PARAMETER2")
   end
 
+  it "allows usage of snippr substitution inside method call parameters" do
+    tpl = 'An instance {var.method3("{var2}","PARAMETER2")}'
+    expect(subject.process(tpl, :var => Klass.new, :var2 => "value2")).to eq("An instance METHOD WITH value2 AND PARAMETER2")
+  end
+
   it "keeps the {snip} if calling a method but the method is not defined" do
-  expect(subject.process("An instance {var.method_not_exist()}", :var => Klass.new)).to eq("An instance {var.method_not_exist()}")
+    expect(subject.process("An instance {var.method_not_exist()}", :var => Klass.new)).to eq("An instance {var.method_not_exist()}")
   end
 
   it "calls a bang(!) method even if the receiver does not respond_to the method" do

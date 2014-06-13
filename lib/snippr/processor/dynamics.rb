@@ -12,7 +12,6 @@ module Snippr
         matches = []
         # convert array of arrays to array of matchdata
         content.scan(regex) { matches << $~ }
-
         matches.each do |match_data|
           replacement = match_data[:all]
           placeholder = match_data[:placeholder].strip.to_sym
@@ -28,6 +27,10 @@ module Snippr
 
           # default set?
           replacement = match_data[:default_when_empty].strip if replacement.empty? && match_data[:default_when_empty]
+
+          # sustititions INSIDE the parameters
+          replacement = process(replacement, opts) if replacement =~ regex
+
           content.gsub!(match_data[:all], replacement)
         end
         content
