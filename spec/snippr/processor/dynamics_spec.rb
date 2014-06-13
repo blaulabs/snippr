@@ -44,22 +44,12 @@ describe Snippr::Processor::Dynamics do
   end
 
   it "keeps the {snip} if calling a method but the method is not defined" do
-  expect(subject.process("An instance {var.method_not_exist()}", :var => Klass.new)).to eq("An instance {var.method_not_exist()}")
+    expect(subject.process("An instance {var.method_not_exist()}", :var => Klass.new)).to eq("An instance {var.method_not_exist()}")
   end
 
   it "calls a bang(!) method even if the receiver does not respond_to the method" do
     tpl = "An instance {!var.method_not_exist()}"
     expect { subject.process(tpl, :var => Klass.new) }.to raise_error(NoMethodError)
-  end
-
-  it "defaults the value if the content is empty" do
-    tpl = "{empty|default}"
-    expect(subject.process(tpl, empty: "")).to eq "default"
-  end
-
-  it "defaults the value if the content is present" do
-    tpl = "{var.method4()|default2}"
-    expect(subject.process(tpl, var: Klass.new )).to eq "default2"
   end
 
   it "leaves the dynamic vslue untouched if no replacement and default exists" do
@@ -71,6 +61,33 @@ describe Snippr::Processor::Dynamics do
       </style>
     HEREDOC
     expect(subject.process(tpl)).to eq "      .clazz {\n      }\n\n      .clazz {}\n      </style>\n"
+  end
+
+  context "default handling" do
+    it "defaults the value if the content is empty" do
+      expect(subject.process("{empty|default}", empty: "")).to eq "default"
+    end
+
+    it "defaults the value if the method calls return value is empty" do
+      expect(subject.process("{var.method4()|default2}", var: Klass.new )).to eq "default2"
+    end
+  end
+
+  context "nested placeholders" do
+    it "allows nested placeholders when calling a method" do
+      tpl = 'An instance {var.method3("{var2}","PARAMETER2")}'
+      expect(subject.process(tpl, :var => Klass.new, :var2 => "VAR")).to eq("An instance METHOD WITH VAR AND PARAMETER2")
+    end
+
+    it "allows nested placeholders with method calls when calling a method" do
+      tpl = 'An instance {var.method3("{var2.method()}","PARAMETER2")}'
+      expect(subject.process(tpl, :var => Klass.new, :var2 => Klass.new)).to eq("An instance METHOD WITH METHOD AND PARAMETER2")
+    end
+
+    it "allows nested placeholders with method calls on the same object when calling a method" do
+      tpl = 'An instance {var.method2("{var.method2("{var.method3("A","B")}")}")}'
+      expect(subject.process(tpl, :var => Klass.new)).to eq("An instance METHOD WITH METHOD WITH METHOD WITH A AND B")
+    end
   end
 
 end
