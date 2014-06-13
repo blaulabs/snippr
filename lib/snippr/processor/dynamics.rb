@@ -19,6 +19,9 @@ module Snippr
           if match_data[:method] && (value.respond_to?(match_data[:method]) || match_data[:respond_to_check] == "!")
             params = (match_data[:parameters] || "").gsub(/[\t\r\n]/,"").split("\",\"")
             replacement = value.send(match_data[:method], *params).to_s
+
+            # sustititions INSIDE the parameters
+            replacement = process(replacement, opts) if replacement =~ regex
           elsif match_data[:method]
             replacement = match_data[:all]
           elsif value
@@ -27,9 +30,6 @@ module Snippr
 
           # default set?
           replacement = match_data[:default_when_empty].strip if replacement.empty? && match_data[:default_when_empty]
-
-          # sustititions INSIDE the parameters
-          replacement = process(replacement, opts) if replacement =~ regex
 
           content.gsub!(match_data[:all], replacement)
         end
