@@ -24,7 +24,7 @@ module Snippr
               replacement = match
             end
             replacement = default if replacement.empty? && default
-            replacement += safety if safety
+            replacement += safety.html_safe if safety
             replacement
           end
         end
