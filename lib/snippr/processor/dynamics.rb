@@ -47,7 +47,7 @@ module Snippr
         (?:\|(.*?))?   # $5: optional default value when snippet content empty
         \}             # and thats it
         )              # end capture of variable area
-        ([^"]|$)       # $6: this allows he capture of method calls in method calls
+        ((?!"[),])|$)  # $6: this allows he capture of method calls in method calls
         }xm
       end
 

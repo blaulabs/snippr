@@ -18,6 +18,11 @@ describe Snippr::Processor::Dynamics do
     })).to eq("Your topup of 15,00 &euro; at #{today} was successful.")
   end
 
+  it 'parses the placeholden when surrounded by quotes' do
+    tpl = 'start class="{var}" end'
+    expect(subject.process(tpl, :var => "cssclass")).to eq('start class="cssclass" end');
+  end
+
   it "parses multi-line parameters" do
     tpl = "An instance {var.method2(\"PARAM\t\nETER\")}"
     expect(subject.process(tpl, :var => Klass.new)).to eq("An instance METHOD WITH PARAMETER")
@@ -41,12 +46,6 @@ describe Snippr::Processor::Dynamics do
   it "allows calling methods with multiple parameters on placeholders" do
     tpl = 'An instance {var.method3("PARAMETER1","PARAMETER2")}'
     expect(subject.process(tpl, :var => Klass.new)).to eq("An instance METHOD WITH PARAMETER1 AND PARAMETER2")
-  end
-
-  it "allows usage of snippr substitution inside method call parameters" do
-    pending 'fix it or use version 0.15.19'
-    tpl = 'An instance {var.method3("{var2.method()}","PARAMETER2")}'
-    expect(subject.process(tpl, :var => Klass.new, :var2 => Klass.new)).to eq('An instance METHOD WITH METHOD AND PARAMETER2')
   end
 
   it "keeps the {snip} if calling a method but the method is not defined" do
