@@ -31,7 +31,8 @@ module Snippr
           "<!-- missing snippr: #{name} -->"
         else
           content = SegmentParser.new(raw_content).content
-          @unprocessed_content, @meta = MetaData.extract(name, content)
+          @unprocessed_content, @meta = MetaData.extract(name, content, self)
+          @meta = @meta.reject { |key_from_meta| key_from_meta == MetaData::INCLUDE }
           content = Processor.process @unprocessed_content, opts, self
           "<!-- starting snippr: #{name} -->\n#{content}\n<!-- closing snippr: #{name} -->"
         end

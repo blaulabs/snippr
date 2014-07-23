@@ -6,6 +6,8 @@ describe Snippr::MetaData do
 
   TEST_CONTENT = 'Hier ist jede Menge Content.'
   TEST_CONTENT_WITH_METABLOCK = "---\nyml_key: yml_value\n---\n#{TEST_CONTENT}"
+  TEST_CONTENT_WITH_INCLUDE = "---\n_include:\n  - include/test\n  - include/test2\ntest: main\n---"
+  TEST_CONTENT_WITH_RELATIVE_INCLUDE = "---\n_include:\n  - ./test\n  - ./test2\ntest: main\n---"
 
   describe '.extract' do
     it 'returns an array with 2 elements [contentstring, metahash]' do
@@ -34,6 +36,22 @@ describe Snippr::MetaData do
     it 'returns content as content without metablock' do
       result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_METABLOCK)
       expect(result.first).to eq TEST_CONTENT
+    end
+
+    it "includes other front matter via the _include key" do
+      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_INCLUDE)
+      expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["include/test", "include/test2"]})
+    end
+
+    it "includes metadata from relative include paths" do
+      snippet = Snippr.load("include/main")
+      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_RELATIVE_INCLUDE, snippet)
+      expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["./test", "./test2"]})
+    end
+
+    it "includes other front matter blocks but lets the main block win" do
+      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_INCLUDE)
+      expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["include/test", "include/test2"]})
     end
   end
 

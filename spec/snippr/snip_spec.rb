@@ -142,6 +142,11 @@ describe Snippr::Snip do
       expect(Snippr::Processor).to receive(:process).never
       expect(Snippr::Snip.new(:doesnotexist, :a => :b).content).to eq('<!-- missing snippr: doesnotexist -->')
     end
+
+    it "removes the _include key from the metadata" do
+      snip = Snippr::Snip.new(:include, :main)
+      expect(snip.meta).to_not have_key("_include")
+    end
   end
 
   describe "#missing?" do

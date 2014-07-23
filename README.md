@@ -119,14 +119,29 @@ The data itself is parsed as YAML:
 Or with Segmentfilter:
 
     ---
-	a_yaml: old
-	---
-	old snippet content comes here until before segment filter
-	==== valid_from: 2013-05-17 13:15:00 ====
-	---
-	a_yaml: new
-	---
-	new snippet content after segment filter
+    a_yaml: old
+    ---
+    old snippet content comes here until before segment filter
+    ==== valid_from: 2013-05-17 13:15:00 ====
+    ---
+    a_yaml: new
+    ---
+    new snippet content after segment filter
+
+You call also include other front matter blocks from another snippet with the magic `_include` YAML construct.  
+If you have a snippet `a/path/snippet.snip`: 
+
+    ---
+    _include:
+      - path/from/root/to/snippet
+      - ./relative/to/this/snippet
+    ---
+
+This would merge the metadata from `path/from/root/to/snippet.snip` and `a/path/relative/to/this/snippet.snip` into the containing snippets metadata.  
+If there are duplicate keys the metadata in the main/base snippet is chosen.
+
+Be aware that the `_include` key is *removed* from the metadata after including.
+
 
 ### Including snippr files inside other files
 
