@@ -15,7 +15,7 @@ module Snippr
       if content =~ /^(---\s*\n.*?\n?)^(---\s*$?)/m
         content = Regexp.last_match.post_match.strip
         meta = yaml_load(name, $1)
-        if meta.keys.include?(INCLUDE)
+        if meta && meta.keys.include?(INCLUDE)
           Array(meta[INCLUDE]).each do |includePath|
             if (snippet && includePath.start_with?("./"))
               includePath = snippet.name.gsub(/\/.*?$/,"") + "/" + includePath.gsub(/^\.\//, "")

@@ -6,6 +6,7 @@ describe Snippr::MetaData do
 
   TEST_CONTENT = 'Hier ist jede Menge Content.'
   TEST_CONTENT_WITH_METABLOCK = "---\nyml_key: yml_value\n---\n#{TEST_CONTENT}"
+  TEST_CONTENT_WITH_EMPTY_METABLOCK = "---\n#nothing here but comments\n#{TEST_CONTENT}"
   TEST_CONTENT_WITH_INCLUDE = "---\n_include:\n  - include/test\n  - include/test2\ntest: main\n---"
   TEST_CONTENT_WITH_RELATIVE_INCLUDE = "---\n_include:\n  - ./test\n  - ./test2\ntest: main\n---"
 
@@ -36,6 +37,11 @@ describe Snippr::MetaData do
     it 'returns content as content without metablock' do
       result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_METABLOCK)
       expect(result.first).to eq TEST_CONTENT
+    end
+
+    it "returns nil if the metadata is empty" do
+      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_EMPTY_METABLOCK)
+      expect(result.second).to eq({})
     end
 
     it "includes other front matter via the _include key" do
