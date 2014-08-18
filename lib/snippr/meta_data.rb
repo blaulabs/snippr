@@ -16,17 +16,18 @@ module Snippr
         content = Regexp.last_match.post_match.strip
         meta = yaml_load(name, $1)
         if meta && meta.keys.include?(INCLUDE)
-          Array(meta[INCLUDE]).each do |includePath|
-            if (snippet && includePath.start_with?("./"))
-              includePath = snippet.name.gsub(/\/.*?$/,"") + "/" + includePath.gsub(/^\.\//, "")
+          Array(meta[INCLUDE]).each do |include_path|
+            if (snippet && include_path.start_with?("./"))
+              include_path = snippet.name.gsub(/\/.*?$/,"") + "/" + include_path.gsub(/^\.\//, "")
             end
-            snippet = Snippr.load(includePath)
-            meta = snippet.meta.merge(meta)
+            snippet = Snippr.load(include_path)
+            meta = snippet.meta.deep_merge(meta)
           end
         end
       end
 
       meta = meta ? meta : {}
+
       [content, meta]
     end
 
