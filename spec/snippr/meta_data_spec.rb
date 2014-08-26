@@ -10,6 +10,8 @@ describe Snippr::MetaData do
   TEST_CONTENT_WITH_INCLUDE = "---\n_include:\n  - include/test\n  - include/test2\ntest: main\n---"
   TEST_CONTENT_WITH_RELATIVE_INCLUDE = "---\n_include:\n  - ./test\n  - ./test2\ntest: main\n---"
 
+  TEST_CONTENT_WITH_MERGE = "---\n_include:\n  - merge/array1\n  - merge/array2\n---"
+
   describe '.extract' do
     it 'returns an array with 2 elements [contentstring, metahash]' do
       result = Snippr::MetaData.extract([:content], TEST_CONTENT)
@@ -44,21 +46,47 @@ describe Snippr::MetaData do
       expect(result.second).to eq({})
     end
 
-    it "includes other front matter via the _include key" do
-      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_INCLUDE)
-      expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["include/test", "include/test2"]})
+    context "_include" do
+      it "includes other front matter via the _include key" do
+        result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_INCLUDE)
+        expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["include/test", "include/test2"]})
+      end
+
+      it "includes metadata from relative include paths" do
+        snippet = Snippr.load("include/main")
+        result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_RELATIVE_INCLUDE, snippet)
+        expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["./test", "./test2"]})
+      end
+
+      it "includes other front matter blocks but lets the main block win" do
+        result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_INCLUDE)
+        expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["include/test", "include/test2"]})
+      end
+
+      it "combines a hash containing an array into one" do
+        # this merges/adds an array to another array when the included hashes contain the same key:
+        # promotion:
+        #   - a: 1
+        #
+        # and
+        #
+        # promotion:
+        #   - b: 2
+        #
+        # will result in
+        # promotion:
+        #   - a: 1
+        #   - b: 2
+        #
+        # instead of letting the later argument win:
+        #
+        # promotion:
+        #   - b: 2
+        result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_MERGE)
+        expect(result.second).to eq({"tracking"=>{"promotion"=>[{"b"=>2}, {"a"=>1}]}, "_include"=>["merge/array1", "merge/array2"]})
+      end
     end
 
-    it "includes metadata from relative include paths" do
-      snippet = Snippr.load("include/main")
-      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_RELATIVE_INCLUDE, snippet)
-      expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["./test", "./test2"]})
-    end
-
-    it "includes other front matter blocks but lets the main block win" do
-      result = Snippr::MetaData.extract([:content], TEST_CONTENT_WITH_INCLUDE)
-      expect(result.second).to eq({"this_is_also"=>"included_from_include_test2_snippet", "test"=>"main", "this_is"=>"included_from_include_test_snippet", "_include"=>["include/test", "include/test2"]})
-    end
   end
 
 end

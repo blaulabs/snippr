@@ -140,8 +140,26 @@ If you have a snippet `a/path/snippet.snip`:
 This would merge the metadata from `path/from/root/to/snippet.snip` and `a/path/relative/to/this/snippet.snip` into the containing snippets metadata.  
 If there are duplicate keys the metadata in the main/base snippet is chosen.
 
+This only works on the *first level* of yaml data.  
 Be aware that the `_include` key is *removed* from the metadata after including.
 
+If the YAML contains two arrays to be merged, both will be ADDED:
+
+    ---
+    key:
+      - a: 1
+    ---
+
+and
+
+    ---
+    key:
+      - b: 2
+    ---
+
+will result in:
+
+    {key: [{"a" => 1, "b" => 2}]}
 
 ### Including snippr files inside other files
 

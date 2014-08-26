@@ -15,13 +15,15 @@ module Snippr
       if content =~ /^(---\s*\n.*?\n?)^(---\s*$?)/m
         content = Regexp.last_match.post_match.strip
         meta = yaml_load(name, $1)
-        if meta && meta.keys.include?(INCLUDE)
-          Array(meta[INCLUDE]).each do |include_path|
-            if (snippet && include_path.start_with?("./"))
-              include_path = snippet.name.gsub(/\/.*?$/,"") + "/" + include_path.gsub(/^\.\//, "")
+        if meta
+          if meta.keys.include?(INCLUDE)
+            Array(meta[INCLUDE]).each do |include_path|
+              if (snippet && include_path.start_with?("./"))
+                include_path = snippet.name.gsub(/\/.*?$/,"") + "/" + include_path.gsub(/^\.\//, "")
+              end
+              snippet = Snippr.load(include_path)
+              meta = deep_yaml_merge(snippet.meta, meta)
             end
-            snippet = Snippr.load(include_path)
-            meta = snippet.meta.deep_merge(meta)
           end
         end
       end
@@ -31,7 +33,22 @@ module Snippr
       [content, meta]
     end
 
-  private
+    private
+
+    def self.deep_yaml_merge(first_hash, other_hash)
+      other_hash.each_pair do |k,v|
+        tv = first_hash[k]
+        if tv.is_a?(Hash) && v.is_a?(Hash)
+          first_hash[k] = deep_yaml_merge(tv, v)
+        elsif tv.is_a?(Array) && v.is_a?(Array)
+          first_hash[k] = tv.concat(v)
+        else
+          first_hash[k] = v
+        end
+      end
+      first_hash
+    end
+
 
     def self.yaml_load(name, yml)
       YAML.load(yml)
