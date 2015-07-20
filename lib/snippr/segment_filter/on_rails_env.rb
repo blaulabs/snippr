@@ -13,7 +13,7 @@ module Snippr
       private
 
       def in_env?
-        sources.include?(Rails.env)
+        sources.include?(::Rails.env)
       end
 
       def sources
