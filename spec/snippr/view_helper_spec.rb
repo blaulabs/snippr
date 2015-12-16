@@ -29,22 +29,22 @@ describe Snippr::ViewHelper do
       context "existing snippet" do
 
         it "returns true when calling .exists?" do
-          expect(snippr(:home).exists?).to be_true
+          expect(snippr(:home).exists?).to eq true
         end
 
         it "returns false when calling .missing?" do
-          expect(snippr(:home).missing?).to be_false
+          expect(snippr(:home).missing?).to eq false
         end
 
       end
 
       context "missing snippet" do
         it "returns false when calling .exists?" do
-          expect(snippr(:missing).exists?).to be_false
+          expect(snippr(:missing).exists?).to eq false
         end
 
         it "returns true when calling .missing?" do
-          expect(snippr(:missing).missing?).to be_true
+          expect(snippr(:missing).missing?).to eq true
         end
       end
 

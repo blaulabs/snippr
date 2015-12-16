@@ -10,7 +10,7 @@ describe Snippr::Tardis do
 
     it "accepts simple values" do
       Snippr::Tardis.enabled = "truthy"
-      expect(Snippr::Tardis.enabled).to be_true
+      expect(Snippr::Tardis.enabled).to eq true
     end
   end
 end

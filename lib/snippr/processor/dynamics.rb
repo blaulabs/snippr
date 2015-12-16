@@ -18,7 +18,7 @@ module Snippr
             method = $3
             safety = $6
             if $3 && (value.respond_to?($3) || $2 == "!")
-              params = recursive_process(($4 || "").gsub(/[\t\r\n]/,""), opts).split("\",\"")
+              params = recursive_process(($4 || "").gsub(/[\t\r\n]/,""), opts).gsub(/"\s*,\s*"/,'","').split("\",\"")
               replacement = value.send(method, *params).to_s
             elsif $3
               replacement = match

@@ -8,6 +8,7 @@ describe Snippr::Processor::Dynamics do
     def method2(param); "METHOD WITH #{param}"; end
     def method3(param1, param2); "METHOD WITH #{param1} AND #{param2}"; end
     def method4; ""; end
+    def method5(param1, param2, param3); "METHOD WITH #{param1} AND #{param2} AND #{param3}"; end
   end
 
   it "replaces placeholders with dynamic values" do
@@ -46,6 +47,11 @@ describe Snippr::Processor::Dynamics do
   it "allows calling methods with multiple parameters on placeholders" do
     tpl = 'An instance {var.method3("PARAMETER1","PARAMETER2")}'
     expect(subject.process(tpl, :var => Klass.new)).to eq("An instance METHOD WITH PARAMETER1 AND PARAMETER2")
+  end
+
+  it "allows calling methods with multiple parameters on placeholders unevently spaced" do
+    tpl = 'An instance {var.method5("PARAMETER1", "PARAMETER2",    "PARAMETER3")}'
+    expect(subject.process(tpl, :var => Klass.new)).to eq("An instance METHOD WITH PARAMETER1 AND PARAMETER2 AND PARAMETER3")
   end
 
   it "keeps the {snip} if calling a method but the method is not defined" do
