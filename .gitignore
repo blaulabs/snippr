@@ -12,3 +12,4 @@ spec/reports
 Gemfile.lock
 .rvmrc
 .ruby-version
+.snippr-rspec-persistence.file

@@ -8,6 +8,7 @@ Bundler.require(:default, :development)
 I18n.enforce_available_locales = false
 
 RSpec.configure do |config|
+  config.example_status_persistence_file_path = ".snippr-rspec-persistence.file"
   config.before do
     Snippr::I18n.enabled = nil
     Snippr::Links.adjust_urls_except = nil

@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activesupport"
 
   s.add_development_dependency "ci_reporter", "~> 1.6.5"
-  s.add_development_dependency "rspec", "~> 2.14.0"
+  s.add_development_dependency "rspec", "~> 3.4"
   s.add_development_dependency "rake", "~> 10.0"
 
   unless ENV["CI"]
